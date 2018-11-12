@@ -1,0 +1,17 @@
+/.vscode
+/src
+/tests
+.jsbeautifyrc
+tsconfig.json
+webpack.config.js
+karma.conf.js
+karma-dependencies-shim.js
+karma-test-shim.ts
+ngv.config.json
+
+*.log
+*.spec.js
+*.spec.d.ts
+
+karma-common-shim.d.ts
+karma-test-shim.d.ts
