@@ -111,6 +111,8 @@ export class BasicValueHandlerComponent<TValue> extends ValueHandlerBase<TValue,
                 {
                     this.selectedOptions.push(option);
                 }
+
+                this.selectedOptions = [...this.selectedOptions];
             }
         }
         else
@@ -197,5 +199,6 @@ export class BasicValueHandlerComponent<TValue> extends ValueHandlerBase<TValue,
         this._markValueAsSelected();
         this._unmappedValue = null;
         this._normalState.invalidateVisuals();
+        this.valueChange.emit();
     }
 }
