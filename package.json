@@ -11,7 +11,7 @@
         "postbuild": "npm run postbuild:copy && npm run postbuild:clean && npm run postbuild:extensionsUpdate",
         "postbuild:copy": "copyfiles -u 3 dist/es5/src/**/*.* dist/es5 && copyfiles -u 3 dist/es2015/src/**/*.* dist/es2015 && copyfiles -u 2 dist/testing/**/*.* testing && copyfiles -u 3 dist/es5/extensions/**/*.* extensions",
         "postbuild:clean": "rimraf dist/es5/src dist/es5/dist dist/es5/node_modules dist/es5/testing dist/es5/karma-* dist/es2015/src dist/es2015/dist dist/es2015/node_modules dist/es2015/testing dist/es2015/karma-* dist/es5/extensions",
-        "postbuild:extensionsUpdate": "replace-in-file /\\.\\.\\//g ../dist/ extensions/*.js,extensions/*.ts --isRegex",
+        "postbuild:extensionsUpdate": "replace-in-file /\\.\\.\\//g ../dist/ extensions/*.js,extensions/*.ts --isRegex && replace-in-file /\\.\\.\\/extensions/g ../../../extensions/ dist/es5/**/*.js,dist/es5/**/*.ts --isRegex",
         "clean": "rimraf dist testing tests docs extensions",
         "clean:deps": "rimraf package-lock.json node_modules",
         "clean:all": "npm run clean && npm run clean:deps",
