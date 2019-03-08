@@ -49,6 +49,8 @@ const defaultOptions: BasicNormalStateOptions =
              border: 1px solid #cccccc;
              border-radius: 4px;
              box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+             height: 28px;
+             overflow: hidden;
          }
 
          button.btn-select:hover

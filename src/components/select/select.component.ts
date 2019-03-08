@@ -128,11 +128,6 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
     protected _availableOptionsChange: EventEmitter<void> = new EventEmitter<void>();
 
     /**
-     * Instance of last options gatherer
-     */
-    protected _lastOptionsGatherer: OptionsGatherer<TValue>;
-
-    /**
      * Array of available options to be displayed
      */
     protected _availableOptions: NgSelectOption<TValue>[] = [];
@@ -928,6 +923,8 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
                     let valueHandler = this._pluginInstances[VALUE_HANDLER] as ValueHandler<TValue>;
 
                     valueHandler.valueComparer = this.selectOptions.valueComparer;
+                    valueHandler.optionsGatherer = this.selectOptions.optionsGatherer;
+                    
                     this._pluginInstances[VALUE_HANDLER].initOptions();
                 }
             }

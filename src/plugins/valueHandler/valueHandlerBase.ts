@@ -56,6 +56,11 @@ export abstract class ValueHandlerBase<TValue, TOptions extends ValueHandlerOpti
      */
     protected _cancelOptionSubscription: Subscription;
 
+    /**
+     * Instance of previous options gatherer, that is used for obtaining available options
+     */
+    protected _optionsGatherer: OptionsGatherer<TValue>;
+
     //######################### public properties - implementation of DynamicValueHandler #########################
 
     /**
@@ -159,19 +164,19 @@ export abstract class ValueHandlerBase<TValue, TOptions extends ValueHandlerOpti
      */
     public initialize()
     {
-        if(this.optionsGatherer && this.optionsGatherer != this.optionsGatherer)
+        if(this._optionsGatherer && this._optionsGatherer != this.optionsGatherer)
         {
             this._optionsChangeSubscription.unsubscribe();
             this._optionsChangeSubscription = null;
 
-            this.optionsGatherer = null;
+            this._optionsGatherer = null;
         }
 
-        if(!this.optionsGatherer)
+        if(!this._optionsGatherer)
         {
-            this.optionsGatherer = this.optionsGatherer;
+            this._optionsGatherer = this.optionsGatherer;
 
-            this._optionsChangeSubscription = this.optionsGatherer.optionsChange.subscribe(() => this._loadOptions());
+            this._optionsChangeSubscription = this._optionsGatherer.optionsChange.subscribe(() => this._loadOptions());
         }
 
         let keyboardHandler = this.ngSelectPlugins[KEYBOARD_HANDLER] as KeyboardHandler;
@@ -284,7 +289,7 @@ export abstract class ValueHandlerBase<TValue, TOptions extends ValueHandlerOpti
      */
     protected _clearSelected()
     {
-        this.optionsGatherer.options.forEach((option: ɵNgSelectOption<TValue>) => option.selected = false);
+        this._optionsGatherer.options.forEach((option: ɵNgSelectOption<TValue>) => option.selected = false);
     }
 
     /**
