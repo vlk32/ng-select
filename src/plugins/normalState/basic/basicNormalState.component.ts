@@ -43,18 +43,29 @@ const defaultOptions: BasicNormalStateOptions =
          {
              display: flex;
              width: 100%;
-             padding: 4px 0px 4px 4px;
+             padding: 5px 0px 4px 6px;
              background-color: #ffffff;
              background-image: none;
              border: 1px solid #cccccc;
              border-radius: 4px;
              box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
          }
+
+         button.btn-select:hover
+         {
+             background-color: #F2F2F2;
+         }
+
+         button.btn-select:active
+         {
+             box-shadow: 0 0 5px -1px #888888 inset;
+         }
        
          button.btn-select .selected-value
          {
              flex: 1;
              text-align: left;
+             min-width: 0;
          }
        
          button.btn-select .selected-caret

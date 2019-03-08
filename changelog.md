@@ -20,6 +20,7 @@
       - `DynamicValueHandlerComponent` allows any value, even values non existing in options, best used for dynamically loaded options
 - `OptionsGatherer` used for obtaining options, defaults to `NgSelectComponent` itself, allows obtaining *options* as `ContentChildren`
    - `DynamicOptionsGatherer` used for obtaining options dynamically, best with combination of *live search*
+   - `CodeOptionsGatherer` used for obtaining *static* options but directly from code, not from html template
 - `TemplateGatherer` allows gathering custom templates, defaults to `NgSelect` using `ContentChild`
    - `optionTemplate` - template that allows changing look of option content
    - `normalStateTemplate` - template that allows changing look of normal state content

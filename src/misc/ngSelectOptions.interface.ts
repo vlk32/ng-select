@@ -9,9 +9,8 @@ import {ReadonlyState} from "../plugins/readonlyState";
 import {ValueHandler} from "../plugins/valueHandler";
 import {LiveSearch} from "../plugins/liveSearch";
 import {TextsLocator} from "../plugins/textsLocator";
-import {OptionsGatherer} from "./optionsGatherer/optionsGatherer.interface";
+import {OptionsGatherer, LiveSearchFilter} from "./optionsGatherer/optionsGatherer.interface";
 import {TemplateGatherer} from "./templateGatherer.interface";
-import {NgSelectOption} from "../components/option";
 
 /**
  * Injection token for 'NgSelectOptions'
@@ -114,5 +113,5 @@ export interface NgSelectOptions<TValue>
     /**
      * Method that is used for filtering when live search is running on static data
      */
-    liveSearchFilter?: (query: string) => (option: NgSelectOption<TValue>) => boolean;
+    liveSearchFilter?: LiveSearchFilter<TValue>;
 }

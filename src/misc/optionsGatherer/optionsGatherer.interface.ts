@@ -4,6 +4,14 @@ import {NgSelectOption} from "../../components/option/option.interface";
 import {NgSelectPluginInstances} from "../../components/select";
 
 /**
+ * Callback that is used for filtering static values during live search
+ */
+export interface LiveSearchFilter<TValue>
+{
+    (query: string): (option: NgSelectOption<TValue>) => boolean
+}
+
+/**
  * Gatherer used for obtaining options for select
  */
 export interface OptionsGatherer<TValue>
