@@ -1,5 +1,5 @@
-import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef, OnDestroy} from '@angular/core';
-import {DOCUMENT} from '@angular/common';
+import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef, OnDestroy, PLATFORM_ID} from '@angular/core';
+import {DOCUMENT, isPlatformBrowser} from '@angular/common';
 import {extend} from '@jscrpt/common';
 import {Subscription} from 'rxjs';
 import * as positions from 'positions';
@@ -63,6 +63,11 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
      */
     protected _popupElement: HTMLElement;
 
+    /**
+     * Indication whether is code running in browser
+     */
+    protected _isBrowser: boolean = isPlatformBrowser(this._platformId);
+
     //######################### public properties - implementation of BasicPositioner #########################
 
     /**
@@ -91,7 +96,8 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
                 public pluginElement: ElementRef,
                 @Inject(POSITIONER_OPTIONS) @Optional() options?: BasicPositionerOptions,
-                @Inject(DOCUMENT) protected _document?: HTMLDocument)
+                @Inject(DOCUMENT) protected _document?: HTMLDocument,
+                @Inject(PLATFORM_ID) protected _platformId?: Object)
     {
         this._options = extend(true, {}, defaultOptions, options);
     }
@@ -115,8 +121,11 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
             this._optionsChangeSubscription = null;
         }
 
-        window.removeEventListener('resize', this._handleResizeAndScroll);
-        window.removeEventListener('scroll', this._handleResizeAndScroll);
+        if(this._isBrowser)
+        {
+            window.removeEventListener('resize', this._handleResizeAndScroll);
+            window.removeEventListener('scroll', this._handleResizeAndScroll);
+        }
     }
 
     //######################### public methods - implementation of BasicPositioner #########################
@@ -198,19 +207,22 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
     {
         this._popupElement = this._popup.popupElement;
 
-        //register events and handle position of opened popup
-        if(this._popupElement)
+        if(this._isBrowser)
         {
-            window.addEventListener('resize', this._handleResizeAndScroll);
-            window.addEventListener('scroll', this._handleResizeAndScroll);
-
-            this._handleResizeAndScroll();
-        }
-        //unregister events
-        else
-        {
-            window.removeEventListener('resize', this._handleResizeAndScroll);
-            window.removeEventListener('scroll', this._handleResizeAndScroll);
+            //register events and handle position of opened popup
+            if(this._popupElement)
+            {
+                window.addEventListener('resize', this._handleResizeAndScroll);
+                window.addEventListener('scroll', this._handleResizeAndScroll);
+    
+                this._handleResizeAndScroll();
+            }
+            //unregister events
+            else
+            {
+                window.removeEventListener('resize', this._handleResizeAndScroll);
+                window.removeEventListener('scroll', this._handleResizeAndScroll);
+            }
         }
     }
 

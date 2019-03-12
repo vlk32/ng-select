@@ -12,3 +12,4 @@ export * from './plugins/positioner';
 export * from './plugins/readonlyState';
 export * from './plugins/textsLocator';
 export * from './plugins/valueHandler';
+export * from './index.ssr';

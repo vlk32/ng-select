@@ -3,6 +3,7 @@
 ## Version 6.0.0-beta
 
 - initial version of new `NgSelectComponent`
+- SSR support
 - added support for ES2015 compilation
 - new `NgSelectComponent` is modular with support of several plugins
 - supported plugins
