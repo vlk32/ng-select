@@ -21,7 +21,8 @@
         ],
         "types": 
         [
-            "positions"
+            "positions",
+            "node"
         ],
         "typeRoots": 
         [

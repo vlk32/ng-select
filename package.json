@@ -62,6 +62,7 @@
         "@jscrpt/common": "^1.0.1",
         "@anglr/common": "^5.0.0",
         "@types/jasmine": "2.8.11",
+        "@types/node": "11.11.2",
         "@anglr/types": "1.1.15",
         "@angular/router": "^7.0.0",
         "@angular/compiler-cli": "^7.0.0",

@@ -1,5 +1,3 @@
-declare var global: any
-
 /**
  * Allows Server Side Rendering for @anglr/select to work, call it as soon as possible
  */
