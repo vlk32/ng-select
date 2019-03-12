@@ -1,3 +1,5 @@
+import './index.ssr';
+
 export * from './components/option';
 export * from './components/select';
 export * from './misc';
@@ -12,4 +14,3 @@ export * from './plugins/positioner';
 export * from './plugins/readonlyState';
 export * from './plugins/textsLocator';
 export * from './plugins/valueHandler';
-export * from './index.ssr';
