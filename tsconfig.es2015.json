@@ -3,8 +3,6 @@
     "compilerOptions":
     {
         "target": "es2015",
-        "declaration": true,
-        "declarationDir": "src",
         "outDir": "dist/es2015"
     }
 }

@@ -3,6 +3,7 @@
 /docs
 /tests
 /src/**/*.d.ts
+/src/**/*.json
 
 package-lock.json
 *.log
