@@ -1,9 +1,8 @@
 /node_modules
 /dist
-/tests
-/testing
 /docs
-/extensions
+/tests
+/src/**/*.d.ts
 
 package-lock.json
 *.log

@@ -1,50 +1,10 @@
 {
+    "extends": "./tsconfig.json",
     "compilerOptions":
     {
         "target": "es2015",
-        "module": "esnext",
-        "moduleResolution": "node",
-        "sourceMap": true,
         "declaration": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "noImplicitAny": false,
-        "noImplicitReturns": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "strictNullChecks": false,
-        "outDir": "dist/es2015",
-        "lib":
-        [
-            "es2016",
-            "dom"
-        ],
-        "types": 
-        [
-            "positions",
-            "node"
-        ],
-        "typeRoots": 
-        [
-            "node_modules/@types",
-            "node_modules/@anglr/types"
-        ],
-        "plugins":
-        [
-            {
-                "name": "@angular/language-service"
-            }
-        ]
-    },
-    "exclude":
-    [
-        "node_modules",
-        "dist",
-        "testing"
-    ],
-    "angularCompilerOptions":
-    {
-        "fullTemplateTypeCheck": true,
-        "enableIvy": false
+        "declarationDir": "src",
+        "outDir": "dist/es2015"
     }
 }
