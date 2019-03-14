@@ -2,7 +2,7 @@ import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import {forwardRef, ExistingProvider, Directive, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
 
-import {NgSelectComponent} from '../components/select';
+import {NgSelectComponent} from '../components/select/select.component';
 import {valueChange, setValue, onFocus, setReadonly, getValue} from '../extensions';
 
 /**

@@ -1,6 +1,9 @@
 import './select.ssr';
 
 export * from './components/select/types';
+export * from './components/select/select.component';
+export * from './components/option/optgroup.component';
+export * from './components/option/option.component';
 export * from './components/option';
 export * from './components/select';
 export * from './misc/ngSelectControlValueAccessor.directive';

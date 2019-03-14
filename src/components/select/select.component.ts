@@ -29,7 +29,9 @@ import {NoLiveSearchComponent} from "../../plugins/liveSearch/components";
 import {TextsLocator} from "../../plugins/textsLocator";
 import {TEXTS_LOCATOR} from "../../plugins/textsLocator/types";
 import {NoTextsLocatorComponent} from "../../plugins/textsLocator/components";
-import {OptionComponent, NgSelectOption, OptGroupComponent, NgSelectOptGroup} from "../option";
+import {NgSelectOption, NgSelectOptGroup} from "../option";
+import {OptionComponent} from "../option/option.component";
+import {OptGroupComponent} from "../option/optgroup.component";
 
 /**
  * Default 'NgSelectOptions'
