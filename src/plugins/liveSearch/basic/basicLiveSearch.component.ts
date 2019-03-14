@@ -9,7 +9,8 @@ import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {LiveSearchTexts} from '../liveSearch.interface';
 import {LIVE_SEARCH_OPTIONS} from '../types';
 import {TextsLocator, TEXTS_LOCATOR} from '../../textsLocator';
-import {Popup, POPUP} from '../../popup';
+import {Popup} from '../../popup';
+import {POPUP} from '../../popup/types';
 
 /**
  * Default options for live search

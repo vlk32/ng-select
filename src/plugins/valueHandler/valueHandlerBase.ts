@@ -5,9 +5,11 @@ import {NgSelectPluginGeneric, OptionsGatherer, CompareValueFunc} from '../../mi
 import {NgSelectPluginInstances} from '../../components/select';
 import {KeyboardHandler} from '../keyboardHandler';
 import {KEYBOARD_HANDLER} from '../keyboardHandler/types';
-import {Popup, POPUP} from '../popup';
+import {Popup} from '../popup';
+import {POPUP} from '../popup/types';
 import {ɵNgSelectOption, NgSelectOption} from '../../components/option';
-import {NormalState, NORMAL_STATE} from '../normalState';
+import {NormalState} from '../normalState';
+import {NORMAL_STATE} from '../normalState/types';
 import {ValueHandler, ValueHandlerOptions} from './valueHandler.interface';
 
 /**

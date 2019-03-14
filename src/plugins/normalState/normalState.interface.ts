@@ -1,17 +1,7 @@
-import {InjectionToken, EventEmitter} from "@angular/core";
+import {EventEmitter} from "@angular/core";
 
 import {NgSelectPlugin, VisualPluginOptions, TemplateGatherer} from "../../misc";
 import {NgSelectOption} from "../../components/option";
-
-/**
- * Constant used for accessing normal state plugin in NgSelect
- */
-export const NORMAL_STATE = "NORMAL_STATE";
-
-/**
- * Token for injecting options for normal state plugin
- */
-export const NORMAL_STATE_OPTIONS: InjectionToken<NormalStateOptions<any>> = new InjectionToken<NormalStateOptions<any>>('NORMAL_STATE_OPTIONS');
 
 /**
  * Texts that are used within NormalState

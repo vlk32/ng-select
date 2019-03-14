@@ -8,8 +8,9 @@ import {BasicPositionerOptions, BasicPositioner} from './basicPositioner.interfa
 import {NgSelectPluginGeneric, OptionsGatherer} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
-import {POSITIONER_OPTIONS} from '../positioner.interface';
-import {POPUP, Popup} from '../../popup';
+import {POSITIONER_OPTIONS} from '../types';
+import {Popup} from '../../popup';
+import {POPUP} from '../../popup/types';
 
 /**
  * Default options for positioner

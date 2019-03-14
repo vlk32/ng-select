@@ -6,7 +6,8 @@ import {BasicNormalStateOptions, BasicNormalState} from './basicNormalState.inte
 import {NgSelectPluginGeneric, TemplateGatherer} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
-import {NORMAL_STATE_OPTIONS, NormalStateTexts} from '../normalState.interface';
+import {NormalStateTexts} from '../normalState.interface';
+import {NORMAL_STATE_OPTIONS} from '../types';
 import {TextsLocator, TEXTS_LOCATOR} from '../../textsLocator';
 import {ValueHandler, VALUE_HANDLER} from '../../valueHandler';
 import {NgSelectOption} from '../../../components/option';
