@@ -14,7 +14,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "strictNullChecks": false,
-        "rootDir": "src",
+        "rootDir": ".",
         "outDir": "dist/es5",
         "lib":
         [
@@ -38,6 +38,10 @@
             }
         ]
     },
+    "files":
+    [
+        "public_api.ts"
+    ],
     "exclude":
     [
         "node_modules",
@@ -46,6 +50,10 @@
     ],
     "angularCompilerOptions":
     {
-        "target": "package"
+        "annotateForClosureCompiler": true,
+        "strictMetadataEmit": false,
+        "skipTemplateCodegen": true,
+        "flatModuleOutFile": "select.js",
+        "flatModuleId": "@anglr/select"
     }
 }

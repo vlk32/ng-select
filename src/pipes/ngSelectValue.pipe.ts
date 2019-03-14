@@ -13,8 +13,8 @@ export class NgSelectValuePipe<TValue> implements PipeTransform
     
     /**
      * Transforms selected option into string
-     * @param {NgSelectOption<TValue>|Array<NgSelectOption<TValue>>} options Selected options to be transformed into text
-     * @param {string} nothingSelectedText Text displayed if nothing is selected
+     * @param options Selected options to be transformed into text
+     * @param nothingSelectedText Text displayed if nothing is selected
      */   
     public transform(options: NgSelectOption<TValue>|Array<NgSelectOption<TValue>>, nothingSelectedText: string): string
     {

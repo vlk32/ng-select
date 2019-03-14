@@ -4,7 +4,7 @@
 
 - initial version of new `NgSelectComponent`
 - SSR support
-- Angular IVY ready
+- Angular IVY ready (APF compliant package)
 - added support for ES2015 compilation
 - new `NgSelectComponent` is modular with support of several plugins
 - supported plugins

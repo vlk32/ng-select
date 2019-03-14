@@ -48,7 +48,7 @@ export interface NgSelect<TValue>
 
     /**
      * Gets instance of plugin by its id
-     * @param {string} pluginId Id of plugin, use constants
+     * @param pluginId Id of plugin, use constants
      */
     getPlugin<PluginType extends NgSelectPlugin>(pluginId: string): PluginType;
 

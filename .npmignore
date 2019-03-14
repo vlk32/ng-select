@@ -10,6 +10,7 @@ karma-dependencies-shim.js
 karma-test-shim.ts
 ngv.config.json
 
+*.ts
 !*.d.ts
 !/src/**/*.d.ts
 

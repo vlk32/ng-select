@@ -4,15 +4,17 @@ import {CommonModule as NgCommonModule} from '@anglr/common';
 
 import {NgSelectValuePipe} from '../pipes/ngSelectValue.pipe';
 import {NgSelectControlValueAccessor} from '../misc/ngSelectControlValueAccessor.directive';
-import {BasicNormalStateComponent} from '../plugins/normalState';
-import {NoTextsLocatorComponent} from '../plugins/textsLocator';
-import {BasicLiveSearchComponent, NoLiveSearchComponent} from '../plugins/liveSearch';
-import {BasicPopupComponent} from '../plugins/popup';
-import {BasicPositionerComponent} from '../plugins/positioner';
-import {BasicKeyboardHandlerComponent} from '../plugins/keyboardHandler';
-import {BasicValueHandlerComponent} from '../plugins/valueHandler';
-import {OptGroupComponent, OptionComponent} from '../components/option';
-import {NgSelectComponent} from '../components/select';
+import {BasicNormalStateComponent} from '../plugins/normalState/basic/basicNormalState.component';
+import {NoTextsLocatorComponent} from '../plugins/textsLocator/no/noTextsLocator.component';
+import {NoLiveSearchComponent} from '../plugins/liveSearch/no/noLiveSearch.component';
+import {BasicLiveSearchComponent} from '../plugins/liveSearch/basic/basicLiveSearch.component';
+import {BasicPopupComponent} from '../plugins/popup/basic/basicPopup.component';
+import {BasicPositionerComponent} from '../plugins/positioner/basic/basicPositioner.component';
+import {BasicKeyboardHandlerComponent} from '../plugins/keyboardHandler/basic/basicKeyboardHandler.component';
+import {BasicValueHandlerComponent} from '../plugins/valueHandler/basic/basicValueHandler.component';
+import {OptionComponent} from '../components/option/option.component';
+import {OptGroupComponent} from '../components/option/optgroup.component';
+import {NgSelectComponent} from '../components/select/select.component';
 
 /**
  * Module for select and its options

@@ -1,4 +1,4 @@
-import './index.ssr';
+import './select.ssr';
 
 export * from './components/option';
 export * from './components/select';

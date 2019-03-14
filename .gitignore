@@ -4,6 +4,8 @@
 /tests
 /src/**/*.d.ts
 /src/**/*.json
+/*.d.ts
+/*.metadata.json
 
 package-lock.json
 *.log

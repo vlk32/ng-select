@@ -536,7 +536,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets normal state component
-     * @param {NormalState} normalState Created normal state that is rendered
+     * @param normalState Created normal state that is rendered
      * @internal
      */
     public setNormalStateComponent(normalState: NormalState)
@@ -564,7 +564,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets keyboard handler component
-     * @param {KeyboardHandler} keyboardHandler Created keyboard handler that is rendered
+     * @param keyboardHandler Created keyboard handler that is rendered
      * @internal
      */
     public setKeyboardHandlerComponent(keyboardHandler: KeyboardHandler)
@@ -593,7 +593,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets popup component
-     * @param {Popup} popup Created popup that is rendered
+     * @param popup Created popup that is rendered
      * @internal
      */
     public setPopupComponent(popup: Popup)
@@ -623,7 +623,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets positioner component
-     * @param {Positioner} positioner Created positioner that is rendered
+     * @param positioner Created positioner that is rendered
      * @internal
      */
     public setPositionerComponent(positioner: Positioner)
@@ -652,7 +652,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets texts locator component
-     * @param {TextsLocator} textsLocator Created texts locator that is rendered
+     * @param textsLocator Created texts locator that is rendered
      * @internal
      */
     public setTextsLocatorComponent(textsLocator: TextsLocator)
@@ -679,7 +679,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets readonly state component
-     * @param {ReadonlyState} readonlyState Created readonly state that is rendered
+     * @param readonlyState Created readonly state that is rendered
      * @internal
      */
     public setReadonlyStateComponent(readonlyState: ReadonlyState)
@@ -712,7 +712,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets value handler component
-     * @param {ValueHandler} valueHandler Created value handler that is rendered
+     * @param valueHandler Created value handler that is rendered
      * @internal
      */
     public setValueHandlerComponent(valueHandler: ValueHandler<TValue>)
@@ -741,7 +741,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets live search component
-     * @param {LiveSearch} liveSearch Created live search that is rendered
+     * @param liveSearch Created live search that is rendered
      * @internal
      */
     public setLiveSearchComponent(liveSearch: LiveSearch)
@@ -956,7 +956,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Gets instance of plugin by its id
-     * @param {string} pluginId Id of plugin, use constants
+     * @param pluginId Id of plugin, use constants
      */
     public getPlugin<PluginType extends NgSelectPlugin>(pluginId: string): PluginType
     {
