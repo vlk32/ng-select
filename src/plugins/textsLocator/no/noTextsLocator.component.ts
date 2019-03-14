@@ -1,7 +1,8 @@
 import {Component, ChangeDetectionStrategy, ElementRef, EventEmitter, Inject, Optional} from "@angular/core";
 
 import {NgSelectPluginGeneric} from "../../../misc";
-import {NgSelectPluginInstances, NG_SELECT_PLUGIN_INSTANCES} from "../../../components/select";
+import {NgSelectPluginInstances} from "../../../components/select";
+import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {NoTextsLocatorOptions, NoTextsLocator} from "./noTextsLocator.interface";
 
 /**

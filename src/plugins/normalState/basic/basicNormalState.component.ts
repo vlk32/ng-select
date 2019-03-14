@@ -4,7 +4,8 @@ import {Subscription} from 'rxjs';
 
 import {BasicNormalStateOptions, BasicNormalState} from './basicNormalState.interface';
 import {NgSelectPluginGeneric, TemplateGatherer} from '../../../misc';
-import {NG_SELECT_PLUGIN_INSTANCES, NgSelectPluginInstances} from '../../../components/select';
+import {NgSelectPluginInstances} from '../../../components/select';
+import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {NORMAL_STATE_OPTIONS, NormalStateTexts} from '../normalState.interface';
 import {TextsLocator, TEXTS_LOCATOR} from '../../textsLocator';
 import {ValueHandler, VALUE_HANDLER} from '../../valueHandler';

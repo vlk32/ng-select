@@ -3,7 +3,8 @@ import {extend, nameof, isBoolean, isPresent} from "@jscrpt/common";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 
 import {NgSelectOptions, NG_SELECT_OPTIONS, KEYBOARD_HANDLER_TYPE, NORMAL_STATE_TYPE, POPUP_TYPE, POSITIONER_TYPE, READONLY_STATE_TYPE, VALUE_HANDLER_TYPE, LIVE_SEARCH_TYPE, NgSelectPlugin, OptionsGatherer, PluginDescription, TemplateGatherer} from "../../misc";
-import {NG_SELECT_PLUGIN_INSTANCES, NgSelect, NgSelectPluginInstances, NgSelectAction, NgSelectFunction} from "./select.interface";
+import {NgSelect, NgSelectPluginInstances, NgSelectAction, NgSelectFunction} from "./select.interface";
+import {NG_SELECT_PLUGIN_INSTANCES} from "./types";
 import {KeyboardHandler, KEYBOARD_HANDLER, BasicKeyboardHandlerComponent} from "../../plugins/keyboardHandler";
 import {NormalState, NORMAL_STATE, BasicNormalStateComponent, NormalStateContext} from "../../plugins/normalState";
 import {Popup, POPUP, BasicPopupComponent, PopupOptions, PopupContext} from "../../plugins/popup";

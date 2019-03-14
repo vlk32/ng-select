@@ -3,7 +3,8 @@ import {DOCUMENT} from '@angular/common';
 
 import {NoLiveSearchOptions, NoLiveSearch} from './noLiveSearch.interface';
 import {NgSelectPluginGeneric} from '../../../misc';
-import {NG_SELECT_PLUGIN_INSTANCES, NgSelectPluginInstances} from '../../../components/select';
+import {NgSelectPluginInstances} from '../../../components/select';
+import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 
 /**
  * Component used for no live search

@@ -5,7 +5,8 @@ import {Subscription} from 'rxjs';
 
 import {BasicPopupOptions, BasicPopup} from './basicPopup.interface';
 import {NgSelectPluginGeneric, OptionsGatherer, TemplateGatherer} from '../../../misc';
-import {NG_SELECT_PLUGIN_INSTANCES, NgSelectPluginInstances} from '../../../components/select';
+import {NgSelectPluginInstances} from '../../../components/select';
+import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {POPUP_OPTIONS} from '../popup.interface';
 import {ɵNgSelectOption, NgSelectOption} from '../../../components/option';
 import {NormalState, NORMAL_STATE} from '../../normalState';

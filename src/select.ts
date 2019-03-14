@@ -1,5 +1,6 @@
 import './select.ssr';
 
+export * from './components/select/types';
 export * from './components/option';
 export * from './components/select';
 export * from './misc';

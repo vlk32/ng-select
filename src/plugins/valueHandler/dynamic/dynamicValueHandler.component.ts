@@ -2,7 +2,8 @@ import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef} from '
 import {extend} from '@jscrpt/common';
 
 import {DynamicValueHandlerOptions, DynamicValueHandler} from './dynamicValueHandler.interface';
-import {NG_SELECT_PLUGIN_INSTANCES, NgSelectPluginInstances} from '../../../components/select';
+import {NgSelectPluginInstances} from '../../../components/select';
+import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {VALUE_HANDLER_OPTIONS} from '../valueHandler.interface';
 import {ɵNgSelectOption} from '../../../components/option';
 import {ValueHandlerBase} from '../valueHandlerBase';

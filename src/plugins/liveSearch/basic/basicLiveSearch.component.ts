@@ -4,7 +4,8 @@ import {Subscription} from 'rxjs';
 
 import {BasicLiveSearchOptions, BasicLiveSearch} from './basicLiveSearch.interface';
 import {NgSelectPluginGeneric} from '../../../misc';
-import {NG_SELECT_PLUGIN_INSTANCES, NgSelectPluginInstances} from '../../../components/select';
+import {NgSelectPluginInstances} from '../../../components/select';
+import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {LIVE_SEARCH_OPTIONS, LiveSearchTexts} from '../liveSearch.interface';
 import {TextsLocator, TEXTS_LOCATOR} from '../../textsLocator';
 import {Popup, POPUP} from '../../popup';

@@ -3,7 +3,8 @@ import {extend} from '@jscrpt/common';
 
 import {BasicKeyboardHandlerOptions, BasicKeyboardHandler} from './basicKeyboardHandler.interface';
 import {NgSelectPluginGeneric, OptionsGatherer} from '../../../misc';
-import {NG_SELECT_PLUGIN_INSTANCES, NgSelectPluginInstances} from '../../../components/select';
+import {NgSelectPluginInstances} from '../../../components/select';
+import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {KEYBOARD_HANDLER_OPTIONS} from '../keyboardHandler.interface';
 import {ɵNgSelectOption, NgSelectOption} from '../../../components/option';
 import {Popup, POPUP} from '../../popup';

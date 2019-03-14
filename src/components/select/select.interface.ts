@@ -1,12 +1,6 @@
-import {InjectionToken} from "@angular/core";
 import {Observable} from "rxjs";
 
 import {NgSelectPlugin, NgSelectOptions} from "../../misc";
-
-/**
- * Token used for obtaining 'NgSelectPluginInstances'
- */
-export const NG_SELECT_PLUGIN_INSTANCES: InjectionToken<NgSelectPluginInstances> = new InjectionToken<NgSelectPluginInstances>('NG_SELECT_PLUGIN_INSTANCES');
 
 /**
  * Interface describing object storing all existing plugin instances for NgSelect
