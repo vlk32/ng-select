@@ -31,3 +31,5 @@ export * from './plugins/textsLocator';
 export * from './plugins/textsLocator/types';
 export * from './plugins/textsLocator/components';
 export * from './plugins/valueHandler';
+export * from './plugins/valueHandler/types';
+export * from './plugins/valueHandler/components';
