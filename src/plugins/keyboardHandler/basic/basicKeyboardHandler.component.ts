@@ -5,7 +5,7 @@ import {BasicKeyboardHandlerOptions, BasicKeyboardHandler} from './basicKeyboard
 import {NgSelectPluginGeneric, OptionsGatherer} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
-import {KEYBOARD_HANDLER_OPTIONS} from '../keyboardHandler.interface';
+import {KEYBOARD_HANDLER_OPTIONS} from '../types';
 import {ɵNgSelectOption, NgSelectOption} from '../../../components/option';
 import {Popup, POPUP} from '../../popup';
 

@@ -5,7 +5,8 @@ import {Subscription} from "rxjs";
 import {OptionsGatherer, LiveSearchFilter} from "./optionsGatherer.interface";
 import {NgSelectOption} from "../../components/option";
 import {NgSelectPluginInstances} from "../../components/select";
-import {LIVE_SEARCH, LiveSearch} from "../../plugins/liveSearch";
+import {LiveSearch} from "../../plugins/liveSearch";
+import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
 
 /**
  * Options gatherer used for static options gathering from code

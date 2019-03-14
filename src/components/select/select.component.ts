@@ -2,16 +2,21 @@ import {Component, ChangeDetectionStrategy, FactoryProvider, Input, Inject, Chan
 import {extend, nameof, isBoolean, isPresent} from "@jscrpt/common";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 
-import {NgSelectOptions, NG_SELECT_OPTIONS, KEYBOARD_HANDLER_TYPE, NORMAL_STATE_TYPE, POPUP_TYPE, POSITIONER_TYPE, READONLY_STATE_TYPE, VALUE_HANDLER_TYPE, LIVE_SEARCH_TYPE, NgSelectPlugin, OptionsGatherer, PluginDescription, TemplateGatherer} from "../../misc";
+import {NgSelectOptions, NgSelectPlugin, OptionsGatherer, PluginDescription, TemplateGatherer} from "../../misc";
+import {NG_SELECT_OPTIONS, KEYBOARD_HANDLER_TYPE, NORMAL_STATE_TYPE, POPUP_TYPE, POSITIONER_TYPE, READONLY_STATE_TYPE, VALUE_HANDLER_TYPE, LIVE_SEARCH_TYPE} from "../../misc/types";
 import {NgSelect, NgSelectPluginInstances, NgSelectAction, NgSelectFunction} from "./select.interface";
 import {NG_SELECT_PLUGIN_INSTANCES} from "./types";
-import {KeyboardHandler, KEYBOARD_HANDLER, BasicKeyboardHandlerComponent} from "../../plugins/keyboardHandler";
+import {KeyboardHandler} from "../../plugins/keyboardHandler";
+import {BasicKeyboardHandlerComponent} from "../../plugins/keyboardHandler/components";
+import {KEYBOARD_HANDLER} from "../../plugins/keyboardHandler/types";
 import {NormalState, NORMAL_STATE, BasicNormalStateComponent, NormalStateContext} from "../../plugins/normalState";
 import {Popup, POPUP, BasicPopupComponent, PopupOptions, PopupContext} from "../../plugins/popup";
 import {Positioner, POSITIONER, BasicPositionerComponent} from "../../plugins/positioner";
 import {ReadonlyState, READONLY_STATE, ReadonlyStateOptions} from "../../plugins/readonlyState";
 import {ValueHandler, VALUE_HANDLER, BasicValueHandlerComponent, ValueHandlerOptions} from "../../plugins/valueHandler";
-import {LiveSearch, LIVE_SEARCH, NoLiveSearchComponent} from "../../plugins/liveSearch";
+import {LiveSearch} from "../../plugins/liveSearch";
+import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
+import {NoLiveSearchComponent} from "../../plugins/liveSearch/components";
 import {TextsLocator, TEXTS_LOCATOR, NoTextsLocatorComponent} from "../../plugins/textsLocator";
 import {OptionComponent, NgSelectOption, OptGroupComponent, NgSelectOptGroup} from "../option";
 

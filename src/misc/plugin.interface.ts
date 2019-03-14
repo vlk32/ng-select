@@ -60,7 +60,7 @@ export interface NgSelectPluginGeneric<TOptions> extends NgSelectPlugin
 /**
  * All available types of plugins for NgSelect
  */
-export class NgSelectPluginTypes
+export interface NgSelectPluginTypes
 {
     /**
      * Handles keyboard events

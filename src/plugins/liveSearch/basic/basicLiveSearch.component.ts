@@ -6,7 +6,8 @@ import {BasicLiveSearchOptions, BasicLiveSearch} from './basicLiveSearch.interfa
 import {NgSelectPluginGeneric} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
-import {LIVE_SEARCH_OPTIONS, LiveSearchTexts} from '../liveSearch.interface';
+import {LiveSearchTexts} from '../liveSearch.interface';
+import {LIVE_SEARCH_OPTIONS} from '../types';
 import {TextsLocator, TEXTS_LOCATOR} from '../../textsLocator';
 import {Popup, POPUP} from '../../popup';
 

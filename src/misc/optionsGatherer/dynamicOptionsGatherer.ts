@@ -7,7 +7,8 @@ import {OptionsGatherer} from "./optionsGatherer.interface";
 import {NgSelectPluginInstances} from "../../components/select";
 import {NgSelectOption} from "../../components/option";
 import {DynamicOptionsGathererOptions} from "./dynamicOptionsGatherer.interface";
-import {LIVE_SEARCH, LiveSearch} from "../../plugins/liveSearch";
+import {LiveSearch} from "../../plugins/liveSearch";
+import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
 
 /**
  * Class that is used as for options gathering in dynamic way, for example from external source when writing

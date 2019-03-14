@@ -4,8 +4,6 @@
         "target": "es5",
         "module": "esnext",
         "moduleResolution": "node",
-        "inlineSourceMap": true,
-        "inlineSources": true,
         "declaration": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -14,8 +12,6 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "strictNullChecks": false,
-        "rootDir": ".",
-        "outDir": "dist/es5",
         "lib":
         [
             "es2016",
@@ -38,10 +34,6 @@
             }
         ]
     },
-    "files":
-    [
-        "public_api.ts"
-    ],
     "exclude":
     [
         "node_modules",
@@ -50,10 +42,6 @@
     ],
     "angularCompilerOptions":
     {
-        "annotateForClosureCompiler": true,
-        "strictMetadataEmit": false,
-        "skipTemplateCodegen": true,
-        "flatModuleOutFile": "select.js",
-        "flatModuleId": "@anglr/select"
+        "fullTemplateTypeCheck": true
     }
 }

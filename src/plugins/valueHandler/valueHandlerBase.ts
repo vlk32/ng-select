@@ -3,7 +3,8 @@ import {Subscription} from 'rxjs';
 
 import {NgSelectPluginGeneric, OptionsGatherer, CompareValueFunc} from '../../misc';
 import {NgSelectPluginInstances} from '../../components/select';
-import {KeyboardHandler, KEYBOARD_HANDLER} from '../keyboardHandler';
+import {KeyboardHandler} from '../keyboardHandler';
+import {KEYBOARD_HANDLER} from '../keyboardHandler/types';
 import {Popup, POPUP} from '../popup';
 import {ɵNgSelectOption, NgSelectOption} from '../../components/option';
 import {NormalState, NORMAL_STATE} from '../normalState';

@@ -1,16 +1,6 @@
-import {InjectionToken, EventEmitter} from "@angular/core";
+import {EventEmitter} from "@angular/core";
 
 import {NgSelectPlugin, VisualPluginOptions} from "../../misc";
-
-/**
- * Constant used for accessing live search plugin in NgSelect
- */
-export const LIVE_SEARCH = "LIVE_SEARCH";
-
-/**
- * Token for injecting options for live search plugin
- */
-export const LIVE_SEARCH_OPTIONS: InjectionToken<LiveSearchOptions<any>> = new InjectionToken<LiveSearchOptions<any>>('LIVE_SEARCH_OPTIONS');
 
 /**
  * Texts that are used within LiveSearch

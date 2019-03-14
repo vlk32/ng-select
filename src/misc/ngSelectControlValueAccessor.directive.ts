@@ -9,7 +9,7 @@ import {valueChange, setValue, onFocus, setReadonly, getValue} from '../extensio
  * Provider for control value accessor
  * @internal
  */
-const NG_SELECT_VALUE_ACCESSOR: ExistingProvider =
+export const NG_SELECT_VALUE_ACCESSOR: ExistingProvider =
 {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => NgSelectControlValueAccessor),

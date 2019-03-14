@@ -7,7 +7,7 @@
     "typings": "./select.d.ts",
     "sideEffects": false,
     "scripts": {
-        "build": "ngc && ngc -p tsconfig.es2015.json",
+        "build": "ngc -p tsconfig.es5.json && ngc -p tsconfig.es2015.json",
         "clean": "rimraf dist tests docs src/**/*.d.ts src/**/*.json **/*.metadata.json ./*.d.ts",
         "clean:deps": "rimraf package-lock.json node_modules",
         "clean:all": "npm run clean && npm run clean:deps",

@@ -1,17 +1,7 @@
-import {InjectionToken, EventEmitter} from "@angular/core";
+import {EventEmitter} from "@angular/core";
 
 import {PluginOptions, NgSelectPlugin, OptionsGatherer} from "../../misc";
 import {NgSelectOption} from "../../components/option";
-
-/**
- * Constant used for accessing keyboard handler plugin in NgSelect
- */
-export const KEYBOARD_HANDLER = "KEYBOARD_HANDLER";
-
-/**
- * Token for injecting options for keyboard handler plugin
- */
-export const KEYBOARD_HANDLER_OPTIONS: InjectionToken<KeyboardHandlerOptions> = new InjectionToken<KeyboardHandlerOptions>('KEYBOARD_HANDLER_OPTIONS');
 
 /**
  * Options for keyboard handler plugin

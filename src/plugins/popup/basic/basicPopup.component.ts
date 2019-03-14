@@ -10,7 +10,8 @@ import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {POPUP_OPTIONS} from '../popup.interface';
 import {ɵNgSelectOption, NgSelectOption} from '../../../components/option';
 import {NormalState, NORMAL_STATE} from '../../normalState';
-import {KeyboardHandler, KEYBOARD_HANDLER} from '../../keyboardHandler';
+import {KeyboardHandler} from '../../keyboardHandler';
+import {KEYBOARD_HANDLER} from '../../keyboardHandler/types';
 import {ValueHandler, VALUE_HANDLER} from '../../valueHandler';
 
 /**
