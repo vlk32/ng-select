@@ -8,7 +8,7 @@
     "sideEffects": false,
     "scripts": {
         "build": "ngc -p tsconfig.es5.json && ngc -p tsconfig.es2015.json",
-        "clean": "rimraf dist tests docs src/**/*.d.ts src/**/*.json **/*.metadata.json ./*.d.ts",
+        "clean": "rimraf dist tests docs src/**/*.d.ts src/**/*.json ./*.metadata.json ./*.d.ts",
         "clean:deps": "rimraf package-lock.json node_modules",
         "clean:all": "npm run clean && npm run clean:deps",
         "ngc": "ngc",
@@ -16,7 +16,7 @@
         "version:git": "ngv -e \"replace-in-file 0.0.0-placeholder $GIT_VERSION package.json\"",
         "prepublishOnly": "npm run bundle && npm run version:placeholder && npm run version:git",
         "postpublish": "npm run version:placeholder && npm run clean",
-        "bundle": "npm run clean && npm run build && nnrh *.js -d dist/es5/src --htmlDir src && nnrh *.js -d dist/es2015/src --htmlDir src",
+        "bundle": "npm run clean && npm run build",
         "deploy": "npm publish",
         "deploy:local": "npm publish --registry http://local:4873 && npm run docs",
         "deploy:next": "npm publish --tag next",
@@ -88,7 +88,6 @@
         "replace-in-file": "3.4.3",
         "typescript": "3.2.4",
         "webpack": "4.29.6",
-        "npm-git-version": "1.1.0",
-        "npm-ng-require-html": "1.0.2"
+        "npm-git-version": "1.1.0"
     }
 }
