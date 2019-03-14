@@ -1,7 +1,8 @@
 import {Subscription} from "rxjs";
 
 import {NgSelectFunction} from "../components/select";
-import {VALUE_HANDLER, ValueHandler} from "../plugins/valueHandler";
+import {ValueHandler} from "../plugins/valueHandler";
+import {VALUE_HANDLER} from "../plugins/valueHandler/types";
 
 /**
  * Adds callback that is called when value changes and returns subscription for this changes

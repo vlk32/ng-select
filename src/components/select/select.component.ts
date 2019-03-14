@@ -18,12 +18,17 @@ import {BasicPopupComponent} from "../../plugins/popup/component";
 import {Positioner} from "../../plugins/positioner";
 import {POSITIONER} from "../../plugins/positioner/types";
 import {BasicPositionerComponent} from "../../plugins/positioner/components";
-import {ReadonlyState, READONLY_STATE, ReadonlyStateOptions} from "../../plugins/readonlyState";
-import {ValueHandler, VALUE_HANDLER, BasicValueHandlerComponent, ValueHandlerOptions} from "../../plugins/valueHandler";
+import {ReadonlyState, ReadonlyStateOptions} from "../../plugins/readonlyState";
+import {READONLY_STATE} from "../../plugins/readonlyState/types";
+import {ValueHandler, ValueHandlerOptions} from "../../plugins/valueHandler";
+import {VALUE_HANDLER} from "../../plugins/valueHandler/types";
+import {BasicValueHandlerComponent} from "../../plugins/valueHandler/components";
 import {LiveSearch} from "../../plugins/liveSearch";
 import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
 import {NoLiveSearchComponent} from "../../plugins/liveSearch/components";
-import {TextsLocator, TEXTS_LOCATOR, NoTextsLocatorComponent} from "../../plugins/textsLocator";
+import {TextsLocator} from "../../plugins/textsLocator";
+import {TEXTS_LOCATOR} from "../../plugins/textsLocator/types";
+import {NoTextsLocatorComponent} from "../../plugins/textsLocator/components";
 import {OptionComponent, NgSelectOption, OptGroupComponent, NgSelectOptGroup} from "../option";
 
 /**

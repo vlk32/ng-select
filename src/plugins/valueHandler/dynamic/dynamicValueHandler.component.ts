@@ -4,7 +4,7 @@ import {extend} from '@jscrpt/common';
 import {DynamicValueHandlerOptions, DynamicValueHandler} from './dynamicValueHandler.interface';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
-import {VALUE_HANDLER_OPTIONS} from '../valueHandler.interface';
+import {VALUE_HANDLER_OPTIONS} from '../types';
 import {ɵNgSelectOption} from '../../../components/option';
 import {ValueHandlerBase} from '../valueHandlerBase';
 

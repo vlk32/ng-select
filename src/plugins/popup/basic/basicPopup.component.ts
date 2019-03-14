@@ -13,7 +13,8 @@ import {NormalState} from '../../normalState';
 import {NORMAL_STATE} from '../../normalState/types';
 import {KeyboardHandler} from '../../keyboardHandler';
 import {KEYBOARD_HANDLER} from '../../keyboardHandler/types';
-import {ValueHandler, VALUE_HANDLER} from '../../valueHandler';
+import {ValueHandler} from '../../valueHandler';
+import {VALUE_HANDLER} from '../../valueHandler/types';
 
 /**
  * Default options for popup

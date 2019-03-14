@@ -8,7 +8,8 @@ import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {LiveSearchTexts} from '../liveSearch.interface';
 import {LIVE_SEARCH_OPTIONS} from '../types';
-import {TextsLocator, TEXTS_LOCATOR} from '../../textsLocator';
+import {TextsLocator} from '../../textsLocator';
+import {TEXTS_LOCATOR} from '../../textsLocator/types';
 import {Popup} from '../../popup';
 import {POPUP} from '../../popup/types';
 

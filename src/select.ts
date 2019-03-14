@@ -26,5 +26,8 @@ export * from './plugins/positioner';
 export * from './plugins/positioner/types';
 export * from './plugins/positioner/components';
 export * from './plugins/readonlyState';
+export * from './plugins/readonlyState/types';
 export * from './plugins/textsLocator';
+export * from './plugins/textsLocator/types';
+export * from './plugins/textsLocator/components';
 export * from './plugins/valueHandler';

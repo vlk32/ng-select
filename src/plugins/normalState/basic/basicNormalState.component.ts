@@ -8,8 +8,10 @@ import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {NormalStateTexts} from '../normalState.interface';
 import {NORMAL_STATE_OPTIONS} from '../types';
-import {TextsLocator, TEXTS_LOCATOR} from '../../textsLocator';
-import {ValueHandler, VALUE_HANDLER} from '../../valueHandler';
+import {TextsLocator} from '../../textsLocator';
+import {TEXTS_LOCATOR} from '../../textsLocator/types';
+import {ValueHandler} from '../../valueHandler';
+import {VALUE_HANDLER} from '../../valueHandler/types';
 import {NgSelectOption} from '../../../components/option';
 
 /**
