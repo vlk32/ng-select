@@ -1,5 +1,5 @@
 import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef} from '@angular/core';
-import {extend} from '@jscrpt/common';
+import {extend, isBlank} from '@jscrpt/common';
 
 import {BasicValueHandlerOptions, BasicValueHandler} from './basicValueHandler.interface';
 import {NgSelectPluginInstances} from '../../../components/select';
@@ -144,7 +144,7 @@ export class BasicValueHandlerComponent<TValue> extends ValueHandlerBase<TValue,
      */
     protected _loadOptions()
     {
-        this._useOptionsAsValue(this._unmappedValue || this.value);
+        this._useOptionsAsValue(isBlank(this._unmappedValue) ? this.value : this._unmappedValue);
     }
 
     /**
@@ -154,7 +154,7 @@ export class BasicValueHandlerComponent<TValue> extends ValueHandlerBase<TValue,
     protected _useOptionsAsValue(value: TValue|TValue[])
     {
         //set empty value
-        if(!value || (Array.isArray(value) && !value.length))
+        if(isBlank(value) || (Array.isArray(value) && !value.length))
         {
             this.selectedOptions = value;
 

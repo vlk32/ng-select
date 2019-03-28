@@ -1,5 +1,5 @@
 import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef} from '@angular/core';
-import {extend} from '@jscrpt/common';
+import {extend, isBlank} from '@jscrpt/common';
 
 import {DynamicValueHandlerOptions, DynamicValueHandler} from './dynamicValueHandler.interface';
 import {NgSelectPluginInstances} from '../../../components/select';
@@ -145,7 +145,7 @@ export class DynamicValueHandlerComponent<TValue> extends ValueHandlerBase<TValu
     protected async _useOptionsAsValue(value: TValue|TValue[])
     {
         //set empty value
-        if(!value || (Array.isArray(value) && !value.length))
+        if(isBlank(value) || (Array.isArray(value) && !value.length))
         {
             this.selectedOptions = value;
 
