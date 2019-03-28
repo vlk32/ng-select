@@ -9,7 +9,7 @@ import {OptionComponent} from "./option.component";
  */
 @Component(
 {
-    selector: 'ng-select>optgroup',
+    selector: 'ng-select>ng-optgroup',
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })

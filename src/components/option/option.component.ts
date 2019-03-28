@@ -7,7 +7,7 @@ import {NgSelectOption} from "./option.interface";
  */
 @Component(
 {
-    selector: 'ng-select option',
+    selector: 'ng-select>ng-option,ng-optgroup>ng-option',
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -7,6 +7,7 @@
 - Angular IVY ready (APF compliant package)
 - added support for ES2015 compilation
 - new `NgSelectComponent` is modular with support of several plugins
+   - selectors for component are `ng-select`, `ng-option`, `ng-optgroup`
 - supported plugins
    - `KeyboardHandler` plugin, allows handling of keyboard events
    - `LiveSearch` plugin, allows user to filter options
