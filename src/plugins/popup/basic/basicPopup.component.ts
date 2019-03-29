@@ -53,6 +53,18 @@ const defaultOptions: BasicPopupOptions =
             min-width: 100%;
             padding: 5px 0;
             box-shadow: 0 6px 12px rgba(0,0,0,.175);
+            scrollbar-width: thin;
+        }
+
+        .popup-div::-webkit-scrollbar-thumb 
+        {
+            background-color: #cdcdcd;
+        }
+        
+        .popup-div::-webkit-scrollbar 
+        {
+            width: 6px;
+            background-color: #f0f0f0;
         }
 
         .option-item
