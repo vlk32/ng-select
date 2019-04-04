@@ -149,6 +149,10 @@ export class DynamicValueHandlerComponent<TValue> extends ValueHandlerBase<TValu
         {
             this.selectedOptions = value;
 
+            this._clearSelected();
+            this._normalState.invalidateVisuals();
+            this.valueChange.emit();
+
             return;
         }
 

@@ -158,6 +158,11 @@ export class BasicValueHandlerComponent<TValue> extends ValueHandlerBase<TValue,
         {
             this.selectedOptions = value;
 
+            this._clearSelected();
+            this._unmappedValue = null;
+            this._normalState.invalidateVisuals();
+            this.valueChange.emit();
+
             return;
         }
 
