@@ -4,6 +4,8 @@
 /tests
 /src/**/*.d.ts
 /src/**/*.json
+/elements/**/*.d.ts
+/elements/**/*.json
 /*.d.ts
 /*.metadata.json
 

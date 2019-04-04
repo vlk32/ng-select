@@ -13,6 +13,7 @@ ngv.config.json
 *.ts
 !*.d.ts
 !/src/**/*.d.ts
+!/elements/**/*.d.ts
 
 *.log
 *.spec.js
