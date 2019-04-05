@@ -1,1 +1,2 @@
-export const TEST = 'ahoj';
+export * from './ngSelect.component';
+export * from './ngSelectElements.module';
