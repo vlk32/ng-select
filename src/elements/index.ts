@@ -1,2 +1,3 @@
-export * from './ngSelect.component';
-export * from './ngSelectElements.module';
+export * from './components/ngSelectElements.component';
+export * from './modules/ngSelectElements.module';
+

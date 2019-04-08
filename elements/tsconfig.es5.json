@@ -4,7 +4,12 @@
     {
         "inlineSourceMap": true,
         "inlineSources": true,
+        "baseUrl": ".",
         "rootDir": "../",
+        "paths": 
+        {
+            "@anglr/select": ["../src/select"]
+        },
         "outDir": "../dist/es5"
     },
     "files":
