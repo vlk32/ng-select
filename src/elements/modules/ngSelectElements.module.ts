@@ -20,6 +20,10 @@ import {NgSelectElementsComponent} from '../components/ngSelectElements.componen
     declarations:
     [
         NgSelectElementsComponent
+    ],
+    entryComponents:
+    [
+        NgSelectElementsComponent
     ]
 })
 export class NgSelectElementsModule implements DoBootstrap

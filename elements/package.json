@@ -1,8 +1,8 @@
 {
     "name": "@anglr/select/elements",
-    "module": "../dist/es5/src/elements/index.js",
-    "esm2015": "../dist/es2015/src/elements/index.js",
-    "esm5": "../dist/es5/src/elements/index.js",
+    "module": "../dist/es5/elements/elements.js",
+    "esm2015": "../dist/es2015/elements/elements.js",
+    "esm5": "../dist/es5/elements/elements.js",
     "typings": "./elements.d.ts",
     "sideEffects": false
 }
