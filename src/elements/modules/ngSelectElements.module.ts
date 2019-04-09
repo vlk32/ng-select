@@ -1,8 +1,9 @@
 import {NgModule, DoBootstrap, Injector} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {BrowserModule} from '@angular/platform-browser';
 import {createCustomElement} from '@angular/elements';
 import {CommonModule as NgCommonModule} from '@anglr/common';
-import {NgSelectModule} from '@anglr/select';
+import {NgSelectModule, OptionComponent} from '@anglr/select';
 
 import {NgSelectElementsComponent} from '../components/ngSelectElements.component';
 
@@ -13,6 +14,7 @@ import {NgSelectElementsComponent} from '../components/ngSelectElements.componen
 {
     imports:
     [
+        BrowserModule,
         CommonModule,
         NgCommonModule,
         NgSelectModule
@@ -23,7 +25,8 @@ import {NgSelectElementsComponent} from '../components/ngSelectElements.componen
     ],
     entryComponents:
     [
-        NgSelectElementsComponent
+        NgSelectElementsComponent,
+        OptionComponent
     ]
 })
 export class NgSelectElementsModule implements DoBootstrap
@@ -31,6 +34,9 @@ export class NgSelectElementsModule implements DoBootstrap
     //######################### constructor #########################
     constructor(injector: Injector) 
     {
+        const ngOption = createCustomElement(OptionComponent, {injector});
+        customElements.define('ng-option', ngOption);
+
         const ngSelect = createCustomElement(NgSelectElementsComponent, {injector});
         customElements.define('ng-select', ngSelect);
     }

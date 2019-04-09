@@ -134,7 +134,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
     /**
      * Subject used for indication that NgSelect was initialized
      */
-    private _initializedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    protected _initializedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     /**
      * Occurs when array of provided options has changed
