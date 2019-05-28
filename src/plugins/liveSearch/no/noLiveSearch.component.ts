@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef, ViewChild, EventEmitter} from '@angular/core';
+import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef, EventEmitter} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
 
 import {NoLiveSearchOptions, NoLiveSearch} from './noLiveSearch.interface';
@@ -48,15 +48,6 @@ export class NoLiveSearchComponent implements NoLiveSearch, NgSelectPluginGeneri
      * Occurs when current value of live search changes
      */
     public searchValueChange: EventEmitter<void> = new EventEmitter<void>();
-
-    //######################### public properties - children #########################
-
-    /**
-     * View child that represents live search element
-     * @internal
-     */
-    @ViewChild('liveSearchElement')
-    public liveSearchElementChild: ElementRef<HTMLElement>;
 
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,

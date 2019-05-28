@@ -12,11 +12,6 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "strictNullChecks": false,
-        "baseUrl": ".",
-        "paths": 
-        {
-            "@anglr/select": ["./src/select"]
-        },
         "lib":
         [
             "es2016",

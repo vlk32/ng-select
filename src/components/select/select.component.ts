@@ -209,14 +209,14 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
      * Template used within normal state
      * @internal
      */
-    @ContentChild('normalStateTemplate')
+    @ContentChild('normalStateTemplate', {static: false})
     public normalStateTemplate: TemplateRef<NormalStateContext>;
 
     /**
      * Template that is used within Popup as option
      * @internal
      */
-    @ContentChild('optionTemplate')
+    @ContentChild('optionTemplate', {static: false})
     public optionTemplate?: TemplateRef<PopupContext>;
 
     //######################### public properties - implementation of OptionsGatherer #########################

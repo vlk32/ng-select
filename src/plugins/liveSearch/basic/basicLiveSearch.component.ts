@@ -129,7 +129,7 @@ export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin
      * View child that represents live search element
      * @internal
      */
-    @ViewChild('liveSearchElement')
+    @ViewChild('liveSearchElement', {static: false})
     public liveSearchElementChild: ElementRef<HTMLElement>;
 
     //######################### constructor #########################
