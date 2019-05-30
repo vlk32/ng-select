@@ -1,11 +1,12 @@
 # Changelog
 
-## Version 6.0.0-beta
+## Version 6.0.0
 
 - initial version of new `NgSelectComponent`
 - SSR support
 - Angular IVY ready (APF compliant package)
 - added support for ES2015 compilation
+- Angular 8
 - new `NgSelectComponent` is modular with support of several plugins
    - selectors for component are `ng-select`, `ng-option`, `ng-optgroup`
 - supported plugins
