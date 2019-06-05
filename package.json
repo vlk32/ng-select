@@ -22,8 +22,8 @@
         "bundle": "npm run clean && npm run build && npm run clean:duplicates",
         "deploy": "npm publish",
         "deploy:local": "npm publish --registry http://local:4873 && npm run docs",
-        "deploy:next": "npm publish --tag ivy",
-        "deploy:next:local": "npm publish --tag ivy --registry http://local:4873 && npm run docs",
+        "deploy:next": "npm publish --tag next",
+        "deploy:next:local": "npm publish --tag next --registry http://local:4873 && npm run docs",
         "docs": "compodoc src -d docs -n '@anglr/select' -p tsconfig.json --disablePrivate --disableInternal --disableLifeCycleHooks",
         "postdocs": "copyfiles -u 1 docs/**/*.* \\\\DOCS-SERVER\\docs\\ng-select && npm run clean",
         "pretest": "webpack",
@@ -52,7 +52,7 @@
         "@angular/platform-browser": "^8.0.0",
         "rxjs": ">=6.5.0",
         "@jscrpt/common": ">=1.0.1",
-        "@anglr/common": ">=6.0.0-beta",
+        "@anglr/common": ">=6.0.0",
         "positions": "^1.6.2"
     },
     "devDependencies": {
@@ -62,7 +62,7 @@
         "@angular/elements": "^8.0.0",
         "rxjs": "^6.5.0",
         "@jscrpt/common": "^1.0.1",
-        "@anglr/common": "^6.0.0-beta",
+        "@anglr/common": "^6.0.0",
         "@types/jasmine": "2.8.11",
         "@types/node": "11.11.1",
         "@anglr/types": "1.1.15",
