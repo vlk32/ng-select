@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 6.1.0
+
+- updated dependency on `@anglr/common` to at least version `6.4.0`
+- plugin `TextsLocator` replaced with `StringLocalization` service from common
+
 ## Version 6.0.0
 
 - initial version of new `NgSelectComponent`

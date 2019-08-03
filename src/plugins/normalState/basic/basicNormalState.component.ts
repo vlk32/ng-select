@@ -1,5 +1,6 @@
 import {Component, ChangeDetectionStrategy, ChangeDetectorRef, Inject, Optional, ElementRef, EventEmitter, OnDestroy} from '@angular/core';
 import {extend} from '@jscrpt/common';
+import {StringLocalization, STRING_LOCALIZATION} from '@anglr/common';
 import {Subscription} from 'rxjs';
 
 import {BasicNormalStateOptions, BasicNormalState} from './basicNormalState.interface';
@@ -8,8 +9,6 @@ import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {NormalStateTexts} from '../normalState.interface';
 import {NORMAL_STATE_OPTIONS} from '../types';
-import {TextsLocator} from '../../textsLocator';
-import {TEXTS_LOCATOR} from '../../textsLocator/types';
 import {ValueHandler} from '../../valueHandler';
 import {VALUE_HANDLER} from '../../valueHandler/types';
 import {NgSelectOption} from '../../../components/option';
@@ -86,11 +85,6 @@ export class BasicNormalStateComponent implements BasicNormalState, NgSelectPlug
     //######################### protected fields #########################
 
     /**
-     * Texts locator used for handling texts
-     */
-    protected _textsLocator: TextsLocator;
-
-    /**
      * Subscription for changes in texts
      */
     protected _textsChangedSubscription: Subscription;
@@ -152,6 +146,7 @@ export class BasicNormalStateComponent implements BasicNormalState, NgSelectPlug
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
                 public pluginElement: ElementRef,
                 protected _changeDetector: ChangeDetectorRef,
+                @Inject(STRING_LOCALIZATION) protected _stringLocalization: StringLocalization,
                 @Inject(NORMAL_STATE_OPTIONS) @Optional() options?: BasicNormalStateOptions)
     {
         this._options = extend(true, {}, defaultOptions, options);
@@ -178,22 +173,7 @@ export class BasicNormalStateComponent implements BasicNormalState, NgSelectPlug
      */
     public initialize()
     {
-        let textsLocator = this.ngSelectPlugins[TEXTS_LOCATOR] as TextsLocator;
-
-        if(this._textsLocator && this._textsLocator != textsLocator)
-        {
-            this._textsChangedSubscription.unsubscribe();
-            this._textsChangedSubscription = null;
-
-            this._textsLocator = null;
-        }
-
-        if(!this._textsLocator)
-        {
-            this._textsLocator = textsLocator;
-
-            this._textsChangedSubscription = this._textsLocator.textsChange.subscribe(() => this._initTexts());
-        }
+        this._textsChangedSubscription = this._stringLocalization.textsChange.subscribe(() => this._initTexts());
 
         let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler<any>;
 
@@ -234,7 +214,7 @@ export class BasicNormalStateComponent implements BasicNormalState, NgSelectPlug
     {
         Object.keys(this.options.texts).forEach(key =>
         {
-            this.texts[key] = this._textsLocator.getText(this.options.texts[key]);
+            this.texts[key] = this._stringLocalization.get(this.options.texts[key]);
         });
 
         this._changeDetector.detectChanges();

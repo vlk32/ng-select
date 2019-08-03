@@ -101,7 +101,7 @@ export class NgSelectElementsComponent<TValue> extends NgSelectComponent<TValue>
                 @Attribute('disabled') disabled?: string,
                 @Attribute('multiple') multiple?: string)
     {
-        super(changeDetector, element, pluginInstances, null, null, null, null, null, null, null, null, null, readonly, disabled, multiple);
+        super(changeDetector, element, pluginInstances, null, null, null, null, null, null, null, null, readonly, disabled, multiple);
 
         this._selectOptions.optionsGatherer = this._codeOptionsGatherer;
 

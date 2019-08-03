@@ -1,5 +1,6 @@
 import {Component, ChangeDetectionStrategy, ChangeDetectorRef, Inject, Optional, ElementRef, ViewChild, EventEmitter, OnDestroy} from '@angular/core';
 import {extend} from '@jscrpt/common';
+import {STRING_LOCALIZATION, StringLocalization} from '@anglr/common';
 import {Subscription} from 'rxjs';
 
 import {BasicLiveSearchOptions, BasicLiveSearch} from './basicLiveSearch.interface';
@@ -8,8 +9,6 @@ import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {LiveSearchTexts} from '../liveSearch.interface';
 import {LIVE_SEARCH_OPTIONS} from '../types';
-import {TextsLocator} from '../../textsLocator';
-import {TEXTS_LOCATOR} from '../../textsLocator/types';
 import {Popup} from '../../popup';
 import {POPUP} from '../../popup/types';
 
@@ -57,11 +56,6 @@ const defaultOptions: BasicLiveSearchOptions =
 export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPluginGeneric<BasicLiveSearchOptions>, OnDestroy
 {
     //######################### protected fields #########################
-
-    /**
-     * Texts locator used for handling texts
-     */
-    protected _textsLocator: TextsLocator;
 
     /**
      * Popup used in NgSelect
@@ -136,6 +130,7 @@ export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
                 public pluginElement: ElementRef,
                 protected _changeDetector: ChangeDetectorRef,
+                @Inject(STRING_LOCALIZATION) protected _stringLocalization: StringLocalization,
                 @Inject(LIVE_SEARCH_OPTIONS) @Optional() options?: BasicLiveSearchOptions)
     {
         this._options = extend(true, {}, defaultOptions, options);
@@ -168,22 +163,7 @@ export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin
      */
     public initialize()
     {
-        let textsLocator = this.ngSelectPlugins[TEXTS_LOCATOR] as TextsLocator;
-
-        if(this._textsLocator && this._textsLocator != textsLocator)
-        {
-            this._textsChangedSubscription.unsubscribe();
-            this._textsChangedSubscription = null;
-
-            this._textsLocator = null;
-        }
-
-        if(!this._textsLocator)
-        {
-            this._textsLocator = textsLocator;
-
-            this._textsChangedSubscription = this._textsLocator.textsChange.subscribe(() => this._initTexts());
-        }
+        this._textsChangedSubscription = this._stringLocalization.textsChange.subscribe(() => this._initTexts());
 
         let popup = this.ngSelectPlugins[POPUP] as Popup;
 
@@ -250,7 +230,7 @@ export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin
     {
         Object.keys(this.options.texts).forEach(key =>
         {
-            this.texts[key] = this._textsLocator.getText(this.options.texts[key]);
+            this.texts[key] = this._stringLocalization.get(this.options.texts[key]);
         });
 
         this._changeDetector.detectChanges();

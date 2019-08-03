@@ -26,9 +26,6 @@ import {BasicValueHandlerComponent} from "../../plugins/valueHandler/components"
 import {LiveSearch} from "../../plugins/liveSearch";
 import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
 import {NoLiveSearchComponent} from "../../plugins/liveSearch/components";
-import {TextsLocator} from "../../plugins/textsLocator";
-import {TEXTS_LOCATOR} from "../../plugins/textsLocator/types";
-import {NoTextsLocatorComponent} from "../../plugins/textsLocator/components";
 import {NgSelectOption, NgSelectOptGroup} from "../option";
 import {OptionComponent} from "../option/option.component";
 import {OptGroupComponent} from "../option/optgroup.component";
@@ -56,10 +53,6 @@ const defaultOptions: NgSelectOptions<any> =
         normalState: <PluginDescription<BasicNormalStateComponent>>
         {
             type: forwardRef(() => BasicNormalStateComponent)
-        },
-        textsLocator: <PluginDescription<NoTextsLocatorComponent>>
-        {
-            type: forwardRef(() => NoTextsLocatorComponent)
         },
         liveSearch: <PluginDescription<NoLiveSearchComponent>>
         {
@@ -301,7 +294,6 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
                 @Inject(READONLY_STATE_TYPE) @Optional() readonlyStateType?: Type<ReadonlyState>,
                 @Inject(VALUE_HANDLER_TYPE) @Optional() valueHandlerType?: Type<ValueHandler<any>>,
                 @Inject(LIVE_SEARCH_TYPE) @Optional() liveSearchType?: Type<LiveSearch>,
-                @Inject(TEXTS_LOCATOR) @Optional() textsLocatorType?: Type<TextsLocator>,
                 @Attribute('readonly') readonly?: string,
                 @Attribute('disabled') disabled?: string,
                 @Attribute('multiple') multiple?: string)
@@ -384,16 +376,6 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
             }
 
             opts.plugins.liveSearch.type = liveSearchType;
-        }
-
-        if(textsLocatorType)
-        {
-            if(!opts.plugins.textsLocator)
-            {
-                opts.plugins.textsLocator = {};
-            }
-
-            opts.plugins.textsLocator.type = textsLocatorType;
         }
 
         this._selectOptions = extend(true,
@@ -670,33 +652,6 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
     }
 
     /**
-     * Sets texts locator component
-     * @param textsLocator Created texts locator that is rendered
-     * @internal
-     */
-    public setTextsLocatorComponent(textsLocator: TextsLocator)
-    {
-        if(!textsLocator)
-        {
-            return;
-        }
-
-        this._pluginInstances[TEXTS_LOCATOR] = textsLocator;
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.textsLocator && this._selectOptions.plugins.textsLocator.options)
-        {
-            textsLocator.options = this._selectOptions.plugins.textsLocator.options;
-        }
-
-        textsLocator.initOptions();
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.textsLocator && this._selectOptions.plugins.textsLocator.instanceCallback)
-        {
-            this._selectOptions.plugins.textsLocator.instanceCallback(textsLocator);
-        }
-    }
-
-    /**
      * Sets readonly state component
      * @param readonlyState Created readonly state that is rendered
      * @internal
@@ -799,7 +754,6 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
         this.selectOptions.optionsGatherer.initializeGatherer();
 
         this._pluginInstances[LIVE_SEARCH].initialize();
-        this._pluginInstances[TEXTS_LOCATOR].initialize();
         this._pluginInstances[KEYBOARD_HANDLER].initialize();
         this._pluginInstances[VALUE_HANDLER].initialize();
         this._pluginInstances[NORMAL_STATE].initialize();
@@ -834,21 +788,6 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
                     normalState.templateGatherer = this.selectOptions.templateGatherer;
 
                     this._pluginInstances[NORMAL_STATE].initOptions();
-                }
-            }
-
-            if(this._selectOptions.plugins.textsLocator)
-            {
-                this._selectOptions.plugins.textsLocator.type = resolveForwardRef(this._selectOptions.plugins.textsLocator.type);
-
-                if(this._pluginInstances[TEXTS_LOCATOR])
-                {
-                    if(this._selectOptions.plugins && this._selectOptions.plugins.textsLocator && this._selectOptions.plugins.textsLocator.options)
-                    {
-                        this._pluginInstances[TEXTS_LOCATOR].options = this._selectOptions.plugins.textsLocator.options;
-                    }
-
-                    this._pluginInstances[TEXTS_LOCATOR].initOptions();
                 }
             }
 

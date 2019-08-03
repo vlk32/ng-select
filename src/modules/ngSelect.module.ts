@@ -5,7 +5,6 @@ import {CommonModule as NgCommonModule} from '@anglr/common';
 import {NgSelectValuePipe} from '../pipes/ngSelectValue.pipe';
 import {NgSelectControlValueAccessor} from '../misc/ngSelectControlValueAccessor.directive';
 import {BasicNormalStateComponent} from '../plugins/normalState/basic/basicNormalState.component';
-import {NoTextsLocatorComponent} from '../plugins/textsLocator/no/noTextsLocator.component';
 import {NoLiveSearchComponent} from '../plugins/liveSearch/no/noLiveSearch.component';
 import {BasicLiveSearchComponent} from '../plugins/liveSearch/basic/basicLiveSearch.component';
 import {BasicPopupComponent} from '../plugins/popup/basic/basicPopup.component';
@@ -34,7 +33,6 @@ import {NgSelectComponent} from '../components/select/select.component';
         NgSelectValuePipe,
         NgSelectControlValueAccessor,
         BasicNormalStateComponent,
-        NoTextsLocatorComponent,
         NoLiveSearchComponent,
         BasicLiveSearchComponent,
         BasicPopupComponent,
@@ -53,7 +51,6 @@ import {NgSelectComponent} from '../components/select/select.component';
     entryComponents:
     [
         BasicNormalStateComponent,
-        NoTextsLocatorComponent,
         NoLiveSearchComponent,
         BasicLiveSearchComponent,
         BasicPopupComponent,
