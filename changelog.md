@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 6.1.1
+
+- fixed *detect changes after view was destroyed* in `NormalStateComponent` when used in *ngIf*
+
 ## Version 6.1.0
 
 - updated dependency on `@anglr/common` to at least version `6.4.0`

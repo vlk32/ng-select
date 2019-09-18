@@ -94,6 +94,11 @@ export class BasicNormalStateComponent implements BasicNormalState, NgSelectPlug
      */
     protected _options: BasicNormalStateOptions;
 
+    /**
+     * Indication whether was component destroyed
+     */
+    protected _destroyed: boolean = false;
+
     //######################### public properties - implementation of BasicNormalState #########################
 
     /**
@@ -159,6 +164,8 @@ export class BasicNormalStateComponent implements BasicNormalState, NgSelectPlug
      */
     public ngOnDestroy()
     {
+        this._destroyed = true;
+
         if(this._textsChangedSubscription)
         {
             this._textsChangedSubscription.unsubscribe();
@@ -202,7 +209,10 @@ export class BasicNormalStateComponent implements BasicNormalState, NgSelectPlug
      */
     public invalidateVisuals(): void
     {
-        this._changeDetector.detectChanges();
+        if(!this._destroyed)
+        {
+            this._changeDetector.detectChanges();
+        }
     }
 
     //######################### protected methods #########################
