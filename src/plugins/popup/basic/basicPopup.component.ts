@@ -422,7 +422,10 @@ export class BasicPopupComponent implements BasicPopup, NgSelectPluginGeneric<Ba
      */
     protected _handleClickOutside = (event: MouseEvent) =>
     {
-        if(this.selectElement != event.target && !isDescendant(this.selectElement, event.target as HTMLElement))
+        if(this.selectElement != event.target &&
+           !isDescendant(this.selectElement, event.target as HTMLElement) &&
+           this.pluginElement.nativeElement != event.target &&
+           !isDescendant(this.pluginElement.nativeElement, event.target as HTMLElement))
         {
             this.togglePopup();
         }

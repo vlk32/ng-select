@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, FactoryProvider, Input, Inject, ChangeDetectorRef, Optional, Type, AfterViewInit, OnInit, ContentChildren, QueryList, EventEmitter, forwardRef, resolveForwardRef, ElementRef, OnChanges, SimpleChanges, Attribute, OnDestroy, TemplateRef, ContentChild} from "@angular/core";
+import {Component, ChangeDetectionStrategy, FactoryProvider, Input, Inject, ChangeDetectorRef, Optional, Type, AfterViewInit, OnInit, ContentChildren, QueryList, EventEmitter, forwardRef, resolveForwardRef, ElementRef, OnChanges, SimpleChanges, Attribute, OnDestroy, TemplateRef, ContentChild, ComponentFactoryResolver, ApplicationRef, Injector, EmbeddedViewRef, ComponentRef} from "@angular/core";
 import {extend, nameof, isBoolean, isPresent} from "@jscrpt/common";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 
@@ -29,6 +29,8 @@ import {NoLiveSearchComponent} from "../../plugins/liveSearch/components";
 import {NgSelectOption, NgSelectOptGroup} from "../option";
 import {OptionComponent} from "../option/option.component";
 import {OptGroupComponent} from "../option/optgroup.component";
+
+//TODO - dynamic change of absolute popup
 
 /**
  * Default 'NgSelectOptions'
@@ -153,6 +155,11 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
      * Subscription for changes of live search value
      */
     protected _searchValueChangeSubscription: Subscription;
+
+    /**
+     * Instance of component ref for absolute popup
+     */
+    protected _absolutePopup: ComponentRef<Popup>;
 
     //######################### public properties - inputs #########################
 
@@ -285,6 +292,9 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
     //######################### constructors #########################
     constructor(protected _changeDetector: ChangeDetectorRef,
                 protected _element: ElementRef<HTMLElement>,
+                private componentFactoryResolver: ComponentFactoryResolver,
+                private appRef: ApplicationRef,
+                private injector: Injector,
                 @Inject(NG_SELECT_PLUGIN_INSTANCES) protected _pluginInstances: NgSelectPluginInstances,
                 @Inject(NG_SELECT_OPTIONS) @Optional() options?: NgSelectOptions<TValue>,
                 @Inject(NORMAL_STATE_TYPE) @Optional() normalStateType?: Type<NormalState>,
@@ -461,6 +471,11 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
             this._optionsChange.emit();
             this._availableOptionsChange.emit();
         });
+        
+        if(this.selectOptions.absolute)
+        {
+            this._appendPopupToBody(this._selectOptions.plugins.popup.type);
+        }
 
         if(this._selectOptions.autoInitialize)
         {
@@ -485,6 +500,8 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
         {
             this.selectOptions.optionsGatherer.destroyGatherer();
         }
+
+        this._destroyAbsolutePopup();
     }
 
     //######################### public methods - implementation of OptionsGatherer #########################
@@ -947,5 +964,52 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
         }
 
         return func(this);
+    }
+
+    //######################### protected methods #########################
+
+    /**
+     * Appends popup component directly to body, allows absolute positioning over page body
+     * @param component Popup component type to be appended
+     */
+    protected _appendPopupToBody(component: Type<Popup>) 
+    {
+        // 0. Destroyes absolute popup if it exists
+        this._destroyAbsolutePopup();
+
+        if(!component)
+        {
+            return;
+        }
+
+        // 1. Create a component reference from the component 
+        const componentRef = this.componentFactoryResolver
+            .resolveComponentFactory(component)
+            .create(this.injector);
+        
+        // 2. Attach component to the appRef so that it's inside the ng component tree
+        this.appRef.attachView(componentRef.hostView);
+        
+        // 3. Get DOM element from component
+        const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
+            .rootNodes[0] as HTMLElement;
+        
+        // 4. Append DOM element to the body
+        document.body.appendChild(domElem);
+
+        this.setPopupComponent(componentRef.instance);
+    }
+
+    /**
+     * Destroyes absolute popup if it exists
+     */
+    protected _destroyAbsolutePopup()
+    {
+        if(this._absolutePopup)
+        {
+            this.appRef.detachView(this._absolutePopup.hostView);
+            this._absolutePopup.destroy();
+            this._absolutePopup = null;
+        }
     }
 }

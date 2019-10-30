@@ -12,5 +12,7 @@
         <ng-template [ngComponentOutletEx]="selectOptions?.plugins?.readonlyState?.type" (ngComponentOutletExCreated)="setReadonlyStateComponent($event)"></ng-template>
     </ng-template>
 
-    <ng-template [ngComponentOutletEx]="selectOptions?.plugins?.popup?.type" (ngComponentOutletExCreated)="setPopupComponent($event)" [ngComponentOutletExContent]="liveSearchElement"></ng-template>
+    <ng-template [ngIf]="!selectOptions?.absolute">
+        <ng-template [ngComponentOutletEx]="selectOptions?.plugins?.popup?.type" (ngComponentOutletExCreated)="setPopupComponent($event)" [ngComponentOutletExContent]="liveSearchElement"></ng-template>
+    </ng-template>
 </div>

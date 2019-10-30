@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef, OnDestroy, PLATFORM_ID} from '@angular/core';
+import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef, OnDestroy, PLATFORM_ID, ChangeDetectorRef} from '@angular/core';
 import {DOCUMENT, isPlatformBrowser} from '@angular/common';
 import {extend} from '@jscrpt/common';
 import {Subscription} from 'rxjs';
@@ -97,6 +97,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
                 public pluginElement: ElementRef,
+                protected _changeDetector: ChangeDetectorRef,
                 @Inject(POSITIONER_OPTIONS) @Optional() options?: BasicPositionerOptions,
                 @Inject(DOCUMENT) protected _document?: HTMLDocument,
                 @Inject(PLATFORM_ID) protected _platformId?: Object)
@@ -208,6 +209,9 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
     protected _handlePosition()
     {
         this._popupElement = this._popup.popupElement;
+
+        //this has meaning only when popup is outside of ng-element
+        this._changeDetector.markForCheck();
 
         if(this._isBrowser)
         {

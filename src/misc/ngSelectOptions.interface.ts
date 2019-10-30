@@ -52,6 +52,11 @@ export interface NgSelectOptions<TValue>
     readonly?: boolean;
 
     /**
+     * Indication whether is 'Popup' plugin displayd inside of NgSelect (false) or directly in Body (true)
+     */
+    absolute?: boolean;
+
+    /**
      * Function of value comparer that is used for comparison of values
      */
     valueComparer?: CompareValueFunc<TValue>;

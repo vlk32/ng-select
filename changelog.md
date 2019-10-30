@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 6.2.0
+
+- added support for *absolute popup* using `absolute` option for `NgSelectOptions`
+
 ## Version 6.1.1
 
 - fixed *detect changes after view was destroyed* in `NormalStateComponent` when used in *ngIf*
