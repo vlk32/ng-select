@@ -1,0 +1,1 @@
+export {ɵSetValue as setValue} from '@anglr/select';

@@ -3,7 +3,7 @@ import {forwardRef, ExistingProvider, Directive, OnDestroy} from '@angular/core'
 import {Subscription} from 'rxjs';
 
 import {NgSelectComponent} from '../components/select/select.component';
-import {valueChange, setValue, onFocus, setReadonly, getValue} from '../extensions';
+import {ɵValueChange, ɵSetValue, ɵOnFocus, ɵSetReadonly, ɵGetValue} from '../misc/extensions';
 
 /**
  * Provider for control value accessor
@@ -79,7 +79,7 @@ export class NgSelectControlValueAccessor<TValue> implements ControlValueAccesso
 
         if(this._select.isInitialized)
         {
-            this._select.execute(setValue(value));
+            this._select.execute(ɵSetValue(value));
 
             return;
         }
@@ -97,7 +97,7 @@ export class NgSelectControlValueAccessor<TValue> implements ControlValueAccesso
                 this._initializedSubscription.unsubscribe();
                 this._initializedSubscription = null;
                 
-                this._select.execute(setValue(value));
+                this._select.execute(ɵSetValue(value));
             }
         });
     }
@@ -117,11 +117,11 @@ export class NgSelectControlValueAccessor<TValue> implements ControlValueAccesso
                     this._changeSubscription = null;
                 }
 
-                this._changeSubscription = this._select.executeAndReturn(valueChange(fn));
+                this._changeSubscription = this._select.executeAndReturn(ɵValueChange(fn));
 
                 if(this._select.selectOptions.forceValueCheckOnInit)
                 {
-                    let value = this._select.executeAndReturn(getValue());
+                    let value = this._select.executeAndReturn(ɵGetValue());
 
                     if(this._value != value)
                     {
@@ -148,7 +148,7 @@ export class NgSelectControlValueAccessor<TValue> implements ControlValueAccesso
                     this._focusSubscription = null;
                 }
 
-                this._focusSubscription = this._select.executeAndReturn(onFocus(fn));
+                this._focusSubscription = this._select.executeAndReturn(ɵOnFocus(fn));
             }
         });
     }
@@ -161,7 +161,7 @@ export class NgSelectControlValueAccessor<TValue> implements ControlValueAccesso
     {
         if(this._select.isInitialized)
         {
-            this._select.execute(setReadonly(isDisabled));
+            this._select.execute(ɵSetReadonly(isDisabled));
 
             return;
         }
@@ -179,7 +179,7 @@ export class NgSelectControlValueAccessor<TValue> implements ControlValueAccesso
                 this._disabledInitializedSubscription.unsubscribe();
                 this._disabledInitializedSubscription = null;
 
-                this._select.execute(setReadonly(isDisabled));
+                this._select.execute(ɵSetReadonly(isDisabled));
             }
         });
     }

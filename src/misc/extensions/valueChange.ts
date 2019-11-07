@@ -1,13 +1,13 @@
 import {Subscription} from "rxjs";
 
-import {NgSelectFunction} from "../components/select";
-import {ValueHandler} from "../plugins/valueHandler";
-import {VALUE_HANDLER} from "../plugins/valueHandler/types";
+import {NgSelectFunction} from "../../components/select";
+import {ValueHandler} from "../../plugins/valueHandler";
+import {VALUE_HANDLER} from "../../plugins/valueHandler/types";
 
 /**
  * Adds callback that is called when value changes and returns subscription for this changes
  */
-export function valueChange<TValue>(callback: (value: TValue|TValue[]) => void): NgSelectFunction<Subscription, TValue>
+export function ɵValueChange<TValue>(callback: (value: TValue|TValue[]) => void): NgSelectFunction<Subscription, TValue>
 {
     return ngSelect =>
     {

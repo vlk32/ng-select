@@ -1,0 +1,1 @@
+export {ɵOnFocus as onFocus} from '@anglr/select';

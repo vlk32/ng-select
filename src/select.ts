@@ -33,3 +33,4 @@ export * from './plugins/readonlyState/types';
 export * from './plugins/valueHandler';
 export * from './plugins/valueHandler/types';
 export * from './plugins/valueHandler/components';
+export * from './misc/extensions';

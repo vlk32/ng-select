@@ -1,5 +1,4 @@
-import {NgSelectAction} from "../components/select";
-import {NgSelectOptions} from "../misc";
+import {NgSelectAction, NgSelectOptions} from "@anglr/select";
 
 /**
  * Method reinitialize options for NgSelect

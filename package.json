@@ -7,10 +7,11 @@
     "typings": "./select.d.ts",
     "sideEffects": false,
     "scripts": {
-        "build": "npm run build:select && npm run build:elements",
+        "build": "npm run build:select && npm run build:elements && npm run build:extensions",
         "build:select": "ngc -p tsconfig.es5.json && ngc -p tsconfig.es2015.json",
         "build:elements": "ngc -p elements/tsconfig.es5.json && ngc -p elements/tsconfig.es2015.json",
-        "clean": "rimraf dist tests docs src/**/*.d.ts elements/**/*.d.ts */*.d.ts */*.metadata.json ./*.metadata.json ./*.d.ts",
+        "build:extensions": "ngc -p extensions/tsconfig.es5.json && ngc -p extensions/tsconfig.es2015.json",
+        "clean": "rimraf dist tests docs src/**/*.d.ts elements/**/*.d.ts extensions/**/*.d.ts */*.d.ts */*.metadata.json ./*.metadata.json ./*.d.ts */dist",
         "clean:duplicates": "rimraf */dist/*/src",
         "clean:deps": "rimraf package-lock.json node_modules",
         "clean:all": "npm run clean && npm run clean:deps",

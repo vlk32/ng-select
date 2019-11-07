@@ -1,0 +1,1 @@
+export {ɵSetReadonly as setReadonly} from '@anglr/select';
