@@ -39,72 +39,8 @@ const defaultOptions: BasicPopupOptions =
 {
     selector: "div.ng-select-popup",
     templateUrl: 'basicPopup.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    styles:
-    [
-        `.popup-div
-        {
-            position: absolute;
-            z-index: 250;
-            background-color: #FFFFFF;
-            border-radius: 4px;
-            border: 1px solid #BBBBBB;
-            overflow: auto;
-            min-width: 100%;
-            padding: 5px 0;
-            box-shadow: 0 6px 12px rgba(0,0,0,.175);
-            scrollbar-width: thin;
-        }
-
-        .popup-div::-webkit-scrollbar-thumb 
-        {
-            background-color: #cdcdcd;
-        }
-        
-        .popup-div::-webkit-scrollbar 
-        {
-            width: 6px;
-            background-color: #f0f0f0;
-        }
-
-        .option-item
-        {
-            padding: 3px 12px;
-            display: flex;
-            align-items: center;
-        }
-
-        .option-item .option-item-text
-        {
-            min-width: 0;
-            flex: 1;
-            white-space: nowrap;
-        }
-
-        .option-item .option-item-text:hover
-        {
-            cursor: pointer;
-        }
-
-        .option-item .fa-check
-        {
-            margin-left: 8px;
-        }
-
-        .option-item.selected,
-        .option-item.active
-        {
-            background-color: #E8E8E8;
-            background-image: linear-gradient(to bottom,#F5F5F5 0,#E8E8E8 100%);
-        }
-
-        .option-item:hover
-        {
-            background-color: #E8E8E8;
-            background-image: linear-gradient(to bottom,#F5F5F5 0,#E8E8E8 100%);
-            cursor: pointer;
-        }`
-    ]
+    styleUrls: ['basicPopup.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BasicPopupComponent implements BasicPopup, NgSelectPluginGeneric<BasicPopupOptions>, AfterViewInit, OnDestroy
 {

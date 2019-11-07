@@ -39,46 +39,8 @@ const defaultOptions: BasicNormalStateOptions =
 {
     selector: "div.normal-state",
     templateUrl: 'basicNormalState.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    styles:
-    [
-        `button.btn-select
-         {
-             display: flex;
-             width: 100%;
-             padding: 5px 0px 4px 6px;
-             background-color: #ffffff;
-             background-image: none;
-             border: 1px solid #cccccc;
-             border-radius: 4px;
-             box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-             height: 28px;
-             overflow: hidden;
-         }
-
-         button.btn-select:hover
-         {
-             background-color: #F2F2F2;
-         }
-
-         button.btn-select:active
-         {
-             box-shadow: 0 0 5px -1px #888888 inset;
-         }
-       
-         button.btn-select .selected-value
-         {
-             flex: 1;
-             text-align: left;
-             min-width: 0;
-         }
-       
-         button.btn-select .selected-caret
-         {
-             flex: 0 0 20px;
-             align-self: center;
-         }`
-    ]
+    styleUrls: ['basicNormalState.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BasicNormalStateComponent implements BasicNormalState, NgSelectPluginGeneric<BasicNormalStateOptions>, OnDestroy
 {

@@ -1,6 +1,6 @@
 import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef, OnDestroy, PLATFORM_ID, ChangeDetectorRef} from '@angular/core';
 import {DOCUMENT, isPlatformBrowser} from '@angular/common';
-import {extend} from '@jscrpt/common';
+import {extend, isNumber} from '@jscrpt/common';
 import {Subscription} from 'rxjs';
 import * as positions from 'positions';
 
@@ -200,6 +200,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
      */
     protected _handleResizeAndScroll = () =>
     {
+        this._updateMinWidth();
         this._calculatePositionAndDimensions();
     };
 
@@ -255,6 +256,26 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
         popupCoordinates = positions(this._popupElement, optionsCoordinates, this.selectElement, selectCoordinates);
         this._popupElement.style.left = `${popupCoordinates.left}px`;
         this._popupElement.style.top = `${popupCoordinates.top}px`;
+    }
+
+    /**
+     * Updates min width of popup
+     */
+    protected _updateMinWidth()
+    {
+        if(!this._popupElement)
+        {
+            return;
+        }
+
+        let minWidth = this.selectElement.clientWidth;
+
+        if(isNaN(minWidth) || !isNumber(minWidth))
+        {
+            return;
+        }
+
+        this._popupElement.style.minWidth = `${minWidth}px`;
     }
 
     /**
