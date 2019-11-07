@@ -118,12 +118,16 @@ export class NgSelectControlValueAccessor<TValue> implements ControlValueAccesso
                 }
 
                 this._changeSubscription = this._select.executeAndReturn(valueChange(fn));
-                let value = this._select.executeAndReturn(getValue());
 
-                if(this._value != value)
+                if(this._select.selectOptions.forceValueCheckOnInit)
                 {
-                    this._value = value;
-                    fn(value);
+                    let value = this._select.executeAndReturn(getValue());
+
+                    if(this._value != value)
+                    {
+                        this._value = value;
+                        fn(value);
+                    }
                 }
             }
         });

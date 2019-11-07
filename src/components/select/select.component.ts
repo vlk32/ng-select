@@ -39,6 +39,8 @@ import {OptGroupComponent} from "../option/optgroup.component";
 const defaultOptions: NgSelectOptions<any> =
 {
     autoInitialize: true,
+    absolute: false,
+    forceValueCheckOnInit: false,
     valueComparer: (source, target) =>
     {
         return source == target;

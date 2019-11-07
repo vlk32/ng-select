@@ -57,6 +57,11 @@ export interface NgSelectOptions<TValue>
     absolute?: boolean;
 
     /**
+     * Indication whether force value check on initialization of grid, this allows to change value of form control to value of valueHandler
+     */
+    forceValueCheckOnInit?: boolean;
+
+    /**
      * Function of value comparer that is used for comparison of values
      */
     valueComparer?: CompareValueFunc<TValue>;

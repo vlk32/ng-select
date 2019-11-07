@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, FactoryProvider, Input, ChangeDetectorRef, ElementRef, Inject, Attribute} from "@angular/core";
+import {Component, ChangeDetectionStrategy, FactoryProvider, Input, ChangeDetectorRef, ElementRef, Inject, Attribute, ComponentFactoryResolver, ApplicationRef, Injector} from "@angular/core";
 import {isString} from '@jscrpt/common';
 import {NgSelectComponent, NG_SELECT_PLUGIN_INSTANCES, ngSelectPluginInstancesFactory, NgSelectOptions, NgSelectAction, NgSelectFunction, NgSelectPluginInstances, NgSelectPlugin, CodeOptionsGatherer, NgSelectOption} from "@anglr/select";
 import {Observable} from "rxjs";
@@ -96,12 +96,15 @@ export class NgSelectElementsComponent<TValue> extends NgSelectComponent<TValue>
     //######################### constructors #########################
     constructor(changeDetector: ChangeDetectorRef,
                 element: ElementRef<HTMLElement>,
+                componentFactoryResolver: ComponentFactoryResolver,
+                appRef: ApplicationRef,
+                injector: Injector,
                 @Inject(NG_SELECT_PLUGIN_INSTANCES) protected pluginInstances: NgSelectPluginInstances,
                 @Attribute('readonly') readonly?: string,
                 @Attribute('disabled') disabled?: string,
                 @Attribute('multiple') multiple?: string)
     {
-        super(changeDetector, element, pluginInstances, null, null, null, null, null, null, null, null, readonly, disabled, multiple);
+        super(changeDetector, element, componentFactoryResolver, appRef, injector, pluginInstances, null, null, null, null, null, null, null, null, readonly, disabled, multiple);
 
         this._selectOptions.optionsGatherer = this._codeOptionsGatherer;
 

@@ -3,6 +3,8 @@
 ## Version 6.2.0
 
 - added support for *absolute popup* using `absolute` option for `NgSelectOptions`
+- fixed emitting of `null` value for initialization of `BasicValueHandlerComponent` with lazy options
+- added new options for select `forceValueCheckOnInit` which allows setting of real `ValueHandler` to `FormControl` on initialization
 
 ## Version 6.1.1
 
