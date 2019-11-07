@@ -31,6 +31,7 @@ import {OptionComponent} from "../option/option.component";
 import {OptGroupComponent} from "../option/optgroup.component";
 
 //TODO - dynamic change of absolute popup
+//TODO - check if dynamic element is correctly removed from html
 
 /**
  * Default 'NgSelectOptions'
