@@ -17,7 +17,7 @@
         "annotateForClosureCompiler": true,
         "strictMetadataEmit": false,
         "skipTemplateCodegen": true,
-        "flatModuleOutFile": "elements.js",
+        "flatModuleOutFile": "index.js",
         "flatModuleId": "@anglr/select/elements"
     }
 }
