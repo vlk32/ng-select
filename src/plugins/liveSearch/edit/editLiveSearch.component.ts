@@ -9,8 +9,10 @@ import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {LiveSearchTexts} from '../liveSearch.interface';
 import {LIVE_SEARCH_OPTIONS} from '../types';
-import {Popup} from '../../popup';
-import {POPUP} from '../../popup/types';
+import {NormalState, NormalStateOptions} from '../../normalState';
+import {NORMAL_STATE} from '../../normalState/types';
+import {ValueHandler} from '../../valueHandler';
+import {VALUE_HANDLER} from '../../valueHandler/types';
 
 /**
  * Default options for live search
@@ -31,7 +33,7 @@ const defaultOptions: EditLiveSearchOptions =
 };
 
 /**
- * Component used for obtaining basic live search html element
+ * Component used for obtaining edit live search html element
  */
 @Component(
 {
@@ -45,9 +47,14 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
     //######################### protected fields #########################
 
     /**
-     * Popup used in NgSelect
+     * Normal state plugin used within `NgSelect`
      */
-    protected _popup: Popup;
+    protected _normalState: NormalState;
+
+    /**
+     * Value handler plugin used within `NgSelect`
+     */
+    protected _valueHandler: ValueHandler<any>;
 
     /**
      * Subscription for changes in texts
@@ -55,9 +62,9 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
     protected _textsChangedSubscription: Subscription;
 
     /**
-     * Subscription for changes of popup visibility
+     * Subscription for changes of selected value
      */
-    protected _visibilityChangeSubscription: Subscription;
+    protected _valueChangedSubscription: Subscription;
 
     /**
      * Options for NgSelect plugin
@@ -104,6 +111,20 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
      */
     public texts: LiveSearchTexts = {};
 
+    /**
+     * Options that are passed to normalState
+     * @internal
+     */
+    public get normalStateOptions(): NormalStateOptions<any>
+    {
+        if(!this._normalState)
+        {
+            return null;
+        }
+
+        return this._normalState.options as NormalStateOptions<any>;
+    }
+
     //######################### public properties - children #########################
 
     /**
@@ -130,16 +151,16 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
      */
     public ngOnDestroy()
     {
-        if(this._visibilityChangeSubscription)
-        {
-            this._visibilityChangeSubscription.unsubscribe();
-            this._visibilityChangeSubscription = null;
-        }
-
         if(this._textsChangedSubscription)
         {
             this._textsChangedSubscription.unsubscribe();
             this._textsChangedSubscription = null;
+        }
+
+        if(this._valueChangedSubscription)
+        {
+            this._valueChangedSubscription.unsubscribe();
+            this._valueChangedSubscription = null;
         }
     }
 
@@ -152,26 +173,50 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
     {
         this._textsChangedSubscription = this._stringLocalization.textsChange.subscribe(() => this._initTexts());
 
-        let popup = this.ngSelectPlugins[POPUP] as Popup;
+        let normalState = this.ngSelectPlugins[NORMAL_STATE] as NormalState;
 
-        if(this._popup && this._popup != popup)
+        if(this._normalState && this._normalState != normalState)
         {
-            this._visibilityChangeSubscription.unsubscribe();
-            this._visibilityChangeSubscription = null;
-
-            this._popup = null;
+            this._normalState = null;
         }
 
-        if(!this._popup)
-        {
-            this._popup = popup;
+        
 
-            this._visibilityChangeSubscription = this._popup.visibilityChange.subscribe(() =>
+        if(!this._normalState)
+        {
+            this._normalState = normalState;
+        }
+
+        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler<any>;
+
+        if(this._valueHandler && this._valueHandler != valueHandler)
+        {
+            this._valueChangedSubscription.unsubscribe();
+            this._valueChangedSubscription = null;
+
+            this._valueHandler = null;
+        }
+
+        if(!this._valueHandler)
+        {
+            this._valueHandler = valueHandler;
+
+            this._valueChangedSubscription = this._valueHandler.valueChange.subscribe(() =>
             {
-                if(!this.options.keepSearchValue)
+                let selected = this._valueHandler.selectedOptions;
+
+                if(!selected || (Array.isArray(selected) && !selected.length))
                 {
-                    this.searchValue = '';
-                    this.searchValueChange.emit();
+                    return;
+                }
+
+                if(Array.isArray(selected))
+                {
+
+                }
+                else
+                {
+                    this.handleInput(selected.text);
                     this._changeDetector.detectChanges();
                 }
             });
@@ -208,6 +253,22 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
         this.searchValueChange.emit();
     }
 
+    /**
+     * Handles focus event
+     * @param element Element that got focus
+     * @internal
+     */
+    public handleFocus(element: HTMLInputElement)
+    {
+        element.select();
+
+        if(this._normalState)
+        {
+            this._normalState.click.emit();
+            this._normalState.focus.emit();
+        }
+    }
+
     //######################### protected methods #########################
 
     /**
@@ -215,10 +276,12 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
      */
     protected _initTexts()
     {
-        Object.keys(this.options.texts).forEach(key =>
+        if(!this.normalStateOptions)
         {
-            this.texts[key] = this._stringLocalization.get(this.options.texts[key]);
-        });
+            return;
+        }
+
+        this.texts.inputPlaceholder = this._stringLocalization.get(this.normalStateOptions.texts.nothingSelected);
 
         this._changeDetector.detectChanges();
     }
