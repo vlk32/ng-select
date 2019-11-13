@@ -1,0 +1,13 @@
+.edit-wrapper-div
+{
+    width: 100%;
+}
+
+.edit-control
+{
+    padding: 4px;
+    height: 26px;
+    width: 100%;
+    border: none;
+    outline: none;
+}

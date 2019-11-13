@@ -1,0 +1,43 @@
+div.btn-select
+{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    height: 28px;
+    overflow: hidden;
+    cursor: default;
+}
+
+div.btn-select:hover .selected-caret
+{
+    background-color: #F2F2F2;
+}
+
+div.btn-select:active
+{
+}
+
+div.btn-select .selected-value
+{
+    flex: 1;
+    text-align: left;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div.btn-select .selected-caret
+{
+    flex: 0 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    cursor: pointer;
+}

@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 6.3.0
+
+- added new module `NgSelectEditModule` which contains components for displaying select with editation and tags
+- added new component `EditLiveSearchComponent` which allows is used within `EditNormalStateComponent` for editing and displaying selected value
+- added new component `EditNormalStateComponent` which uses `EditLiveSearchComponent` for editing and displaying selected value
+- added new directive `NgSelectEditDirective` which configures `NgSelect` to use edit plugin components
+
 ## Version 6.2.0
 
 - added support for *absolute popup* using `absolute` option for `NgSelectOptions`
