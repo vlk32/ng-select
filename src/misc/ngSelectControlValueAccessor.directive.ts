@@ -107,6 +107,15 @@ export class NgSelectControlValueAccessor<TValue> implements ControlValueAccesso
      */
     public registerOnChange(fn: (data: TValue|Array<TValue>) => void): void
     {
+        let fnWrapper = (value: TValue|Array<TValue>) =>
+        {
+            if(this._value != value)
+            {
+                this._value = value;
+                fn(value);
+            }
+        };
+
         this._changeInitializedSubscription = this._select.initialized.subscribe(initialized =>
         {
             if(initialized)
@@ -117,17 +126,13 @@ export class NgSelectControlValueAccessor<TValue> implements ControlValueAccesso
                     this._changeSubscription = null;
                 }
 
-                this._changeSubscription = this._select.executeAndReturn(ɵValueChange(fn));
+                this._changeSubscription = this._select.executeAndReturn(ɵValueChange(fnWrapper));
 
                 if(this._select.selectOptions.forceValueCheckOnInit)
                 {
                     let value = this._select.executeAndReturn(ɵGetValue());
 
-                    if(this._value != value)
-                    {
-                        this._value = value;
-                        fn(value);
-                    }
+                    fnWrapper(value);
                 }
             }
         });

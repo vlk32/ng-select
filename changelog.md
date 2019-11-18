@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 6.2.1
+
+ - fixed emitting of *same* value during initialization as form control change
+
 ## Version 6.2.0
 
 - added support for *absolute popup* using `absolute` option for `NgSelectOptions`
