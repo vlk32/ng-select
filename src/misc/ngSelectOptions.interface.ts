@@ -17,6 +17,18 @@ export interface CompareValueFunc<TValue>
 }
 
 /**
+ * Function used for normalization of value, used during comparison or search
+ */
+export interface NormalizeFunc<TValue>
+{
+    /**
+     * Normalize provided value, usually used with strings
+     * @param value Value that is being normalized
+     */
+    (value: TValue): TValue;
+}
+
+/**
  * Describes select options used for NgSelect
  */
 export interface NgSelectOptions<TValue>
@@ -70,4 +82,9 @@ export interface NgSelectOptions<TValue>
      * Method that is used for filtering when live search is running on static data
      */
     liveSearchFilter?: LiveSearchFilter<TValue>;
+
+    /**
+     * Normalizer used for normalizing values
+     */
+    normalizer?: NormalizeFunc<TValue>;
 }

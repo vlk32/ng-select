@@ -13,6 +13,9 @@ import {NormalState, NormalStateOptions} from '../../normalState';
 import {NORMAL_STATE} from '../../normalState/types';
 import {ValueHandler} from '../../valueHandler';
 import {VALUE_HANDLER} from '../../valueHandler/types';
+import {Popup} from '../../popup';
+import {POPUP} from '../../popup/types';
+import {ɵNgSelectOption} from '../../../components/option';
 
 /**
  * Default options for live search
@@ -50,6 +53,11 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
      * Normal state plugin used within `NgSelect`
      */
     protected _normalState: NormalState;
+
+    /**
+     * Popup plugin used within `NgSelect`
+     */
+    protected _popup: Popup;
 
     /**
      * Value handler plugin used within `NgSelect`
@@ -104,6 +112,12 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
     public searchValueChange: EventEmitter<void> = new EventEmitter<void>();
 
     //######################### public properties - template bindings #########################
+
+    /**
+     * Current value that is displayed
+     * @internal
+     */
+    public searchValueDisplayed: string = null;
 
     /**
      * Object containing available texts
@@ -180,11 +194,21 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
             this._normalState = null;
         }
 
-        
-
         if(!this._normalState)
         {
             this._normalState = normalState;
+        }
+
+        let popup = this.ngSelectPlugins[POPUP] as Popup;
+
+        if(this._popup && this._popup != popup)
+        {
+            this._popup = null;
+        }
+
+        if(!this._popup)
+        {
+            this._popup = popup;
         }
 
         let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler<any>;
@@ -216,7 +240,8 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
                 }
                 else
                 {
-                    this.handleInput(selected.text);
+                    this.handleInput(null);
+                    this.searchValueDisplayed = selected.text;
                     this._changeDetector.detectChanges();
                 }
             });
@@ -245,12 +270,28 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
     /**
      * Handle input value
      * @param value Value of input
+     * @param inputChange Indication that change was by input event of input
      * @internal
      */
-    public handleInput(value: string)
+    public handleInput(value: string, inputChange: boolean = false)
     {
         this.searchValue = value;
         this.searchValueChange.emit();
+
+        if(inputChange)
+        {
+            this.searchValueDisplayed = value;
+            // this._valueHandler.setValue(value);
+            let option: ɵNgSelectOption<any> = this._valueHandler.findAvailableOption(value);
+
+            if(option)
+            {
+                //if available is active do not change active
+                this._valueHandler.optionsGatherer.options.forEach((option: ɵNgSelectOption<any>) => option.active = false);
+                option.active = true;
+                this._popup.invalidateVisuals();
+            }
+        }
     }
 
     /**

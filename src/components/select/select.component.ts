@@ -1,5 +1,5 @@
 import {Component, ChangeDetectionStrategy, FactoryProvider, Input, Inject, ChangeDetectorRef, Optional, Type, AfterViewInit, OnInit, ContentChildren, QueryList, EventEmitter, forwardRef, resolveForwardRef, ElementRef, OnChanges, SimpleChanges, Attribute, OnDestroy, TemplateRef, ContentChild, ComponentFactoryResolver, ApplicationRef, Injector, EmbeddedViewRef, ComponentRef} from "@angular/core";
-import {extend, nameof, isBoolean, isPresent} from "@jscrpt/common";
+import {extend, nameof, isBoolean, isPresent, isString} from "@jscrpt/common";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 
 import {NgSelectOptions, NgSelectPlugin, OptionsGatherer, PluginDescription, TemplateGatherer} from "../../misc";
@@ -49,6 +49,15 @@ const defaultOptions: NgSelectOptions<any> =
     liveSearchFilter: (query: string) =>
     {
         return itm => itm.text.indexOf(query) >= 0;
+    },
+    normalizer: value =>
+    {
+        if(isString(value))
+        {
+            return value.toLowerCase();
+        }
+
+        return value;
     },
     cssClasses:
     {
@@ -724,6 +733,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
         }
 
         valueHandler.valueComparer = this.selectOptions.valueComparer;
+        valueHandler.liveSearchFilter = this.selectOptions.liveSearchFilter;
         valueHandler.optionsGatherer = this.selectOptions.optionsGatherer;
         valueHandler.initOptions();
 
@@ -901,6 +911,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
                     let valueHandler = this._pluginInstances[VALUE_HANDLER] as ValueHandler<TValue>;
 
                     valueHandler.valueComparer = this.selectOptions.valueComparer;
+                    valueHandler.liveSearchFilter = this.selectOptions.liveSearchFilter;
                     valueHandler.optionsGatherer = this.selectOptions.optionsGatherer;
                     
                     this._pluginInstances[VALUE_HANDLER].initOptions();

@@ -1,6 +1,6 @@
 import {EventEmitter} from "@angular/core";
 
-import {PluginOptions, NgSelectPlugin, OptionsGatherer, CompareValueFunc} from "../../misc";
+import {PluginOptions, NgSelectPlugin, OptionsGatherer, CompareValueFunc, LiveSearchFilter} from "../../misc";
 import {NgSelectOption} from "../../components/option";
 
 /**
@@ -30,6 +30,11 @@ export interface ValueHandler<TValue> extends NgSelectPlugin
     valueComparer: CompareValueFunc<TValue>;
 
     /**
+     * Function for filtering options
+     */
+    liveSearchFilter: LiveSearchFilter<TValue>;
+
+    /**
      * Current selected options of NgSelect
      */
     readonly selectedOptions: NgSelectOption<TValue>|NgSelectOption<TValue>[];
@@ -54,4 +59,11 @@ export interface ValueHandler<TValue> extends NgSelectPlugin
      * @param value Value to be set
      */
     setValue(value:TValue|TValue[]): void;
+
+    /**
+     * Returns first found options or null
+     * @param text Text of option that is being searched
+     * @param exact Indication whether return only option which is exact match
+     */
+    findAvailableOption(text: string, exact?: boolean): NgSelectOption<TValue>;
 }

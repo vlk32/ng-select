@@ -7,6 +7,8 @@
 - added new component `EditNormalStateComponent` which uses `EditLiveSearchComponent` for editing and displaying selected value
 - added new component `EditPopupComponent` which is used for editing and displaying selected value
 - added new directive `NgSelectEditDirective` which configures `NgSelect` to use edit plugin components
+- added new option for select `normalizer` which is function which allows normalization of value before using it in search
+- extended `ValueHandler` with new method `findAvailableOption` allowing search for option
 
 ## Version 6.2.1
 

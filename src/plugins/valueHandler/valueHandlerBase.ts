@@ -1,7 +1,7 @@
 import {ElementRef, EventEmitter, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
 
-import {NgSelectPluginGeneric, OptionsGatherer, CompareValueFunc} from '../../misc';
+import {NgSelectPluginGeneric, OptionsGatherer, CompareValueFunc, LiveSearchFilter} from '../../misc';
 import {NgSelectPluginInstances} from '../../components/select';
 import {KeyboardHandler} from '../keyboardHandler';
 import {KEYBOARD_HANDLER} from '../keyboardHandler/types';
@@ -85,6 +85,11 @@ export abstract class ValueHandlerBase<TValue, TOptions extends ValueHandlerOpti
      * Function of value comparer that is used for comparison of values
      */
     public valueComparer: CompareValueFunc<TValue>;
+
+    /**
+     * Function for filtering options
+     */
+    public liveSearchFilter: LiveSearchFilter<TValue>;
 
     /**
      * Occurs when there is requested for change of visibility of popup using keyboard
@@ -248,6 +253,29 @@ export abstract class ValueHandlerBase<TValue, TOptions extends ValueHandlerOpti
      */
     public invalidateVisuals(): void
     {
+    }
+
+    /**
+     * Returns first found options or null
+     * @param text Text of option that is being searched
+     * @param exact Indication whether return only option which is exact match
+     */
+    public findAvailableOption(text: string, exact?: boolean): NgSelectOption<TValue>
+    {
+        if(!this._optionsGatherer)
+        {
+            return null;
+        }
+
+        let option = this._optionsGatherer.availableOptions.find(itm => this.liveSearchFilter(text)(itm));
+
+        //TODO - finish
+        if(exact)
+        {
+            
+        }
+
+        return option;
     }
 
     //######################### protected methods #########################
