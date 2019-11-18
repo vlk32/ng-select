@@ -8,6 +8,10 @@
 - added new component `EditPopupComponent` which is used for editing and displaying selected value
 - added new directive `NgSelectEditDirective` which configures `NgSelect` to use edit plugin components
 
+## Version 6.2.1
+
+ - fixed emitting of *same* value during initialization as form control change
+
 ## Version 6.2.0
 
 - added support for *absolute popup* using `absolute` option for `NgSelectOptions`
