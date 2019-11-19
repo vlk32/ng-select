@@ -2,13 +2,14 @@ import {EventEmitter} from "@angular/core";
 
 import {NgSelectOption} from "../../components/option/option.interface";
 import {NgSelectPluginInstances} from "../../components/select";
+import {NormalizeFunc} from "../ngSelectOptions.interface";
 
 /**
  * Callback that is used for filtering static values during live search
  */
 export interface LiveSearchFilter<TValue>
 {
-    (query: string): (option: NgSelectOption<TValue>) => boolean
+    (query: string, normalizer?: NormalizeFunc<TValue>): (option: NgSelectOption<TValue>) => boolean
 }
 
 /**

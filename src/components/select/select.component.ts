@@ -2,7 +2,7 @@ import {Component, ChangeDetectionStrategy, FactoryProvider, Input, Inject, Chan
 import {extend, nameof, isBoolean, isPresent, isString} from "@jscrpt/common";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 
-import {NgSelectOptions, NgSelectPlugin, OptionsGatherer, PluginDescription, TemplateGatherer} from "../../misc";
+import {NgSelectOptions, NgSelectPlugin, OptionsGatherer, PluginDescription, TemplateGatherer, NormalizeFunc} from "../../misc";
 import {NG_SELECT_OPTIONS, KEYBOARD_HANDLER_TYPE, NORMAL_STATE_TYPE, POPUP_TYPE, POSITIONER_TYPE, READONLY_STATE_TYPE, VALUE_HANDLER_TYPE, LIVE_SEARCH_TYPE} from "../../misc/types";
 import {NgSelect, NgSelectPluginInstances, NgSelectAction, NgSelectFunction} from "./select.interface";
 import {NG_SELECT_PLUGIN_INSTANCES} from "./types";
@@ -46,9 +46,9 @@ const defaultOptions: NgSelectOptions<any> =
     {
         return source == target;
     },
-    liveSearchFilter: (query: string) =>
+    liveSearchFilter: (query: string, normalizer: NormalizeFunc<any> = value => value) =>
     {
-        return itm => itm.text.indexOf(query) >= 0;
+        return itm => normalizer(itm.text).indexOf(normalizer(query)) >= 0;
     },
     normalizer: value =>
     {
@@ -548,7 +548,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
                     return;
                 }
 
-                this._availableOptions = this.options.filter(this.selectOptions.liveSearchFilter(this._liveSearch.searchValue));
+                this._availableOptions = this.options.filter(this.selectOptions.liveSearchFilter(this._liveSearch.searchValue, this.selectOptions.normalizer));
                 this._availableOptionsChange.emit();
             });
         }

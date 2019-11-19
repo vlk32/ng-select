@@ -7,6 +7,7 @@ import {NgSelectOption} from "../../components/option";
 import {NgSelectPluginInstances} from "../../components/select";
 import {LiveSearch} from "../../plugins/liveSearch";
 import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
+import {NormalizeFunc} from "../ngSelectOptions.interface";
 
 /**
  * Options gatherer used for static options gathering from code
@@ -82,13 +83,19 @@ export class CodeOptionsGatherer<TValue> implements OptionsGatherer<TValue>
     public ngSelectPlugins: NgSelectPluginInstances;
 
     //######################### constructor #########################
-    constructor(private _liveSearchFilter?: LiveSearchFilter<TValue>)
+    constructor(private _liveSearchFilter?: LiveSearchFilter<TValue>,
+                private _normalizer?: NormalizeFunc<TValue>)
     {
+        if(isBlank(this._normalizer))
+        {
+            this._normalizer = value => value;
+        }
+
         if(isBlank(this._liveSearchFilter))
         {
-            this._liveSearchFilter = (query: string) =>
+            this._liveSearchFilter = (query: string, normalizer?: NormalizeFunc<any>) =>
             {
-                return itm => itm.text.indexOf(query) >= 0;
+                return itm => normalizer(itm.text).indexOf(normalizer(query)) >= 0;
             };
         }
     }
@@ -124,7 +131,7 @@ export class CodeOptionsGatherer<TValue> implements OptionsGatherer<TValue>
                     return;
                 }
 
-                this._availableOptions = this.options.filter(this._liveSearchFilter(this._liveSearch.searchValue));
+                this._availableOptions = this.options.filter(this._liveSearchFilter(this._liveSearch.searchValue, this._normalizer));
                 this._availableOptionsChange.emit();
             });
         }
