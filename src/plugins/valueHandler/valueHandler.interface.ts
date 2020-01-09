@@ -1,7 +1,10 @@
 import {EventEmitter} from "@angular/core";
 
-import {PluginOptions, NgSelectPlugin, OptionsGatherer, CompareValueFunc, LiveSearchFilter} from "../../misc";
+import {PluginOptions, NgSelectPlugin, OptionsGatherer, CompareValueFunc, LiveSearchFilter, NormalizeFunc} from "../../misc";
 import {NgSelectOption} from "../../components/option";
+
+//TODO - think how to clean usage of optionsGatherer, valueComparerer, liveSearchFilter, normalizerFunc, templateGatherer, move them into base plugin ?
+//TODO - think of passing select options to each plugin (may solve also upper problem, but also multiple and readonly)
 
 /**
  * Options for value handler plugin
@@ -33,6 +36,11 @@ export interface ValueHandler<TValue> extends NgSelectPlugin
      * Function for filtering options
      */
     liveSearchFilter: LiveSearchFilter<TValue>;
+
+    /**
+     * Normalizer used for normalizing values, usually when filtering
+     */
+    normalizer: NormalizeFunc<TValue>;
 
     /**
      * Current selected options of NgSelect

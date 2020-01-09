@@ -281,15 +281,20 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
         if(inputChange)
         {
             this.searchValueDisplayed = value;
-            // this._valueHandler.setValue(value);
-            let option: ɵNgSelectOption<any> = this._valueHandler.findAvailableOption(value);
 
-            if(option)
+            this._valueHandler.setValue(null);
+
+            //do not change active if active is visible
+            if(!this._valueHandler.optionsGatherer.availableOptions.find((option: ɵNgSelectOption<any>) => option.active))
             {
-                //if available is active do not change active
-                this._valueHandler.optionsGatherer.options.forEach((option: ɵNgSelectOption<any>) => option.active = false);
-                option.active = true;
-                this._popup.invalidateVisuals();
+                let option: ɵNgSelectOption<any> = this._valueHandler.findAvailableOption(value);
+
+                if(option)
+                {
+                    this._valueHandler.optionsGatherer.options.forEach((option: ɵNgSelectOption<any>) => option.active = false);
+                    option.active = true;
+                    this._popup.invalidateVisuals();
+                }
             }
         }
     }

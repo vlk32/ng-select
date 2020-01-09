@@ -1,7 +1,7 @@
 import {ElementRef, EventEmitter, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
 
-import {NgSelectPluginGeneric, OptionsGatherer, CompareValueFunc, LiveSearchFilter} from '../../misc';
+import {NgSelectPluginGeneric, OptionsGatherer, CompareValueFunc, LiveSearchFilter, NormalizeFunc} from '../../misc';
 import {NgSelectPluginInstances} from '../../components/select';
 import {KeyboardHandler} from '../keyboardHandler';
 import {KEYBOARD_HANDLER} from '../keyboardHandler/types';
@@ -90,6 +90,11 @@ export abstract class ValueHandlerBase<TValue, TOptions extends ValueHandlerOpti
      * Function for filtering options
      */
     public liveSearchFilter: LiveSearchFilter<TValue>;
+
+    /**
+     * Normalizer used for normalizing values, usually when filtering
+     */
+    public normalizer: NormalizeFunc<TValue>;
 
     /**
      * Occurs when there is requested for change of visibility of popup using keyboard
@@ -267,7 +272,7 @@ export abstract class ValueHandlerBase<TValue, TOptions extends ValueHandlerOpti
             return null;
         }
 
-        let option = this._optionsGatherer.availableOptions.find(itm => this.liveSearchFilter(text)(itm));
+        let option = this._optionsGatherer.availableOptions.find(itm => this.liveSearchFilter(text, this.normalizer)(itm));
 
         //TODO - finish
         if(exact)

@@ -734,6 +734,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
         valueHandler.valueComparer = this.selectOptions.valueComparer;
         valueHandler.liveSearchFilter = this.selectOptions.liveSearchFilter;
+        valueHandler.normalizer = this.selectOptions.normalizer;
         valueHandler.optionsGatherer = this.selectOptions.optionsGatherer;
         valueHandler.initOptions();
 
@@ -912,6 +913,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
                     valueHandler.valueComparer = this.selectOptions.valueComparer;
                     valueHandler.liveSearchFilter = this.selectOptions.liveSearchFilter;
+                    valueHandler.normalizer = this.selectOptions.normalizer;
                     valueHandler.optionsGatherer = this.selectOptions.optionsGatherer;
                     
                     this._pluginInstances[VALUE_HANDLER].initOptions();
