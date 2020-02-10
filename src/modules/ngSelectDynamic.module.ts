@@ -10,10 +10,6 @@ import {DynamicValueHandlerComponent} from '../plugins/valueHandler/dynamic/dyna
     declarations:
     [
         DynamicValueHandlerComponent
-    ],
-    entryComponents:
-    [
-        DynamicValueHandlerComponent
     ]
 })
 export class NgSelectDynamicModule

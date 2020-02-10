@@ -46,14 +46,14 @@ export class CodeOptionsGatherer<TValue> implements OptionsGatherer<TValue>
     /**
      * Array of provided options for select
      */
+    public get options(): NgSelectOption<TValue>[]
+    {
+        return this._options;
+    }
     public set options(value: NgSelectOption<TValue>[])
     {
         this._options = value;
         this._availableOptions = value;
-    }
-    public get options(): NgSelectOption<TValue>[]
-    {
-        return this._options;
     }
 
     /**

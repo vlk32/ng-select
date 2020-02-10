@@ -280,7 +280,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
 
     /**
      * Updates height of element
-     * @param popupElement Html element for popup div
+     * @param popupElement - Html element for popup div
      */
     protected _updateHeight(popupElement: HTMLElement): void
     {
@@ -304,7 +304,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
 
     /**
      * Flips html element position if collision occur
-     * @param popupElement Html element to be flipped if collisions occur
+     * @param popupElement - Html element to be flipped if collisions occur
      */
     protected _flipIfCollision(popupElement: HTMLElement): [Positions.PositionsCss, Positions.PositionsCoordinates, Positions.PositionsCoordinates]
     {
@@ -344,7 +344,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
 
     /**
      * Flips vertical position
-     * @param position Position to be flipped vertically
+     * @param position - Position to be flipped vertically
      */
     protected _flipVertiacal(position: Positions.PositionsCoordinates): Positions.PositionsCoordinates
     {
@@ -362,7 +362,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
 
     /**
      * Flips horizontal position
-     * @param position Position to be flipped horizontally
+     * @param position - Position to be flipped horizontally
      */
     protected _flipHorizontal(position: Positions.PositionsCoordinates): Positions.PositionsCoordinates
     {

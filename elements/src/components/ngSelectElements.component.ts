@@ -23,8 +23,7 @@ const NG_OPTION = "NG-OPTION";
             useFactory: ngSelectPluginInstancesFactory
         }
     ],
-    styles:
-    [
+    styles: [
         `:host
         {
             display: block;
@@ -70,6 +69,10 @@ export class NgSelectElementsComponent<TValue> extends NgSelectComponent<TValue>
      * Gets or sets NgSelect options
      */
     @Input('selectOptions')
+    public get selectOptionsWC(): NgSelectOptions<TValue>
+    {
+        return this.selectOptions;
+    }
     public set selectOptionsWC(options: NgSelectOptions<TValue>)
     {
         if(isString(options))
@@ -87,10 +90,6 @@ export class NgSelectElementsComponent<TValue> extends NgSelectComponent<TValue>
         }
 
         this.selectOptions = options;
-    }
-    public get selectOptionsWC(): NgSelectOptions<TValue>
-    {
-        return this.selectOptions;
     }
 
     //######################### constructors #########################
@@ -190,7 +189,7 @@ export class NgSelectElementsComponent<TValue> extends NgSelectComponent<TValue>
 
     /**
      * Gets instance of plugin by its id
-     * @param pluginId Id of plugin, use constants
+     * @param pluginId - Id of plugin, use constants
      */
     @Input()
     public getPluginWC = <PluginType extends NgSelectPlugin>(pluginId: string): PluginType => this.getPlugin(pluginId);
@@ -203,14 +202,14 @@ export class NgSelectElementsComponent<TValue> extends NgSelectComponent<TValue>
 
     /**
      * Executes actions on NgSelect
-     * @param actions Array of actions that are executed over NgSelect
+     * @param actions - Array of actions that are executed over NgSelect
      */
     @Input()
     public executeWC = (...actions: NgSelectAction<TValue>[]) => this.execute(...actions);
 
     /**
      * Executes function on NgSelect and returns result
-     * @param func Function that is executed and its result is returned
+     * @param func - Function that is executed and its result is returned
      */
     @Input()
     public executeAndReturnWC = <TResult>(func: NgSelectFunction<TResult, TValue>): TResult => this.executeAndReturn(func);

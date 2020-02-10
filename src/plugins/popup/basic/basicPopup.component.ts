@@ -354,7 +354,7 @@ export class BasicPopupComponent implements BasicPopup, NgSelectPluginGeneric<Ba
 
     /**
      * Handles click outside of select element
-     * @param event Mouse event object
+     * @param event - Mouse event object
      */
     protected _handleClickOutside = (event: MouseEvent) =>
     {

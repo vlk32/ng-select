@@ -168,7 +168,7 @@ export abstract class ValueHandlerBase<TValue, TOptions extends ValueHandlerOpti
 
     /**
      * Sets value for NgSelect
-     * @param value Value to be set
+     * @param value - Value to be set
      */
     public abstract setValue(value:TValue|TValue[]): void;
 
@@ -262,8 +262,8 @@ export abstract class ValueHandlerBase<TValue, TOptions extends ValueHandlerOpti
 
     /**
      * Returns first found options or null
-     * @param text Text of option that is being searched
-     * @param exact Indication whether return only option which is exact match
+     * @param text - Text of option that is being searched
+     * @param exact - Indication whether return only option which is exact match
      */
     public findAvailableOption(text: string, exact?: boolean): NgSelectOption<TValue>
     {
@@ -292,7 +292,7 @@ export abstract class ValueHandlerBase<TValue, TOptions extends ValueHandlerOpti
 
     /**
      * Cancels, removes option from selected options
-     * @param option Option to be canceled
+     * @param option - Option to be canceled
      */
     protected _cancelValue = (option: ɵNgSelectOption<TValue>): void =>
     {

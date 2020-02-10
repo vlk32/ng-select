@@ -10,8 +10,8 @@ export interface CompareValueFunc<TValue>
 {
     /**
      * Compares two values and returns true if objects are equal, otherwise false
-     * @param source First value to be compared
-     * @param target Second value to be compared
+     * @param source - First value to be compared
+     * @param target - Second value to be compared
      */
     (source: TValue, target: TValue): boolean;
 }
@@ -23,7 +23,7 @@ export interface NormalizeFunc<TValue>
 {
     /**
      * Normalize provided value, usually used with strings
-     * @param value Value that is being normalized
+     * @param value - Value that is being normalized
      */
     (value: TValue): TValue;
 }

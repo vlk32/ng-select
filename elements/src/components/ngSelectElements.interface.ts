@@ -33,7 +33,7 @@ export interface NgSelectWebComponent<TValue>
 
     /**
      * Gets instance of plugin by its id
-     * @param pluginId Id of plugin, use constants
+     * @param pluginId - Id of plugin, use constants
      */
     getPluginWC<PluginType extends NgSelectPlugin>(pluginId: string): PluginType;
 
@@ -44,13 +44,13 @@ export interface NgSelectWebComponent<TValue>
 
     /**
      * Executes actions on NgSelect
-     * @param actions Array of actions that are executed over NgSelect
+     * @param actions - Array of actions that are executed over NgSelect
      */
     executeWC(...actions: NgSelectAction<TValue>[]);
 
     /**
      * Executes function on NgSelect and returns result
-     * @param func Function that is executed and its result is returned
+     * @param func - Function that is executed and its result is returned
      */
     executeAndReturnWC<TResult>(func: NgSelectFunction<TResult, TValue>): TResult;
 }

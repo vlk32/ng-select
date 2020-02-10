@@ -30,12 +30,6 @@ import {NgSelectModule} from './ngSelect.module';
         EditNormalStateComponent,
         EditLiveSearchComponent,
         EditPopupComponent
-    ],
-    entryComponents:
-    [
-        EditNormalStateComponent,
-        EditLiveSearchComponent,
-        EditPopupComponent
     ]
 })
 export class NgSelectEditModule

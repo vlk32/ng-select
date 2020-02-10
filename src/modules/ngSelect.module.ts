@@ -47,16 +47,6 @@ import {NgSelectComponent} from '../components/select/select.component';
         NgSelectComponent,
         NgSelectValuePipe,
         NgSelectControlValueAccessor
-    ],
-    entryComponents:
-    [
-        BasicNormalStateComponent,
-        NoLiveSearchComponent,
-        BasicLiveSearchComponent,
-        BasicPopupComponent,
-        BasicPositionerComponent,
-        BasicKeyboardHandlerComponent,
-        BasicValueHandlerComponent
     ]
 })
 export class NgSelectModule

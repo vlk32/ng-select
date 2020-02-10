@@ -2,7 +2,7 @@ import {NgSelectAction, NgSelectOptions} from "@anglr/select";
 
 /**
  * Method reinitialize options for NgSelect
- * @param options Options to be used for reinitialization
+ * @param options - Options to be used for reinitialization
  */
 export function reinitializeOptions<TValue>(options?: NgSelectOptions<TValue>): NgSelectAction<TValue>
 {

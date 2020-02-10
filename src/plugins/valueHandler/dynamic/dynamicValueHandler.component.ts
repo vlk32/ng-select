@@ -56,7 +56,7 @@ export class DynamicValueHandlerComponent<TValue> extends ValueHandlerBase<TValu
 
     /**
      * Sets value for NgSelect
-     * @param value Value to be set
+     * @param value - Value to be set
      */
     public setValue(value:TValue|TValue[]): void
     {
@@ -140,7 +140,7 @@ export class DynamicValueHandlerComponent<TValue> extends ValueHandlerBase<TValu
 
     /**
      * Converts value to options
-     * @param value Value to be changed to options
+     * @param value - Value to be changed to options
      */
     protected async _useOptionsAsValue(value: TValue|TValue[])
     {
@@ -197,7 +197,7 @@ export class DynamicValueHandlerComponent<TValue> extends ValueHandlerBase<TValu
 
     /**
      * Loads text for specified value
-     * @param value Value that is going to be used for obtaining option
+     * @param value - Value that is going to be used for obtaining option
      */
     protected async _loadText(value: TValue): Promise<ɵNgSelectOption<TValue>>
     {

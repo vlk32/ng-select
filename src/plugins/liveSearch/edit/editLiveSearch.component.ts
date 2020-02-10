@@ -145,7 +145,7 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
      * View child that represents live search element
      * @internal
      */
-    @ViewChild('liveSearchElement', {static: false})
+    @ViewChild('liveSearchElement')
     public liveSearchElementChild: ElementRef<HTMLElement>;
 
     //######################### constructor #########################
@@ -269,8 +269,8 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
 
     /**
      * Handle input value
-     * @param value Value of input
-     * @param inputChange Indication that change was by input event of input
+     * @param value - Value of input
+     * @param inputChange - Indication that change was by input event of input
      * @internal
      */
     public handleInput(value: string, inputChange: boolean = false)
@@ -301,7 +301,7 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
 
     /**
      * Handles focus event
-     * @param element Element that got focus
+     * @param element - Element that got focus
      * @internal
      */
     public handleFocus(element: HTMLInputElement)

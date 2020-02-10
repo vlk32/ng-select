@@ -160,7 +160,7 @@ export class NgSelectControlValueAccessor<TValue> implements ControlValueAccesso
 
     /**
      * Sets NgSelect as disabled/readonly
-     * @param isDisabled Indication whether is control disabled or not
+     * @param isDisabled - Indication whether is control disabled or not
      */
     public setDisabledState(isDisabled: boolean): void 
     {

@@ -62,7 +62,7 @@ export class BasicValueHandlerComponent<TValue> extends ValueHandlerBase<TValue,
 
     /**
      * Sets value for NgSelect
-     * @param value Value to be set
+     * @param value - Value to be set
      */
     public setValue(value:TValue|TValue[]): void
     {
@@ -149,7 +149,7 @@ export class BasicValueHandlerComponent<TValue> extends ValueHandlerBase<TValue,
 
     /**
      * Converts value to options
-     * @param value Value to be changed to options
+     * @param value - Value to be changed to options
      */
     protected _useOptionsAsValue(value: TValue|TValue[])
     {

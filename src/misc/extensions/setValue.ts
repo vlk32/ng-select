@@ -4,7 +4,7 @@ import {VALUE_HANDLER} from "../../plugins/valueHandler/types";
 
 /**
  * Sets value of NgSelect
- * @param value Value to be set into select
+ * @param value - Value to be set into select
  */
 export function ɵSetValue<TValue>(value: TValue|TValue[]): NgSelectAction<TValue>
 {

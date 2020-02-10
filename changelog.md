@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 7.0.0
+
+- updated to latest stable *Angular* 9
+- added generating of API doc
+
 ## Version 6.3.0
 
 - added new module `NgSelectEditModule` which contains components for displaying select with editation and tags

@@ -149,7 +149,7 @@ export class BasicKeyboardHandlerComponent implements BasicKeyboardHandler, NgSe
 
     /**
      * Handles keyboard event
-     * @param event Keyboard event that occured
+     * @param event - Keyboard event that occured
      */
     protected _handleKeyboard = (event: KeyboardEvent) =>
     {

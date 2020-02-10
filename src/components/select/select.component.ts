@@ -120,8 +120,7 @@ export function ngSelectPluginInstancesFactory()
             useFactory: ngSelectPluginInstancesFactory
         }
     ],
-    styles:
-    [
+    styles: [
         `:host
         {
             display: block;
@@ -179,13 +178,13 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
      * Gets or sets NgSelect options
      */
     @Input()
-    public set selectOptions(options: NgSelectOptions<TValue>)
-    {
-        this._selectOptions = extend(true, this._selectOptions, options);
-    }
     public get selectOptions(): NgSelectOptions<TValue>
     {
         return this._selectOptions;
+    }
+    public set selectOptions(options: NgSelectOptions<TValue>)
+    {
+        this._selectOptions = extend(true, this._selectOptions, options);
     }
 
     /**
@@ -221,14 +220,14 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
      * Template used within normal state
      * @internal
      */
-    @ContentChild('normalStateTemplate', {static: false})
+    @ContentChild('normalStateTemplate')
     public normalStateTemplate: TemplateRef<NormalStateContext>;
 
     /**
      * Template that is used within Popup as option
      * @internal
      */
-    @ContentChild('optionTemplate', {static: false})
+    @ContentChild('optionTemplate')
     public optionTemplate?: TemplateRef<PopupContext>;
 
     //######################### public properties - implementation of OptionsGatherer #########################
@@ -566,7 +565,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets normal state component
-     * @param normalState Created normal state that is rendered
+     * @param normalState - Created normal state that is rendered
      * @internal
      */
     public setNormalStateComponent(normalState: NormalState)
@@ -594,7 +593,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets keyboard handler component
-     * @param keyboardHandler Created keyboard handler that is rendered
+     * @param keyboardHandler - Created keyboard handler that is rendered
      * @internal
      */
     public setKeyboardHandlerComponent(keyboardHandler: KeyboardHandler)
@@ -623,7 +622,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets popup component
-     * @param popup Created popup that is rendered
+     * @param popup - Created popup that is rendered
      * @internal
      */
     public setPopupComponent(popup: Popup)
@@ -653,7 +652,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets positioner component
-     * @param positioner Created positioner that is rendered
+     * @param positioner - Created positioner that is rendered
      * @internal
      */
     public setPositionerComponent(positioner: Positioner)
@@ -682,7 +681,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets readonly state component
-     * @param readonlyState Created readonly state that is rendered
+     * @param readonlyState - Created readonly state that is rendered
      * @internal
      */
     public setReadonlyStateComponent(readonlyState: ReadonlyState)
@@ -715,7 +714,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets value handler component
-     * @param valueHandler Created value handler that is rendered
+     * @param valueHandler - Created value handler that is rendered
      * @internal
      */
     public setValueHandlerComponent(valueHandler: ValueHandler<TValue>)
@@ -746,7 +745,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Sets live search component
-     * @param liveSearch Created live search that is rendered
+     * @param liveSearch - Created live search that is rendered
      * @internal
      */
     public setLiveSearchComponent(liveSearch: LiveSearch)
@@ -947,7 +946,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Gets instance of plugin by its id
-     * @param pluginId Id of plugin, use constants
+     * @param pluginId - Id of plugin, use constants
      */
     public getPlugin<PluginType extends NgSelectPlugin>(pluginId: string): PluginType
     {
@@ -956,7 +955,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Executes actions on NgSelect
-     * @param actions Array of actions that are executed over NgSelect
+     * @param actions - Array of actions that are executed over NgSelect
      */
     public execute(...actions: NgSelectAction<TValue>[])
     {
@@ -970,7 +969,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Executes function on NgSelect and returns result
-     * @param func Function that is executed and its result is returned
+     * @param func - Function that is executed and its result is returned
      */
     public executeAndReturn<TResult>(func: NgSelectFunction<TResult, TValue>): TResult
     {
@@ -986,7 +985,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
 
     /**
      * Appends popup component directly to body, allows absolute positioning over page body
-     * @param component Popup component type to be appended
+     * @param component - Popup component type to be appended
      */
     protected _appendPopupToBody(component: Type<Popup>) 
     {
