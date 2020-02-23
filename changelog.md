@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 7.1.0
+
+- updated `BasicPositionerComponent`, logic for positioning moved to `@anglr/common/positions`
+
 ## Version 7.0.0
 
 - updated to latest stable *Angular* 9

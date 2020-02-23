@@ -61,7 +61,7 @@
         "@angular/platform-browser": "^9.0.0",
         "rxjs": ">=6.5.0",
         "@jscrpt/common": ">=1.1.0",
-        "@anglr/common": ">=7.0.0",
+        "@anglr/common": ">=7.1.0",
         "positions": "^1.6.2"
     },
     "devDependencies": {
@@ -71,7 +71,7 @@
         "@angular/elements": "^9.0.0",
         "rxjs": "^6.5.0",
         "@jscrpt/common": "^1.1.0",
-        "@anglr/common": "^7.0.0",
+        "@anglr/common": "^7.1.0",
         "@types/jasmine": "2.8.11",
         "@types/node": "11.11.1",
         "@anglr/types": "1.1.18",

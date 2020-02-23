@@ -1,8 +1,8 @@
 import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef, OnDestroy, PLATFORM_ID, ChangeDetectorRef} from '@angular/core';
 import {DOCUMENT, isPlatformBrowser} from '@angular/common';
+import {positionsWithFlip} from '@anglr/common/positions';
 import {extend, isNumber} from '@jscrpt/common';
 import {Subscription} from 'rxjs';
-import * as positions from 'positions';
 
 import {BasicPositionerOptions, BasicPositioner} from './basicPositioner.interface';
 import {NgSelectPluginGeneric, OptionsGatherer} from '../../../misc';
@@ -201,7 +201,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
     protected _handleResizeAndScroll = () =>
     {
         this._updateMinWidth();
-        this._calculatePositionAndDimensions();
+        positionsWithFlip(this._popupElement, this.options.optionsCoordinates, this.selectElement, this.options.selectCoordinates, this._document);
     };
 
     /**
@@ -234,31 +234,6 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
     }
 
     /**
-     * Calculates positions and dimensions of popup
-     */
-    protected _calculatePositionAndDimensions()
-    {
-        //set to default position
-        let popupCoordinates = positions(this._popupElement, this.options.optionsCoordinates, this.selectElement, this.options.selectCoordinates);
-        this._popupElement.style.left = `${popupCoordinates.left}px`;
-        this._popupElement.style.top = `${popupCoordinates.top}px`;
-        this._popupElement.style.maxHeight = '';
-
-        //flip if collision with viewport
-        let optionsCoordinates: Positions.PositionsCoordinates;
-        let selectCoordinates: Positions.PositionsCoordinates;
-        [popupCoordinates, optionsCoordinates, selectCoordinates] = this._flipIfCollision(this._popupElement);
-        this._popupElement.style.left = `${popupCoordinates.left}px`;
-        this._popupElement.style.top = `${popupCoordinates.top}px`;
-
-        //set maxHeight if there is not more place
-        this._updateHeight(this._popupElement);
-        popupCoordinates = positions(this._popupElement, optionsCoordinates, this.selectElement, selectCoordinates);
-        this._popupElement.style.left = `${popupCoordinates.left}px`;
-        this._popupElement.style.top = `${popupCoordinates.top}px`;
-    }
-
-    /**
      * Updates min width of popup
      */
     protected _updateMinWidth()
@@ -276,105 +251,5 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
         }
 
         this._popupElement.style.minWidth = `${minWidth}px`;
-    }
-
-    /**
-     * Updates height of element
-     * @param popupElement - Html element for popup div
-     */
-    protected _updateHeight(popupElement: HTMLElement): void
-    {
-        let rect = popupElement.getBoundingClientRect(),
-            selectRect = this.selectElement.getBoundingClientRect(),
-            h = Math.max(this._document.documentElement.clientHeight, window.innerHeight || 0);
-
-        //popup is above
-        if(rect.top < selectRect.top)
-        {
-            //space above is not enough
-            popupElement.style.maxHeight = `${selectRect.top - 6}px`;
-        }
-        //popup is below
-        else
-        {
-            //space below is not enough
-            popupElement.style.maxHeight = `${h - selectRect.bottom - 6}px`;
-        }
-    }
-
-    /**
-     * Flips html element position if collision occur
-     * @param popupElement - Html element to be flipped if collisions occur
-     */
-    protected _flipIfCollision(popupElement: HTMLElement): [Positions.PositionsCss, Positions.PositionsCoordinates, Positions.PositionsCoordinates]
-    {
-        let w = Math.max(this._document.documentElement.clientWidth, window.innerWidth || 0),
-            h = Math.max(this._document.documentElement.clientHeight, window.innerHeight || 0),
-            rect = popupElement.getBoundingClientRect(),
-            selectRect = this.selectElement.getBoundingClientRect(),
-            spaceAbove = selectRect.top,
-            spaceUnder = h - selectRect.bottom,
-            spaceBefore = selectRect.left,
-            spaceAfter = w - selectRect.right,
-            optionsCoordinates = this.options.optionsCoordinates,
-            selectCoordinates = this.options.selectCoordinates;
-
-        //vertical overflow
-        if((h < rect.bottom &&
-            spaceUnder < spaceAbove) ||
-           (rect.top < 0 &&
-            spaceAbove < spaceUnder))
-        {
-            optionsCoordinates = this._flipVertiacal(optionsCoordinates);
-            selectCoordinates = this._flipVertiacal(selectCoordinates);
-        }
-
-        //horizontal overflow
-        if((w < (rect.left + rect.width) &&
-            spaceAfter < spaceBefore) ||
-           (rect.left < 0 &&
-            spaceBefore < spaceAfter))
-        {
-            optionsCoordinates = this._flipHorizontal(optionsCoordinates);
-            selectCoordinates = this._flipHorizontal(selectCoordinates);
-        }
-
-        return [positions(popupElement, optionsCoordinates, this.selectElement, selectCoordinates), optionsCoordinates, selectCoordinates];
-    }
-
-    /**
-     * Flips vertical position
-     * @param position - Position to be flipped vertically
-     */
-    protected _flipVertiacal(position: Positions.PositionsCoordinates): Positions.PositionsCoordinates
-    {
-        if(position.indexOf('top') >= 0)
-        {
-            return position.replace('top', 'bottom') as Positions.PositionsCoordinates;
-        }
-        else if(position.indexOf('bottom') >= 0)
-        {
-            return position.replace('bottom', 'top') as Positions.PositionsCoordinates;
-        }
-
-        return position;
-    }
-
-    /**
-     * Flips horizontal position
-     * @param position - Position to be flipped horizontally
-     */
-    protected _flipHorizontal(position: Positions.PositionsCoordinates): Positions.PositionsCoordinates
-    {
-        if(position.indexOf('right') >= 0)
-        {
-            return position.replace('right', 'left') as Positions.PositionsCoordinates;
-        }
-        else if(position.indexOf('left') >= 0)
-        {
-            return position.replace('left', 'right') as Positions.PositionsCoordinates;
-        }
-
-        return position;
     }
 }
