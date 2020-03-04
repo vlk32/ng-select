@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 7.2.0
+
+- *subpackage* `@anglr/select/material` 
+   - added new `DialogPopupModule` that allows usage of *DialogPopupComponent*
+   - added new `DialogPopupComponent` as `Popup` plugin (using angular cdk dialog)
+- added new `NoPositionerComponent` as `Positioner` plugin
+
 ## Version 7.1.0
 
 - updated `BasicPositionerComponent`, logic for positioning moved to `@anglr/common/positions`

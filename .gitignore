@@ -7,11 +7,12 @@ temp/
 /src/**/*.json
 /elements/**/*.d.ts
 /elements/**/*.json
+/material/**/*.d.ts
 /extensions/**/*.d.ts
 /extensions/**/*.json
 /*/dist
 /*.d.ts
-/*.metadata.json
+*.metadata.json
 
 package-lock.json
 tsdoc-metadata.json
