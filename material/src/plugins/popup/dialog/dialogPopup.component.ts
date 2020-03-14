@@ -11,9 +11,10 @@ import {BasicDialogPopupComponent} from "../../../components/basicDialogPopup/ba
  * Default options for popup
  * @internal
  */
-const defaultOptions: DialogPopupOptions =
+const defaultOptions: DialogPopupOptions<any> =
 {
     dialogComponent: forwardRef(() => BasicDialogPopupComponent),
+    dialogOptions: {},
     cssClasses:
     {
         optionChecked: 'fa fa-check',
@@ -33,14 +34,14 @@ const defaultOptions: DialogPopupOptions =
     template: "",
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DialogPopupComponent<TValue> implements DialogPopup, NgSelectPluginGeneric<DialogPopupOptions>, OnDestroy
+export class DialogPopupComponent<TValue, TDialogOptions> implements DialogPopup, NgSelectPluginGeneric<DialogPopupOptions<TDialogOptions>>, OnDestroy
 {
     //######################### protected fields #########################
 
     /**
      * Options for NgSelect plugin
      */
-    protected _options: DialogPopupOptions;
+    protected _options: DialogPopupOptions<TDialogOptions>;
 
     /**
      * Subscription for click event on normal state
@@ -70,12 +71,12 @@ export class DialogPopupComponent<TValue> implements DialogPopup, NgSelectPlugin
     /**
      * Value handler that is used
      */
-    protected _valueHandler: ValueHandler<any>;
+    protected _valueHandler: ValueHandler<TValue>;
 
     /**
      * Component that is used for handling metadata selection itself
      */
-    protected _dialogComponent?: Type<DialogPopupContentComponent<any>>;
+    protected _dialogComponent?: Type<DialogPopupContentComponent<TValue, TDialogOptions>>;
 
     /**
      * Popup dialog reference
@@ -87,11 +88,11 @@ export class DialogPopupComponent<TValue> implements DialogPopup, NgSelectPlugin
     /**
      * Options for NgSelect plugin
      */
-    public get options(): DialogPopupOptions
+    public get options(): DialogPopupOptions<TDialogOptions>
     {
         return this._options;
     }
-    public set options(options: DialogPopupOptions)
+    public set options(options: DialogPopupOptions<TDialogOptions>)
     {
         this._options = extend(true, this._options, options);
     }
@@ -142,7 +143,7 @@ export class DialogPopupComponent<TValue> implements DialogPopup, NgSelectPlugin
                 public pluginElement: ElementRef,
                 protected _dialog: MatDialog,
                 protected _changeDetector: ChangeDetectorRef,
-                @Inject(POPUP_OPTIONS) @Optional() options?: DialogPopupOptions)
+                @Inject(POPUP_OPTIONS) @Optional() options?: DialogPopupOptions<TDialogOptions>)
     {
         this._options = extend(true, {}, defaultOptions, options);
     }
@@ -262,7 +263,7 @@ export class DialogPopupComponent<TValue> implements DialogPopup, NgSelectPlugin
         {
             this._dialogRef = this._dialog.open(this._dialogComponent,
                 {
-                    data: <DialogPopupComponentData<TValue>>
+                    data: <DialogPopupComponentData<TValue, TDialogOptions>>
                     {
                         optionsGatherer: this.optionsGatherer,
                         templateGatherer: this.templateGatherer,

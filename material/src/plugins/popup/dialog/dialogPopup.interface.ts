@@ -30,12 +30,17 @@ export interface CssClassesDialogPopup
 /**
  * Dialog popup options
  */
-export interface DialogPopupOptions extends PopupOptions<CssClassesDialogPopup>
+export interface DialogPopupOptions<T> extends PopupOptions<CssClassesDialogPopup>
 {
     /**
      * Component that is used to show in dialog
      */
     dialogComponent: any;
+
+    /**
+     * Dialog options
+     */
+    dialogOptions?: T;
 }
 
 /**
@@ -48,7 +53,7 @@ export interface DialogPopup extends Popup
 /**
  * Data that are passed to component that handles metadata
  */
-export interface DialogPopupComponentData<TValue>
+export interface DialogPopupComponentData<TValue, TOptions>
 {
     /**
      * Gatherer used for obtaining custom templates
@@ -68,16 +73,16 @@ export interface DialogPopupComponentData<TValue>
     /**
      * Dialogs popup options
      */
-    options: DialogPopupOptions;
+    options: DialogPopupOptions<TOptions>;
 }
 
 /**
  * Component that is rendered within dialog
  */
-export interface DialogPopupContentComponent<TValue>
+export interface DialogPopupContentComponent<TValue, TOptions>
 {
     /**
      * Data that are used for communication with Popup
      */
-    data: DialogPopupComponentData<TValue>;
+    data: DialogPopupComponentData<TValue, TOptions>;
 }

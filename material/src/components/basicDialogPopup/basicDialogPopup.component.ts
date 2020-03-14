@@ -12,7 +12,7 @@ import {DialogPopupComponentData, DialogPopupContentComponent, DialogPopupOption
     styleUrls: ['basicDialogPopup.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BasicDialogPopupComponent<TValue> implements DialogPopupContentComponent<TValue>, OnInit, OnDestroy
+export class BasicDialogPopupComponent<TValue, TDialogOptions> implements DialogPopupContentComponent<TValue, TDialogOptions>, OnInit, OnDestroy
 {
     //######################### private properties #########################
 
@@ -41,7 +41,7 @@ export class BasicDialogPopupComponent<TValue> implements DialogPopupContentComp
     /**
      * Dialogs popup options
      */
-    options: DialogPopupOptions;
+    options: DialogPopupOptions<TDialogOptions>;
 
     /**
      * Occurs when user clicks on option, clicked options is passed as argument
@@ -49,9 +49,9 @@ export class BasicDialogPopupComponent<TValue> implements DialogPopupContentComp
     optionClick: EventEmitter<NgSelectOption<TValue>>;
 
     //######################### constructor #########################
-    constructor(public dialog: MatDialogRef<BasicDialogPopupComponent<TValue>, DialogPopupComponentData<TValue>>,
+    constructor(public dialog: MatDialogRef<BasicDialogPopupComponent<TValue, TDialogOptions>, DialogPopupComponentData<TValue, TDialogOptions>>,
                 private _changeDetector: ChangeDetectorRef,
-                @Inject(MAT_DIALOG_DATA) public data: DialogPopupComponentData<TValue>)
+                @Inject(MAT_DIALOG_DATA) public data: DialogPopupComponentData<TValue, TDialogOptions>)
     {
         if (data)
         {
