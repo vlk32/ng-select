@@ -6,6 +6,7 @@
    - added new `DialogPopupModule` that allows usage of *DialogPopupComponent*
    - added new `DialogPopupComponent` as `Popup` plugin (using angular cdk dialog)
 - added new `NoPositionerComponent` as `Positioner` plugin
+- fixed canceling value for `ValueHandlerBase` for multi value
 
 ## Version 7.1.0
 

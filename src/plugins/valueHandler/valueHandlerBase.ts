@@ -303,6 +303,7 @@ export abstract class ValueHandlerBase<TValue, TOptions extends ValueHandlerOpti
             if(index >= 0)
             {
                 this.selectedOptions.splice(index, 1);
+                this.selectedOptions = [...this.selectedOptions];
             }
         }
         else
