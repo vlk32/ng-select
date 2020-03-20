@@ -1,5 +1,5 @@
 import {EventEmitter} from "@angular/core";
-import {Popup, PopupOptions, OptionsGatherer, TemplateGatherer, NgSelectOption} from "@anglr/select";
+import {Popup, PopupOptions, OptionsGatherer, TemplateGatherer, NgSelectOption, NgSelectPluginInstances} from "@anglr/select";
 
 /**
  * Css classes for dialog popup
@@ -55,6 +55,11 @@ export interface DialogPopup extends Popup
  */
 export interface DialogPopupComponentData<TValue, TOptions>
 {
+    /**
+     * NgSelect plugins instances
+     */
+    ngSelectPlugins: NgSelectPluginInstances,
+
     /**
      * Gatherer used for obtaining custom templates
      */

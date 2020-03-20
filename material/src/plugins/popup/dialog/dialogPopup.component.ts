@@ -265,6 +265,7 @@ export class DialogPopupComponent<TValue, TDialogOptions> implements DialogPopup
                 {
                     data: <DialogPopupComponentData<TValue, TDialogOptions>>
                     {
+                        ngSelectPlugins: this.ngSelectPlugins,
                         optionsGatherer: this.optionsGatherer,
                         templateGatherer: this.templateGatherer,
                         optionClick: this.optionClick,
