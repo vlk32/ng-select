@@ -6,7 +6,7 @@ import {TemplateGatherer} from "./templateGatherer.interface";
 /**
  * Function used for comparing two values
  */
-export interface CompareValueFunc<TValue>
+export interface CompareValueFunc<TValue = any>
 {
     /**
      * Compares two values and returns true if objects are equal, otherwise false
@@ -19,7 +19,7 @@ export interface CompareValueFunc<TValue>
 /**
  * Function used for normalization of value, used during comparison or search
  */
-export interface NormalizeFunc<TValue>
+export interface NormalizeFunc<TValue = any>
 {
     /**
      * Normalize provided value, usually used with strings
@@ -31,7 +31,7 @@ export interface NormalizeFunc<TValue>
 /**
  * Describes select options used for NgSelect
  */
-export interface NgSelectOptions<TValue>
+export interface NgSelectOptions<TValue = any>
 {
     /**
      * Indication whether NgSelect should be initialized automaticaly during 'NgOnInit' phase

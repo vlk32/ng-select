@@ -7,7 +7,7 @@ import {NormalizeFunc} from "../ngSelectOptions.interface";
 /**
  * Callback that is used for filtering static values during live search
  */
-export interface LiveSearchFilter<TValue>
+export interface LiveSearchFilter<TValue = any>
 {
     (query: string, normalizer?: NormalizeFunc<TValue>): (option: NgSelectOption<TValue>) => boolean
 }
@@ -15,7 +15,7 @@ export interface LiveSearchFilter<TValue>
 /**
  * Gatherer used for obtaining options for select
  */
-export interface OptionsGatherer<TValue>
+export interface OptionsGatherer<TValue = any>
 {
     /**
      * Array of provided options for select

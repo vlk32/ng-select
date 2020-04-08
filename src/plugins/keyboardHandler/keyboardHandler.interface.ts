@@ -23,7 +23,7 @@ export interface KeyboardHandler extends NgSelectPlugin
     /**
      * Instance of options gatherer, that is used for obtaining available options
      */
-    optionsGatherer: OptionsGatherer<any>;
+    optionsGatherer: OptionsGatherer;
 
     /**
      * Occurs when there is requested for change of visibility of popup using keyboard
@@ -33,5 +33,5 @@ export interface KeyboardHandler extends NgSelectPlugin
     /**
      * Occurs when option was selected using keyboard
      */
-    readonly optionSelect: EventEmitter<NgSelectOption<any>>;
+    readonly optionSelect: EventEmitter<NgSelectOption>;
 }

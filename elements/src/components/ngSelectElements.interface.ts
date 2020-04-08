@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 /**
  * Public API for NgSelect WebComponent
  */
-export interface NgSelectWebComponent<TValue>
+export interface NgSelectWebComponent<TValue = any>
 {
     /**
      * Occurs every time when NgSelect is initialized or reinitialized, if value is false NgSelect was not initialized yet

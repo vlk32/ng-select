@@ -54,7 +54,7 @@ export class EditPopupComponent implements EditPopup, NgSelectPluginGeneric<Edit
     /**
      * Instance of previous options gatherer, that is used for obtaining available options
      */
-    protected _optionsGatherer: OptionsGatherer<any>;
+    protected _optionsGatherer: OptionsGatherer;
 
     /**
      * Subscription for changes of options in options gatherer
@@ -89,7 +89,7 @@ export class EditPopupComponent implements EditPopup, NgSelectPluginGeneric<Edit
     /**
      * Value handler that is used
      */
-    protected _valueHandler: ValueHandler<any>;
+    protected _valueHandler: ValueHandler;
 
     /**
      * Indication whether is popup visible
@@ -113,7 +113,7 @@ export class EditPopupComponent implements EditPopup, NgSelectPluginGeneric<Edit
     /**
      * Instance of options gatherer, that is used for obtaining available options
      */
-    public optionsGatherer: OptionsGatherer<any>;
+    public optionsGatherer: OptionsGatherer;
 
     /**
      * Gatherer used for obtaining custom templates
@@ -128,7 +128,7 @@ export class EditPopupComponent implements EditPopup, NgSelectPluginGeneric<Edit
     /**
      * Occurs when user clicks on option, clicked options is passed as argument
      */
-    public optionClick: EventEmitter<NgSelectOption<any>> = new EventEmitter<NgSelectOption<any>>();
+    public optionClick: EventEmitter<NgSelectOption> = new EventEmitter<NgSelectOption>();
 
     /**
      * Occurs when visibility of popup has changed
@@ -156,7 +156,7 @@ export class EditPopupComponent implements EditPopup, NgSelectPluginGeneric<Edit
      * Array of select options available
      * @internal
      */
-    public selectOptions: ɵNgSelectOption<any>[];
+    public selectOptions: ɵNgSelectOption[];
 
     //######################### public properties - children #########################
 
@@ -297,7 +297,7 @@ export class EditPopupComponent implements EditPopup, NgSelectPluginGeneric<Edit
             this._khPopupVisibilityRequestSubscription = this._keyboardHandler.popupVisibilityRequest.subscribe(this._handleVisibilityChange);
         }
 
-        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler<any>;
+        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler;
 
         if(this._valueHandler && this._valueHandler != valueHandler)
         {

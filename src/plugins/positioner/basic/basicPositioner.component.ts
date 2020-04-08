@@ -38,7 +38,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
     /**
      * Instance of previous options gatherer, that is used for obtaining available options
      */
-    protected _optionsGatherer: OptionsGatherer<any>;
+    protected _optionsGatherer: OptionsGatherer;
 
     /**
      * Options for NgSelect plugin
@@ -92,7 +92,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
     /**
      * Instance of options gatherer, that is used for obtaining available options
      */
-    public optionsGatherer: OptionsGatherer<any>;
+    public optionsGatherer: OptionsGatherer;
 
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,

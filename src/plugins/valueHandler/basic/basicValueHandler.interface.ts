@@ -10,6 +10,6 @@ export interface BasicValueHandlerOptions extends ValueHandlerOptions
 /**
  * Public API for 'BasicValueHandlerComponent'
  */
-export interface BasicValueHandler<TValue> extends ValueHandler<TValue>
+export interface BasicValueHandler<TValue = any> extends ValueHandler<TValue>
 {
 }

@@ -11,7 +11,7 @@ import {NgSelectOption} from "./option.interface";
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OptionComponent<TValue> implements NgSelectOption<TValue>
+export class OptionComponent<TValue = any> implements NgSelectOption<TValue>
 {
     //######################### public properties - template bindings #########################
 

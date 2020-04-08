@@ -3,7 +3,7 @@ import {NgSelectOption} from "../../components/option";
 /**
  * Callback used for obtaining dynamic options
  */
-export interface GetOptionsCallback<TValue>
+export interface GetOptionsCallback<TValue = any>
 {
     /**
      * Gets array of options based on query
@@ -15,7 +15,7 @@ export interface GetOptionsCallback<TValue>
 /**
  * Options for dynamic options gatherer
  */
-export interface DynamicOptionsGathererOptions<TValue>
+export interface DynamicOptionsGathererOptions<TValue = any>
 {
     /**
      * Callback used for obtaining dynamic options

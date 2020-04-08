@@ -5,7 +5,7 @@ import {NgSelectOption} from "./option.interface";
 /**
  * Option group for ng select
  */
-export interface NgSelectOptGroup<TValue>
+export interface NgSelectOptGroup<TValue = any>
 {
     /**
      * Options assigned to this options group

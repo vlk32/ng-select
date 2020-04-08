@@ -10,4 +10,4 @@ export const POPUP = "POPUP";
 /**
  * Token for injecting options for popup plugin
  */
-export const POPUP_OPTIONS: InjectionToken<PopupOptions<any>> = new InjectionToken<PopupOptions<any>>('POPUP_OPTIONS');
+export const POPUP_OPTIONS: InjectionToken<PopupOptions> = new InjectionToken<PopupOptions>('POPUP_OPTIONS');

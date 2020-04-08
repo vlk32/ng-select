@@ -30,7 +30,7 @@ export interface CssClassesDialogPopup
 /**
  * Dialog popup options
  */
-export interface DialogPopupOptions<T> extends PopupOptions<CssClassesDialogPopup>
+export interface DialogPopupOptions<T = any> extends PopupOptions<CssClassesDialogPopup>
 {
     /**
      * Component that is used to show in dialog
@@ -53,7 +53,7 @@ export interface DialogPopup extends Popup
 /**
  * Data that are passed to component that handles metadata
  */
-export interface DialogPopupComponentData<TValue, TOptions>
+export interface DialogPopupComponentData<TValue = any, TOptions = any>
 {
     /**
      * NgSelect plugins instances
@@ -84,7 +84,7 @@ export interface DialogPopupComponentData<TValue, TOptions>
 /**
  * Component that is rendered within dialog
  */
-export interface DialogPopupContentComponent<TValue, TOptions>
+export interface DialogPopupContentComponent<TValue = any, TOptions = any>
 {
     /**
      * Data that are used for communication with Popup

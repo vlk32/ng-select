@@ -13,7 +13,7 @@ export interface NgSelectPluginInstances
 /**
  * Public API for NgSelect
  */
-export interface NgSelect<TValue>
+export interface NgSelect<TValue = any>
 {
     /**
      * Occurs every time when NgSelect is initialized or reinitialized, if value is false NgSelect was not initialized yet
@@ -67,9 +67,9 @@ export interface NgSelect<TValue>
 /**
  * Defintion of action that can be executed on NgSelect
  */
-export type NgSelectAction<TValue> = (ngSelect: NgSelect<TValue>) => void;
+export type NgSelectAction<TValue = any> = (ngSelect: NgSelect<TValue>) => void;
 
 /**
  * Definition of function that can be executed on NgSelect and returns some data
  */
-export type NgSelectFunction<TResult, TValue> = (ngSelect: NgSelect<TValue>) => TResult;
+export type NgSelectFunction<TResult = any, TValue = any> = (ngSelect: NgSelect<TValue>) => TResult;

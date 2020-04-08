@@ -6,7 +6,7 @@ import {NgSelectOption} from "../../components/option";
 /**
  * Options for popup plugin
  */
-export interface PopupOptions<TCssClasses> extends VisualPluginOptions<TCssClasses>
+export interface PopupOptions<TCssClasses = any> extends VisualPluginOptions<TCssClasses>
 {
     /**
      * Indication whether are popup options visible, or not
@@ -27,7 +27,7 @@ export interface Popup extends NgSelectPlugin
     /**
      * Instance of options gatherer, that is used for obtaining available options
      */
-    optionsGatherer: OptionsGatherer<any>;
+    optionsGatherer: OptionsGatherer;
 
     /**
      * Gatherer used for obtaining custom templates
@@ -42,7 +42,7 @@ export interface Popup extends NgSelectPlugin
     /**
      * Occurs when user clicks on option, clicked options is passed as argument
      */
-    readonly optionClick: EventEmitter<NgSelectOption<any>>;
+    readonly optionClick: EventEmitter<NgSelectOption>;
 
     /**
      * Occurs when visibility of popup has changed
@@ -63,7 +63,7 @@ export interface PopupContext
     /**
      * Instance of plugin itself
      */
-    $implicit: NgSelectOption<any>;
+    $implicit: NgSelectOption;
 
     /**
      * Instance of plugin itself

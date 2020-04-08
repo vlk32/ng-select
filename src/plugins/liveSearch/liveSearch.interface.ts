@@ -16,7 +16,7 @@ export interface LiveSearchTexts
 /**
  * Options for live search plugin
  */
-export interface LiveSearchOptions<TCssClasses> extends VisualPluginOptions<TCssClasses>
+export interface LiveSearchOptions<TCssClasses = any> extends VisualPluginOptions<TCssClasses>
 {
     /**
      * Texts that are used within any LiveSearch

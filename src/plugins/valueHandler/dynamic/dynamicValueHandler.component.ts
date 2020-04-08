@@ -12,7 +12,7 @@ import {ValueHandlerBase} from '../valueHandlerBase';
  * Default options for value handler
  * @internal
  */
-const defaultOptions: DynamicValueHandlerOptions<any> =
+const defaultOptions: DynamicValueHandlerOptions =
 {
     textExtractor: value => value
 };
@@ -26,7 +26,7 @@ const defaultOptions: DynamicValueHandlerOptions<any> =
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DynamicValueHandlerComponent<TValue> extends ValueHandlerBase<TValue, DynamicValueHandlerOptions<TValue>> implements DynamicValueHandler<TValue>
+export class DynamicValueHandlerComponent<TValue = any> extends ValueHandlerBase<TValue, DynamicValueHandlerOptions<TValue>> implements DynamicValueHandler<TValue>
 {
     //######################### public properties - implementation of DynamicValueHandler #########################
 

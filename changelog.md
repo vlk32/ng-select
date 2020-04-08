@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 8.0.0
+
+- all generic types are now optional, all defaults to `any`
+- **Breaking Changes**
+   - test
+
 ## Version 7.2.0
 
 - *subpackage* `@anglr/select/material` 

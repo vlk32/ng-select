@@ -11,7 +11,7 @@ import {BasicDialogPopupComponent} from "../../../components/basicDialogPopup/ba
  * Default options for popup
  * @internal
  */
-const defaultOptions: DialogPopupOptions<any> =
+const defaultOptions: DialogPopupOptions =
 {
     dialogComponent: forwardRef(() => BasicDialogPopupComponent),
     dialogOptions: {},
@@ -34,7 +34,7 @@ const defaultOptions: DialogPopupOptions<any> =
     template: "",
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DialogPopupComponent<TValue, TDialogOptions> implements DialogPopup, NgSelectPluginGeneric<DialogPopupOptions<TDialogOptions>>, OnDestroy
+export class DialogPopupComponent<TValue = any, TDialogOptions = any> implements DialogPopup, NgSelectPluginGeneric<DialogPopupOptions<TDialogOptions>>, OnDestroy
 {
     //######################### protected fields #########################
 
@@ -81,7 +81,7 @@ export class DialogPopupComponent<TValue, TDialogOptions> implements DialogPopup
     /**
      * Popup dialog reference
      */
-    protected _dialogRef?: MatDialogRef<any>;
+    protected _dialogRef?: MatDialogRef;
 
     //######################### public properties - implementation of BasicPopup #########################
 
@@ -100,7 +100,7 @@ export class DialogPopupComponent<TValue, TDialogOptions> implements DialogPopup
     /**
      * Instance of options gatherer, that is used for obtaining available options
      */
-    public optionsGatherer: OptionsGatherer<any>;
+    public optionsGatherer: OptionsGatherer;
 
     /**
      * Gatherer used for obtaining custom templates
@@ -136,7 +136,7 @@ export class DialogPopupComponent<TValue, TDialogOptions> implements DialogPopup
      * Array of select options available
      * @internal
      */
-    public selectOptions: ɵNgSelectOption<any>[];
+    public selectOptions: ɵNgSelectOption[];
 
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
@@ -208,7 +208,7 @@ export class DialogPopupComponent<TValue, TDialogOptions> implements DialogPopup
             this._khPopupVisibilityRequestSubscription = this._keyboardHandler.popupVisibilityRequest.subscribe(this._handleDialog);
         }
 
-        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler<any>;
+        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler;
 
         if(this._valueHandler && this._valueHandler != valueHandler)
         {

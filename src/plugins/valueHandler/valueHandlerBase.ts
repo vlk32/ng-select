@@ -15,7 +15,7 @@ import {ValueHandler, ValueHandlerOptions} from './valueHandler.interface';
 /**
  * Base class for value handlers
  */
-export abstract class ValueHandlerBase<TValue, TOptions extends ValueHandlerOptions> implements ValueHandler<TValue>, NgSelectPluginGeneric<TOptions>, OnDestroy
+export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandlerOptions = any> implements ValueHandler<TValue>, NgSelectPluginGeneric<TOptions>, OnDestroy
 {
     //######################### protected fields #########################
 

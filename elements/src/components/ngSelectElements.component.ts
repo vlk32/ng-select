@@ -31,7 +31,7 @@ const NG_OPTION = "NG-OPTION";
         }`
     ]
 })
-export class NgSelectElementsComponent<TValue> extends NgSelectComponent<TValue> implements NgSelectWebComponent<TValue>
+export class NgSelectElementsComponent<TValue = any> extends NgSelectComponent<TValue> implements NgSelectWebComponent<TValue>
 {
     //######################### protected fields #########################
 

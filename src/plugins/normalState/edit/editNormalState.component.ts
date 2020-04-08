@@ -89,7 +89,7 @@ export class EditNormalStateComponent implements EditNormalState, NgSelectPlugin
     /**
      * Occurs when user tries to cancel one of selected values
      */
-    public cancelOption: EventEmitter<NgSelectOption<any>> = new EventEmitter<NgSelectOption<any>>();
+    public cancelOption: EventEmitter<NgSelectOption> = new EventEmitter<NgSelectOption>();
 
     /**
      * Gatherer used for obtaining custom templates
@@ -108,7 +108,7 @@ export class EditNormalStateComponent implements EditNormalState, NgSelectPlugin
      * Value handler used in NgSelect
      * @internal
      */
-    public valueHandler: ValueHandler<any>;
+    public valueHandler: ValueHandler;
 
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
@@ -145,7 +145,7 @@ export class EditNormalStateComponent implements EditNormalState, NgSelectPlugin
     {
         this._textsChangedSubscription = this._stringLocalization.textsChange.subscribe(() => this._initTexts());
 
-        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler<any>;
+        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler;
 
         if(this.valueHandler && this.valueHandler != valueHandler)
         {

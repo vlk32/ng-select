@@ -10,4 +10,4 @@ export const NORMAL_STATE = "NORMAL_STATE";
 /**
  * Token for injecting options for normal state plugin
  */
-export const NORMAL_STATE_OPTIONS: InjectionToken<NormalStateOptions<any>> = new InjectionToken<NormalStateOptions<any>>('NORMAL_STATE_OPTIONS');
+export const NORMAL_STATE_OPTIONS: InjectionToken<NormalStateOptions> = new InjectionToken<NormalStateOptions>('NORMAL_STATE_OPTIONS');

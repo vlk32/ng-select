@@ -46,7 +46,7 @@ export class BasicKeyboardHandlerComponent implements BasicKeyboardHandler, NgSe
     /**
      * Gets currently available options
      */
-    protected get availableOptions(): ɵNgSelectOption<any>[]
+    protected get availableOptions(): ɵNgSelectOption[]
     {
         return this.optionsGatherer.availableOptions;
     }
@@ -73,7 +73,7 @@ export class BasicKeyboardHandlerComponent implements BasicKeyboardHandler, NgSe
     /**
      * Instance of options gatherer, that is used for obtaining available options
      */
-    public optionsGatherer: OptionsGatherer<any>;
+    public optionsGatherer: OptionsGatherer;
 
     /**
      * Occurs when there is requested for change of visibility of popup using keyboard
@@ -83,7 +83,7 @@ export class BasicKeyboardHandlerComponent implements BasicKeyboardHandler, NgSe
     /**
      * Occurs when option was selected using keyboard
      */
-    public optionSelect: EventEmitter<NgSelectOption<any>> = new EventEmitter<NgSelectOption<any>>();
+    public optionSelect: EventEmitter<NgSelectOption> = new EventEmitter<NgSelectOption>();
 
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,

@@ -1,7 +1,7 @@
 /**
  * Option for ng select
  */
-export interface NgSelectOption<TValue>
+export interface NgSelectOption<TValue = any>
 {
     /**
      * Value that will be used if this option will be selected
@@ -22,7 +22,7 @@ export interface NgSelectOption<TValue>
 /**
  * Option for ng select
  */
-export interface ɵNgSelectOption<TValue> extends NgSelectOption<TValue>
+export interface ɵNgSelectOption<TValue = any> extends NgSelectOption<TValue>
 {
     /**
      * Indication whether is item active

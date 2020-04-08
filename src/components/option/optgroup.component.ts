@@ -13,7 +13,7 @@ import {OptionComponent} from "./option.component";
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OptGroupComponent<TValue> implements NgSelectOptGroup<TValue>, AfterViewInit
+export class OptGroupComponent<TValue = any> implements NgSelectOptGroup<TValue>, AfterViewInit
 {
     //######################### private fields #########################
 

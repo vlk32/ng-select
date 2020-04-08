@@ -13,7 +13,7 @@ import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
 /**
  * Class that is used as for options gathering in dynamic way, for example from external source when writing
  */
-export class DynamicOptionsGatherer<TValue> implements OptionsGatherer<TValue>
+export class DynamicOptionsGatherer<TValue = any> implements OptionsGatherer<TValue>
 {
     //######################### protected fields #########################
 

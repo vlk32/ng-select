@@ -37,7 +37,7 @@ import {OptGroupComponent} from "../option/optgroup.component";
  * Default 'NgSelectOptions'
  * @internal
  */
-const defaultOptions: NgSelectOptions<any> =
+const defaultOptions: NgSelectOptions =
 {
     autoInitialize: true,
     absolute: false,
@@ -46,7 +46,7 @@ const defaultOptions: NgSelectOptions<any> =
     {
         return source == target;
     },
-    liveSearchFilter: (query: string, normalizer: NormalizeFunc<any> = value => value) =>
+    liveSearchFilter: (query: string, normalizer: NormalizeFunc = value => value) =>
     {
         return itm => normalizer(itm.text).indexOf(normalizer(query)) >= 0;
     },
@@ -88,7 +88,7 @@ const defaultOptions: NgSelectOptions<any> =
         {
             type: forwardRef(() => BasicNormalStateComponent)
         },
-        valueHandler: <PluginDescription<BasicValueHandlerComponent<any>>>
+        valueHandler: <PluginDescription<BasicValueHandlerComponent>>
         {
             type: forwardRef(() => BasicValueHandlerComponent)
         }
@@ -128,7 +128,7 @@ export function ngSelectPluginInstancesFactory()
         }`
     ]
 })
-export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, OnInit, AfterViewInit, OnDestroy, OptionsGatherer<TValue>, TemplateGatherer
+export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChanges, OnInit, AfterViewInit, OnDestroy, OptionsGatherer<TValue>, TemplateGatherer
 {
     //######################### protected fields #########################
 
@@ -289,7 +289,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
      * @internal
      */
     @ContentChildren(OptionComponent)
-    public optionsChildren: QueryList<NgSelectOption<any>>;
+    public optionsChildren: QueryList<NgSelectOption>;
 
     //######################### public properties - children #########################
 
@@ -298,7 +298,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
      * @internal
      */
     @ContentChildren(OptGroupComponent)
-    public optGroupsChildren: QueryList<NgSelectOptGroup<any>>;
+    public optGroupsChildren: QueryList<NgSelectOptGroup>;
 
     //######################### constructors #########################
     constructor(protected _changeDetector: ChangeDetectorRef,
@@ -313,7 +313,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
                 @Inject(POPUP_TYPE) @Optional() popupType?: Type<Popup>,
                 @Inject(POSITIONER_TYPE) @Optional() positionerType?: Type<Positioner>,
                 @Inject(READONLY_STATE_TYPE) @Optional() readonlyStateType?: Type<ReadonlyState>,
-                @Inject(VALUE_HANDLER_TYPE) @Optional() valueHandlerType?: Type<ValueHandler<any>>,
+                @Inject(VALUE_HANDLER_TYPE) @Optional() valueHandlerType?: Type<ValueHandler>,
                 @Inject(LIVE_SEARCH_TYPE) @Optional() liveSearchType?: Type<LiveSearch>,
                 @Attribute('readonly') readonly?: string,
                 @Attribute('disabled') disabled?: string,
@@ -409,7 +409,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
                                          {
                                              popup:
                                              {
-                                                 options: <PopupOptions<any>>
+                                                 options: <PopupOptions>
                                                  {
                                                      multiple: multipleDefault
                                                  }
@@ -701,7 +701,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
             readonlyState.options = this._selectOptions.plugins.readonlyState.options;
         }
 
-        let options = readonlyState.options as ReadonlyStateOptions<any>;
+        let options = readonlyState.options as ReadonlyStateOptions;
 
         options.readonly = true;
         readonlyState.initOptions();
@@ -890,7 +890,7 @@ export class NgSelectComponent<TValue> implements NgSelect<TValue>, OnChanges, O
                         this._pluginInstances[READONLY_STATE].options = this._selectOptions.plugins.readonlyState.options;
                     }
 
-                    let options = this._pluginInstances[READONLY_STATE].options as ReadonlyStateOptions<any>;
+                    let options = this._pluginInstances[READONLY_STATE].options as ReadonlyStateOptions;
 
                     options.readonly = true;
                     this._pluginInstances[READONLY_STATE].initOptions();

@@ -12,7 +12,7 @@ import {NormalizeFunc} from "../ngSelectOptions.interface";
 /**
  * Options gatherer used for static options gathering from code
  */
-export class CodeOptionsGatherer<TValue> implements OptionsGatherer<TValue>
+export class CodeOptionsGatherer<TValue = any> implements OptionsGatherer<TValue>
 {
     //######################### private fields #########################
 
@@ -93,7 +93,7 @@ export class CodeOptionsGatherer<TValue> implements OptionsGatherer<TValue>
 
         if(isBlank(this._liveSearchFilter))
         {
-            this._liveSearchFilter = (query: string, normalizer?: NormalizeFunc<any>) =>
+            this._liveSearchFilter = (query: string, normalizer?: NormalizeFunc) =>
             {
                 return itm => normalizer(itm.text).indexOf(normalizer(query)) >= 0;
             };

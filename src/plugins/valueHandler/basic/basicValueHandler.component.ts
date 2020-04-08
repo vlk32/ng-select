@@ -25,7 +25,7 @@ const defaultOptions: BasicValueHandlerOptions =
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BasicValueHandlerComponent<TValue> extends ValueHandlerBase<TValue, BasicValueHandlerOptions> implements BasicValueHandler<TValue>
+export class BasicValueHandlerComponent<TValue = any> extends ValueHandlerBase<TValue, BasicValueHandlerOptions> implements BasicValueHandler<TValue>
 {
     //######################### protected fields #########################
 

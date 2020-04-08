@@ -20,7 +20,7 @@ export interface ValueHandlerOptions extends PluginOptions
 /**
  * Value handler plugin interface
  */
-export interface ValueHandler<TValue> extends NgSelectPlugin
+export interface ValueHandler<TValue = any> extends NgSelectPlugin
 {
     /**
      * Instance of options gatherer, that is used for obtaining available options

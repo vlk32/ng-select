@@ -29,5 +29,5 @@ export interface Positioner extends NgSelectPlugin
     /**
      * Instance of options gatherer, that is used for obtaining available options
      */
-    optionsGatherer: OptionsGatherer<any>;
+    optionsGatherer: OptionsGatherer;
 }

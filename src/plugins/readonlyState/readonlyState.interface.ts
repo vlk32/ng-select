@@ -4,7 +4,7 @@ import {NormalStateOptions, NormalState} from "../normalState";
 /**
  * Options for readonly state plugin
  */
-export interface ReadonlyStateOptions<TCssClasses> extends NormalStateOptions<TCssClasses>
+export interface ReadonlyStateOptions<TCssClasses = any> extends NormalStateOptions<TCssClasses>
 {
 }
 

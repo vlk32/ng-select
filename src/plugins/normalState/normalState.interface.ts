@@ -17,7 +17,7 @@ export interface NormalStateTexts
 /**
  * Options for normal state plugin
  */
-export interface NormalStateOptions<TCssClasses> extends VisualPluginOptions<TCssClasses>
+export interface NormalStateOptions<TCssClasses = any> extends VisualPluginOptions<TCssClasses>
 {
     /**
      * Texts that are used within any NormalState
@@ -53,7 +53,7 @@ export interface NormalState extends NgSelectPlugin
     /**
      * Occurs when user tries to cancel one of selected values
      */
-    readonly cancelOption: EventEmitter<NgSelectOption<any>>;
+    readonly cancelOption: EventEmitter<NgSelectOption>;
 }
 
 /**

@@ -7,7 +7,7 @@ import {NgSelectOption} from '../components/option';
  * Pipe to transform ng select selected option into
  */
 @Pipe({name: 'ngSelectValue'})
-export class NgSelectValuePipe<TValue> implements PipeTransform
+export class NgSelectValuePipe<TValue = any> implements PipeTransform
 {
     //######################### public methods #########################
     

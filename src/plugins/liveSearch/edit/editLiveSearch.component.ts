@@ -62,7 +62,7 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
     /**
      * Value handler plugin used within `NgSelect`
      */
-    protected _valueHandler: ValueHandler<any>;
+    protected _valueHandler: ValueHandler;
 
     /**
      * Subscription for changes in texts
@@ -129,14 +129,14 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
      * Options that are passed to normalState
      * @internal
      */
-    public get normalStateOptions(): NormalStateOptions<any>
+    public get normalStateOptions(): NormalStateOptions
     {
         if(!this._normalState)
         {
             return null;
         }
 
-        return this._normalState.options as NormalStateOptions<any>;
+        return this._normalState.options as NormalStateOptions;
     }
 
     //######################### public properties - children #########################
@@ -211,7 +211,7 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
             this._popup = popup;
         }
 
-        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler<any>;
+        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler;
 
         if(this._valueHandler && this._valueHandler != valueHandler)
         {
@@ -285,13 +285,13 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGe
             this._valueHandler.setValue(null);
 
             //do not change active if active is visible
-            if(!this._valueHandler.optionsGatherer.availableOptions.find((option: ɵNgSelectOption<any>) => option.active))
+            if(!this._valueHandler.optionsGatherer.availableOptions.find((option: ɵNgSelectOption) => option.active))
             {
-                let option: ɵNgSelectOption<any> = this._valueHandler.findAvailableOption(value);
+                let option: ɵNgSelectOption = this._valueHandler.findAvailableOption(value);
 
                 if(option)
                 {
-                    this._valueHandler.optionsGatherer.options.forEach((option: ɵNgSelectOption<any>) => option.active = false);
+                    this._valueHandler.optionsGatherer.options.forEach((option: ɵNgSelectOption) => option.active = false);
                     option.active = true;
                     this._popup.invalidateVisuals();
                 }

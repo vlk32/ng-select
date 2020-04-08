@@ -24,7 +24,7 @@ export const NG_SELECT_VALUE_ACCESSOR: ExistingProvider =
     selector: 'ng-select[formControlName],ng-select[formControl],ng-select[ngModel]',
     providers: [NG_SELECT_VALUE_ACCESSOR]
 })
-export class NgSelectControlValueAccessor<TValue> implements ControlValueAccessor, OnDestroy
+export class NgSelectControlValueAccessor<TValue = any> implements ControlValueAccessor, OnDestroy
 {
     //######################### private fields #########################
 

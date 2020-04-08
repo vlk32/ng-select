@@ -55,7 +55,7 @@ export class NoPositionerComponent implements NoPositioner, NgSelectPluginGeneri
     /**
      * Instance of options gatherer, that is used for obtaining available options
      */
-    public optionsGatherer: OptionsGatherer<any>;
+    public optionsGatherer: OptionsGatherer;
 
 
     //######################### constructor #########################

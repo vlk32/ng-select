@@ -9,10 +9,10 @@ import {DialogPopupComponentData, DialogPopupContentComponent, DialogPopupOption
 {
     selector: 'ng-select-basic-dialog-popup',
     templateUrl: 'basicDialogPopup.component.html',
-    styleUrls: ['basicDialogPopup.component.scss'],
+    styleUrls: ['basicDialogPopup.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BasicDialogPopupComponent<TValue, TDialogOptions> implements DialogPopupContentComponent<TValue, TDialogOptions>, OnInit, OnDestroy
+export class BasicDialogPopupComponent<TValue = any, TDialogOptions = any> implements DialogPopupContentComponent<TValue, TDialogOptions>, OnInit, OnDestroy
 {
     //######################### private properties #########################
 

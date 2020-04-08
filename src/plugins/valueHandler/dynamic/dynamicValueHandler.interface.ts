@@ -4,7 +4,7 @@ import {GetOptionsCallback} from "../../../misc";
 /**
  * Dynamic value handler options
  */
-export interface DynamicValueHandlerOptions<TValue> extends ValueHandlerOptions
+export interface DynamicValueHandlerOptions<TValue = any> extends ValueHandlerOptions
 {
     /**
      * Callback used for obtaining dynamic options during initialization, if not specified value will be used as text
@@ -20,6 +20,6 @@ export interface DynamicValueHandlerOptions<TValue> extends ValueHandlerOptions
 /**
  * Public API for 'DynamicValueHandlerComponent'
  */
-export interface DynamicValueHandler<TValue> extends ValueHandler<TValue>
+export interface DynamicValueHandler<TValue = any> extends ValueHandler<TValue>
 {
 }

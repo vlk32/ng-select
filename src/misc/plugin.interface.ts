@@ -48,7 +48,7 @@ export interface NgSelectPlugin
 /**
  * NgSelect plugin generic interface
  */
-export interface NgSelectPluginGeneric<TOptions> extends NgSelectPlugin
+export interface NgSelectPluginGeneric<TOptions = any> extends NgSelectPlugin
 {
     /**
      * Options for ng select plugin
@@ -89,7 +89,7 @@ export interface NgSelectPluginTypes
     /**
      * Handles obtaining and setting value of component
      */
-    valueHandler?: PluginDescription<ValueHandler<any>>;
+    valueHandler?: PluginDescription<ValueHandler>;
 
     /**
      * Contains component that is used for live searching in options
@@ -107,7 +107,7 @@ export interface PluginOptions
 /**
  * Base options for every visual plugin (component)
  */
-export interface VisualPluginOptions<TCssClasses> extends PluginOptions
+export interface VisualPluginOptions<TCssClasses = any> extends PluginOptions
 {
     /**
      * Css classes applied to visual plugin (component), possible to override only part of classes
@@ -118,7 +118,7 @@ export interface VisualPluginOptions<TCssClasses> extends PluginOptions
 /**
  * Defines interface, that describes minimal set of parameters for specifying plugin for NgSelect
  */
-export interface PluginDescription<PluginType>
+export interface PluginDescription<PluginType = any>
 {
     /**
      * Type of plugin that will be dynamically instantiated
