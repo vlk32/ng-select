@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, OnDestroy, Component, EventEmitter, Inject, Optional, ElementRef, ChangeDetectorRef, Type, resolveForwardRef, forwardRef} from "@angular/core";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {NgSelectPluginGeneric, NormalState, KeyboardHandler, ValueHandler, OptionsGatherer, TemplateGatherer, ɵNgSelectOption, NgSelectOption, NgSelectPluginInstances, NG_SELECT_PLUGIN_INSTANCES, POPUP_OPTIONS, NORMAL_STATE, KEYBOARD_HANDLER, VALUE_HANDLER} from "@anglr/select";
+import {NgSelectPlugin, NormalState, KeyboardHandler, ValueHandler, OptionsGatherer, TemplateGatherer, ɵNgSelectOption, NgSelectOption, NgSelectPluginInstances, NG_SELECT_PLUGIN_INSTANCES, POPUP_OPTIONS, NORMAL_STATE, KEYBOARD_HANDLER, VALUE_HANDLER} from "@anglr/select";
 import {extend} from "@jscrpt/common";
 import {Subscription} from "rxjs";
 
@@ -34,7 +34,7 @@ const defaultOptions: DialogPopupOptions =
     template: "",
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DialogPopupComponent<TValue = any, TDialogOptions = any> implements DialogPopup, NgSelectPluginGeneric<DialogPopupOptions<TDialogOptions>>, OnDestroy
+export class DialogPopupComponent<TValue = any, TDialogOptions = any> implements DialogPopup, NgSelectPlugin<DialogPopupOptions<TDialogOptions>>, OnDestroy
 {
     //######################### protected fields #########################
 

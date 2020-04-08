@@ -4,7 +4,7 @@ import {STRING_LOCALIZATION, StringLocalization} from '@anglr/common';
 import {Subscription} from 'rxjs';
 
 import {EditLiveSearchOptions, EditLiveSearch} from './editLiveSearch.interface';
-import {NgSelectPluginGeneric} from '../../../misc';
+import {NgSelectPlugin} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {LiveSearchTexts} from '../liveSearch.interface';
@@ -45,7 +45,7 @@ const defaultOptions: EditLiveSearchOptions =
     styleUrls: ['editLiveSearch.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPluginGeneric<EditLiveSearchOptions>, OnDestroy
+export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<EditLiveSearchOptions>, OnDestroy
 {
     //######################### protected fields #########################
 

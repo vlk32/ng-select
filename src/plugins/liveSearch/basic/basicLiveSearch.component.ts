@@ -4,7 +4,7 @@ import {STRING_LOCALIZATION, StringLocalization} from '@anglr/common';
 import {Subscription} from 'rxjs';
 
 import {BasicLiveSearchOptions, BasicLiveSearch} from './basicLiveSearch.interface';
-import {NgSelectPluginGeneric} from '../../../misc';
+import {NgSelectPlugin} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {LiveSearchTexts} from '../liveSearch.interface';
@@ -37,23 +37,10 @@ const defaultOptions: BasicLiveSearchOptions =
 {
     selector: "ng-basic-live-search",
     templateUrl: 'basicLiveSearch.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    styles:
-    [
-        `.wrapper-div
-        {
-            padding: 4px;
-            border-bottom: 1px solid #666;
-            margin-bottom: 2px;
-        }
-        
-        .form-control
-        {
-            width: 100%;
-        }`
-    ]
+    styleUrls: ['basicLiveSearch.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPluginGeneric<BasicLiveSearchOptions>, OnDestroy
+export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin<BasicLiveSearchOptions>, OnDestroy
 {
     //######################### protected fields #########################
 

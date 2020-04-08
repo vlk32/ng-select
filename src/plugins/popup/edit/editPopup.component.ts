@@ -4,7 +4,7 @@ import {extend, isDescendant} from '@jscrpt/common';
 import {Subscription} from 'rxjs';
 
 import {EditPopupOptions, EditPopup} from './editPopup.interface';
-import {NgSelectPluginGeneric, OptionsGatherer, TemplateGatherer} from '../../../misc';
+import {NgSelectPlugin, OptionsGatherer, TemplateGatherer} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {POPUP_OPTIONS} from '../types';
@@ -42,7 +42,7 @@ const defaultOptions: EditPopupOptions =
     styleUrls: ['editPopup.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditPopupComponent implements EditPopup, NgSelectPluginGeneric<EditPopupOptions>, AfterViewInit, OnDestroy
+export class EditPopupComponent implements EditPopup, NgSelectPlugin<EditPopupOptions>, AfterViewInit, OnDestroy
 {
     //######################### protected fields #########################
 

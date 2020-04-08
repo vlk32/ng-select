@@ -5,7 +5,7 @@ import {extend, isNumber} from '@jscrpt/common';
 import {Subscription} from 'rxjs';
 
 import {BasicPositionerOptions, BasicPositioner} from './basicPositioner.interface';
-import {NgSelectPluginGeneric, OptionsGatherer} from '../../../misc';
+import {NgSelectPlugin, OptionsGatherer} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {POSITIONER_OPTIONS} from '../types';
@@ -31,7 +31,7 @@ const defaultOptions: BasicPositionerOptions =
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BasicPositionerComponent implements BasicPositioner, NgSelectPluginGeneric<BasicPositionerOptions>, OnDestroy
+export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin<BasicPositionerOptions>, OnDestroy
 {
     //######################### protected fields #########################
 

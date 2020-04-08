@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, FactoryProvider, Input, Inject, ChangeDetectorRef, Optional, Type, AfterViewInit, OnInit, ContentChildren, QueryList, EventEmitter, forwardRef, resolveForwardRef, ElementRef, OnChanges, SimpleChanges, Attribute, OnDestroy, TemplateRef, ContentChild, ComponentFactoryResolver, ApplicationRef, Injector, EmbeddedViewRef, ComponentRef} from "@angular/core";
+import {Component, ChangeDetectionStrategy, FactoryProvider, Input, Inject, ChangeDetectorRef, Optional, Type, AfterViewInit, OnInit, ContentChildren, QueryList, EventEmitter, forwardRef, resolveForwardRef, ElementRef, OnChanges, SimpleChanges, Attribute, OnDestroy, TemplateRef, ContentChild, ComponentFactoryResolver, ApplicationRef, Injector, EmbeddedViewRef, ComponentRef, ClassProvider} from "@angular/core";
 import {extend, nameof, isBoolean, isPresent, isString} from "@jscrpt/common";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 
@@ -29,6 +29,7 @@ import {NoLiveSearchComponent} from "../../plugins/liveSearch/components";
 import {NgSelectOption, NgSelectOptGroup} from "../option";
 import {OptionComponent} from "../option/option.component";
 import {OptGroupComponent} from "../option/optgroup.component";
+import {PluginBus} from '../../misc/pluginBus/pluginBus';
 
 //TODO - dynamic change of absolute popup
 //TODO - check if dynamic element is correctly removed from html
@@ -118,6 +119,11 @@ export function ngSelectPluginInstancesFactory()
         {
             provide: NG_SELECT_PLUGIN_INSTANCES,
             useFactory: ngSelectPluginInstancesFactory
+        },
+        <ClassProvider>
+        {
+            provide: PluginBus,
+            useClass: PluginBus
         }
     ],
     styles: [

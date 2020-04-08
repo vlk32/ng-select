@@ -29,9 +29,30 @@ export interface NormalizeFunc<TValue = any>
 }
 
 /**
+ * Options used for plugin bus
+ */
+export interface PluginBusOptions<TValue = any>
+{
+    /**
+     * Instance of options gatherer that is used for obtaining options
+     */
+    optionsGatherer?: OptionsGatherer<TValue>;
+
+    /**
+     * Instance of template gatherer used for obtaining custom templates
+     */
+    templateGatherer?: TemplateGatherer;
+
+    /**
+     * Indication whether is NgSelect readonly or not
+     */
+    readonly?: boolean;
+}
+
+/**
  * Describes select options used for NgSelect
  */
-export interface NgSelectOptions<TValue = any>
+export interface NgSelectOptions<TValue = any> extends PluginBusOptions<TValue>
 {
     /**
      * Indication whether NgSelect should be initialized automaticaly during 'NgOnInit' phase
@@ -47,21 +68,6 @@ export interface NgSelectOptions<TValue = any>
      * Object defining overrides for default plugins, default plugins can be also specified using DI
      */
     plugins?: NgSelectPluginTypes;
-
-    /**
-     * Instance of options gatherer that is used for obtaining options
-     */
-    optionsGatherer?: OptionsGatherer<TValue>;
-
-    /**
-     * Instance of template gatherer used for obtaining custom templates
-     */
-    templateGatherer?: TemplateGatherer;
-
-    /**
-     * Indication whether is NgSelect readonly or not
-     */
-    readonly?: boolean;
 
     /**
      * Indication whether is 'Popup' plugin displayd inside of NgSelect (false) or directly in Body (true)

@@ -1,0 +1,11 @@
+.wrapper-div
+{
+    padding: 4px;
+    border-bottom: 1px solid #666;
+    margin-bottom: 2px;
+}
+
+.form-control
+{
+    width: 100%;
+}

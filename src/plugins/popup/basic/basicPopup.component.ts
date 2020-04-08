@@ -4,7 +4,7 @@ import {extend, isDescendant} from '@jscrpt/common';
 import {Subscription} from 'rxjs';
 
 import {BasicPopupOptions, BasicPopup} from './basicPopup.interface';
-import {NgSelectPluginGeneric, OptionsGatherer, TemplateGatherer} from '../../../misc';
+import {NgSelectPlugin, OptionsGatherer, TemplateGatherer} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {POPUP_OPTIONS} from '../types';
@@ -42,7 +42,7 @@ const defaultOptions: BasicPopupOptions =
     styleUrls: ['basicPopup.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BasicPopupComponent implements BasicPopup, NgSelectPluginGeneric<BasicPopupOptions>, AfterViewInit, OnDestroy
+export class BasicPopupComponent implements BasicPopup, NgSelectPlugin<BasicPopupOptions>, AfterViewInit, OnDestroy
 {
     //######################### protected fields #########################
 

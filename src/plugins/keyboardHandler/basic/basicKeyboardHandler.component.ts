@@ -2,7 +2,7 @@ import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef, OnDest
 import {extend} from '@jscrpt/common';
 
 import {BasicKeyboardHandlerOptions, BasicKeyboardHandler} from './basicKeyboardHandler.interface';
-import {NgSelectPluginGeneric, OptionsGatherer} from '../../../misc';
+import {NgSelectPlugin, OptionsGatherer} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {KEYBOARD_HANDLER_OPTIONS} from '../types';
@@ -27,7 +27,7 @@ const defaultOptions: BasicKeyboardHandlerOptions =
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BasicKeyboardHandlerComponent implements BasicKeyboardHandler, NgSelectPluginGeneric<BasicKeyboardHandlerOptions>, OnDestroy
+export class BasicKeyboardHandlerComponent implements BasicKeyboardHandler, NgSelectPlugin<BasicKeyboardHandlerOptions>, OnDestroy
 {
     //######################### protected fields #########################
 

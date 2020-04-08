@@ -4,7 +4,7 @@ import {StringLocalization, STRING_LOCALIZATION} from '@anglr/common';
 import {Subscription} from 'rxjs';
 
 import {EditNormalStateOptions, EditNormalState} from './editNormalState.interface';
-import {NgSelectPluginGeneric, TemplateGatherer} from '../../../misc';
+import {NgSelectPlugin, TemplateGatherer} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {NormalStateTexts} from '../normalState.interface';
@@ -43,7 +43,7 @@ const defaultOptions: EditNormalStateOptions =
     styleUrls: ['editNormalState.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditNormalStateComponent implements EditNormalState, NgSelectPluginGeneric<EditNormalStateOptions>, OnDestroy
+export class EditNormalStateComponent implements EditNormalState, NgSelectPlugin<EditNormalStateOptions>, OnDestroy
 {
     //######################### protected fields #########################
 

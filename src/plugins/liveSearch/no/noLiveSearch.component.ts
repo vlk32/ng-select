@@ -2,7 +2,7 @@ import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef, EventE
 import {DOCUMENT} from '@angular/common';
 
 import {NoLiveSearchOptions, NoLiveSearch} from './noLiveSearch.interface';
-import {NgSelectPluginGeneric} from '../../../misc';
+import {NgSelectPlugin} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 
@@ -15,7 +15,7 @@ import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NoLiveSearchComponent implements NoLiveSearch, NgSelectPluginGeneric<NoLiveSearchOptions>
+export class NoLiveSearchComponent implements NoLiveSearch, NgSelectPlugin<NoLiveSearchOptions>
 {
     //######################### protected fields #########################
 

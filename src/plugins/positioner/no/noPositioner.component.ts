@@ -2,7 +2,7 @@ import {NoPositioner, NoPositionerOptions} from "./noPositioner.interface";
 import {ChangeDetectionStrategy, Component, ElementRef, Inject, Optional} from "@angular/core";
 import {extend} from "@jscrpt/common";
 
-import {NgSelectPluginGeneric, OptionsGatherer} from '../../../misc';
+import {NgSelectPlugin, OptionsGatherer} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {POSITIONER_OPTIONS} from '../types';
@@ -24,7 +24,7 @@ const defaultOptions: NoPositionerOptions =
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NoPositionerComponent implements NoPositioner, NgSelectPluginGeneric<NoPositionerOptions>
+export class NoPositionerComponent implements NoPositioner, NgSelectPlugin<NoPositionerOptions>
 {
     //######################### private properties #########################
 

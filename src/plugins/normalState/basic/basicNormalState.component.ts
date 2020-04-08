@@ -4,7 +4,7 @@ import {StringLocalization, STRING_LOCALIZATION} from '@anglr/common';
 import {Subscription} from 'rxjs';
 
 import {BasicNormalStateOptions, BasicNormalState} from './basicNormalState.interface';
-import {NgSelectPluginGeneric, TemplateGatherer} from '../../../misc';
+import {NgSelectPlugin, TemplateGatherer} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {NormalStateTexts} from '../normalState.interface';
@@ -42,7 +42,7 @@ const defaultOptions: BasicNormalStateOptions =
     styleUrls: ['basicNormalState.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BasicNormalStateComponent implements BasicNormalState, NgSelectPluginGeneric<BasicNormalStateOptions>, OnDestroy
+export class BasicNormalStateComponent implements BasicNormalState, NgSelectPlugin<BasicNormalStateOptions>, OnDestroy
 {
     //######################### protected fields #########################
 

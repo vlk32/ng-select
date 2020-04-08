@@ -10,6 +10,7 @@ export * from './directives/ngSelectEdit/ngSelectEdit.directive';
 export * from './misc/ngSelectControlValueAccessor.directive';
 export * from './misc';
 export * from './misc/types';
+export * from './misc/pluginBus/pluginBus';
 export * from './misc/optionsGatherer/types';
 export * from './modules/ngSelect.module';
 export * from './modules/ngSelectDynamic.module';

@@ -1,7 +1,7 @@
 import {ElementRef, EventEmitter, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
 
-import {NgSelectPluginGeneric, OptionsGatherer, CompareValueFunc, LiveSearchFilter, NormalizeFunc} from '../../misc';
+import {NgSelectPlugin, OptionsGatherer, CompareValueFunc, LiveSearchFilter, NormalizeFunc} from '../../misc';
 import {NgSelectPluginInstances} from '../../components/select';
 import {KeyboardHandler} from '../keyboardHandler';
 import {KEYBOARD_HANDLER} from '../keyboardHandler/types';
@@ -15,7 +15,7 @@ import {ValueHandler, ValueHandlerOptions} from './valueHandler.interface';
 /**
  * Base class for value handlers
  */
-export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandlerOptions = any> implements ValueHandler<TValue>, NgSelectPluginGeneric<TOptions>, OnDestroy
+export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandlerOptions = any> implements ValueHandler<TValue>, NgSelectPlugin<TOptions>, OnDestroy
 {
     //######################### protected fields #########################
 

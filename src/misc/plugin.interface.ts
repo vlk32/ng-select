@@ -8,11 +8,12 @@ import {Positioner} from "../plugins/positioner";
 import {ReadonlyState} from "../plugins/readonlyState";
 import {ValueHandler} from "../plugins/valueHandler";
 import {LiveSearch} from "../plugins/liveSearch";
+import {PluginBus} from './pluginBus/pluginBus';
 
 /**
  * NgSelect plugin interface
  */
-export interface NgSelectPlugin
+export interface NgSelectPlugin<TOptions = any, TValue = any>
 {
     /**
      * NgSelect plugin instances available for this plugin
@@ -27,7 +28,12 @@ export interface NgSelectPlugin
     /**
      * Options for NgSelect plugin
      */
-    options: any;
+    options: TOptions;
+
+    /**
+     * Plugin bus used in select
+     */
+    pluginBus: PluginBus<TValue>;
 
     /**
      * Initialize plugin, to be ready to use, initialize communication with other plugins
@@ -43,17 +49,6 @@ export interface NgSelectPlugin
      * Explicitly runs invalidation of content (change detection)
      */
     invalidateVisuals(): void;
-}
-
-/**
- * NgSelect plugin generic interface
- */
-export interface NgSelectPluginGeneric<TOptions = any> extends NgSelectPlugin
-{
-    /**
-     * Options for ng select plugin
-     */
-    options: TOptions;
 }
 
 /**
