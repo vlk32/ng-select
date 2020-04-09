@@ -14,7 +14,7 @@ import {PluginBus} from '../../misc/pluginBus/pluginBus';
 /**
  * Base class for value handlers
  */
-export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandlerOptions = any> implements ValueHandler<TValue>, NgSelectPlugin<TOptions>, OnDestroy
+export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandlerOptions = any> implements ValueHandler<TValue>, NgSelectPlugin<TOptions, TValue>, OnDestroy
 {
     //######################### protected fields #########################
 
@@ -119,7 +119,7 @@ export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandl
     //######################### constructor #########################
     constructor(public ngSelectPlugins: NgSelectPluginInstances,
                 public pluginElement: ElementRef,
-                public pluginBus: PluginBus)
+                public pluginBus: PluginBus<TValue>)
     {
     }
 

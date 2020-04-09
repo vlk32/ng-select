@@ -1,5 +1,4 @@
-import {EventEmitter} from "@angular/core";
-import {Popup, PopupOptions, OptionsGatherer, TemplateGatherer, NgSelectOption, NgSelectPluginInstances} from "@anglr/select";
+import {Popup, PopupOptions, NgSelectPluginInstances, PluginBus, VisualPluginOptions} from "@anglr/select";
 
 /**
  * Css classes for dialog popup
@@ -30,17 +29,17 @@ export interface CssClassesDialogPopup
 /**
  * Dialog popup options
  */
-export interface DialogPopupOptions<T = any> extends PopupOptions<CssClassesDialogPopup>
+export interface DialogPopupOptions<TComponent extends DialogPopupContentComponent<TOptions, TValue, TCssClasses> = any, TOptions = any, TValue = any, TCssClasses = any> extends PopupOptions<CssClassesDialogPopup>
 {
     /**
-     * Component that is used to show in dialog
+     * Component that is used to show popup content in dialog
      */
-    dialogComponent: any;
+    dialogComponent: TComponent;
 
     /**
-     * Dialog options
+     * Options passed to dialog component
      */
-    dialogOptions?: T;
+    dialogOptions?: TOptions;
 }
 
 /**
@@ -51,43 +50,38 @@ export interface DialogPopup extends Popup
 }
 
 /**
- * Data that are passed to component that handles metadata
+ * Data that are passed to component that displays popup
  */
-export interface DialogPopupComponentData<TValue = any, TOptions = any>
+export interface DialogPopupComponentData<TOptions extends VisualPluginOptions<TCssClasses> = any, TValue = any, TCssClasses = any>
 {
     /**
-     * NgSelect plugins instances
+     * NgSelect plugin instances available for this plugin
      */
-    ngSelectPlugins: NgSelectPluginInstances,
+    ngSelectPlugins: NgSelectPluginInstances;
 
     /**
-     * Gatherer used for obtaining custom templates
+     * Plugin bus used in select
      */
-    templateGatherer: TemplateGatherer;
-
-    /**
-     * Instance of options gatherer, that is used for obtaining available options
-     */
-    optionsGatherer: OptionsGatherer<TValue>;
-
-    /**
-     * Occurs when user clicks on option, clicked options is passed as argument
-     */
-    optionClick: EventEmitter<NgSelectOption<TValue>>;
+    pluginBus: PluginBus<TValue>;
 
     /**
      * Dialogs popup options
      */
-    options: DialogPopupOptions<TOptions>;
+    options: TOptions;
 }
 
 /**
- * Component that is rendered within dialog
+ * Component that is rendered within dialog and represents popup
  */
-export interface DialogPopupContentComponent<TValue = any, TOptions = any>
+export interface DialogPopupContentComponent<TOptions = any, TValue = any, TCssClasses = any>
 {
     /**
      * Data that are used for communication with Popup
      */
-    data: DialogPopupComponentData<TValue, TOptions>;
+    data: DialogPopupComponentData<TOptions, TValue, TCssClasses>;
+
+    /**
+     * Explicitly runs invalidation of content (change detection)
+     */
+    invalidateVisuals(): void;
 }

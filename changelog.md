@@ -21,6 +21,8 @@
    - `Positioner` plugin removed `selectElement`, `optionsGatherer` properties, use new `PluginBus` instead
    - `Popup` plugin removed `multiple`, `optionsGatherer`, `templateGatherer`, `selectElement`, `optionClick` properties, use new `PluginBus` instead
    - `ValueHandler` plugin removed `multiple`, `optionsGatherer`, `valueComparer`, `liveSearchFilter`, `normalizer`, `popupVisibilityRequest` properties, use new `PluginBus` instead
+   - *subpackage* `@anglr/select/material` 
+      - completely changed types for `DialogPopup`
 
 ## Version 7.2.0
 

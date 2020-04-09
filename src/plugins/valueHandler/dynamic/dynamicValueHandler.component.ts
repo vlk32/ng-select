@@ -45,7 +45,7 @@ export class DynamicValueHandlerComponent<TValue = any> extends ValueHandlerBase
 
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() ngSelectPlugins: NgSelectPluginInstances,
-                @Optional() pluginBus: PluginBus,
+                @Optional() pluginBus: PluginBus<TValue>,
                 pluginElement: ElementRef,
                 @Inject(VALUE_HANDLER_OPTIONS) @Optional() options?: DynamicValueHandlerOptions<TValue>)
     {

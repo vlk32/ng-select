@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, OnDestroy, Component, EventEmitter, Inject, Optional, ElementRef, ChangeDetectorRef, Type, resolveForwardRef, forwardRef} from "@angular/core";
+import {NgSelectPlugin, NgSelectPluginInstances, NG_SELECT_PLUGIN_INSTANCES, PluginBus, POPUP_OPTIONS, ɵNgSelectOption} from "@anglr/select";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Inject, OnDestroy, Optional, resolveForwardRef} from "@angular/core";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {NgSelectPlugin, NormalState, KeyboardHandler, ValueHandler, OptionsGatherer, TemplateGatherer, ɵNgSelectOption, NgSelectOption, NgSelectPluginInstances, NG_SELECT_PLUGIN_INSTANCES, POPUP_OPTIONS, NORMAL_STATE, KEYBOARD_HANDLER, VALUE_HANDLER} from "@anglr/select";
 import {extend} from "@jscrpt/common";
 import {Subscription} from "rxjs";
 
-import {DialogPopupOptions, DialogPopup, DialogPopupContentComponent, DialogPopupComponentData} from "./dialogPopup.interface";
 import {BasicDialogPopupComponent} from "../../../components/basicDialogPopup/basicDialogPopup.component";
+import {DialogPopup, DialogPopupContentComponent, DialogPopupOptions, DialogPopupComponentData} from "./dialogPopup.interface";
 
 /**
  * Default options for popup
@@ -34,88 +34,48 @@ const defaultOptions: DialogPopupOptions =
     template: "",
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DialogPopupComponent<TValue = any, TDialogOptions = any> implements DialogPopup, NgSelectPlugin<DialogPopupOptions<TDialogOptions>>, OnDestroy
+export class DialogPopupComponent<TComponent extends DialogPopupContentComponent<TDialogOptions, TValue, TCssClasses> = any, TValue = any, TDialogOptions = any, TCssClasses = any> implements DialogPopup, NgSelectPlugin<DialogPopupOptions<TComponent, TDialogOptions, TValue, TCssClasses>, TValue>, OnDestroy
 {
     //######################### protected fields #########################
 
     /**
      * Options for NgSelect plugin
      */
-    protected _options: DialogPopupOptions<TDialogOptions>;
+    protected _options: DialogPopupOptions<TComponent, TDialogOptions, TValue, TCssClasses>;
 
     /**
-     * Subscription for click event on normal state
+     * Subscription for toggle popup event
      */
-    protected _clickSubscription: Subscription;
+    protected _popupToggleSubscription: Subscription;
 
     /**
-     * Subscription for popup visibility request from keyboard handler
+     * Subscription for popup visibility change request
      */
-    protected _khPopupVisibilityRequestSubscription: Subscription;
-
-    /**
-     * Subscription for popup visibility request from value handler
-     */
-    protected _vhPopupVisibilityRequestSubscription: Subscription;
-
-    /**
-     * Normal state that is displayed
-     */
-    protected _normalState: NormalState;
-
-    /**
-     * Keyboard handler that is used
-     */
-    protected _keyboardHandler: KeyboardHandler;
-
-    /**
-     * Value handler that is used
-     */
-    protected _valueHandler: ValueHandler<TValue>;
+    protected _visibilityRequestSubscription: Subscription;
 
     /**
      * Component that is used for handling metadata selection itself
      */
-    protected _dialogComponent?: Type<DialogPopupContentComponent<TValue, TDialogOptions>>;
+    protected _dialogComponent?: TComponent;
 
     /**
      * Popup dialog reference
      */
-    protected _dialogRef?: MatDialogRef;
+    protected _dialogRef?: MatDialogRef<TComponent>;
 
     //######################### public properties - implementation of BasicPopup #########################
 
     /**
      * Options for NgSelect plugin
      */
-    public get options(): DialogPopupOptions<TDialogOptions>
+    public get options(): DialogPopupOptions<TComponent, TDialogOptions, TValue, TCssClasses>
     {
         return this._options;
     }
-    public set options(options: DialogPopupOptions<TDialogOptions>)
+    public set options(options: DialogPopupOptions<TComponent, TDialogOptions, TValue, TCssClasses>)
     {
         this._options = extend(true, this._options, options);
     }
-
-    /**
-     * Instance of options gatherer, that is used for obtaining available options
-     */
-    public optionsGatherer: OptionsGatherer;
-
-    /**
-     * Gatherer used for obtaining custom templates
-     */
-    public templateGatherer: TemplateGatherer;
-
-    /**
-     * HTML element that represents select itself
-     */
-    public selectElement: HTMLElement;
-
-    /**
-     * Occurs when user clicks on option, clicked options is passed as argument
-     */
-    public optionClick: EventEmitter<NgSelectOption<TValue>> = new EventEmitter<NgSelectOption<TValue>>();
 
     /**
      * Occurs when visibility of popup has changed
@@ -140,10 +100,11 @@ export class DialogPopupComponent<TValue = any, TDialogOptions = any> implements
 
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
+                @Optional() public pluginBus: PluginBus<TValue>,
                 public pluginElement: ElementRef,
                 protected _dialog: MatDialog,
                 protected _changeDetector: ChangeDetectorRef,
-                @Inject(POPUP_OPTIONS) @Optional() options?: DialogPopupOptions<TDialogOptions>)
+                @Inject(POPUP_OPTIONS) @Optional() options?: DialogPopupOptions<TComponent, TDialogOptions, TValue, TCssClasses>)
     {
         this._options = extend(true, {}, defaultOptions, options);
     }
@@ -155,14 +116,11 @@ export class DialogPopupComponent<TValue = any, TDialogOptions = any> implements
      */
     public ngOnDestroy()
     {
-        this._clickSubscription?.unsubscribe();
-        this._clickSubscription = null;
+        this._popupToggleSubscription?.unsubscribe();
+        this._popupToggleSubscription = null;
 
-        this._khPopupVisibilityRequestSubscription?.unsubscribe();
-        this._khPopupVisibilityRequestSubscription = null;
-
-        this._vhPopupVisibilityRequestSubscription?.unsubscribe();
-        this._vhPopupVisibilityRequestSubscription = null;
+        this._visibilityRequestSubscription?.unsubscribe();
+        this._visibilityRequestSubscription = null;
     }
 
     //######################### public methods - implementation of BasicPopup #########################
@@ -174,55 +132,14 @@ export class DialogPopupComponent<TValue = any, TDialogOptions = any> implements
     {
         this._dialogComponent = resolveForwardRef(this.options.dialogComponent);
 
-        let normalState = this.ngSelectPlugins[NORMAL_STATE] as NormalState;
-
-        if(this._normalState && this._normalState != normalState)
+        if(!this._popupToggleSubscription)
         {
-            this._clickSubscription.unsubscribe();
-            this._clickSubscription = null;
-
-            this._normalState = null;
+            this._popupToggleSubscription = this.pluginBus.togglePopup.subscribe(() => this.toggleDialog());
         }
 
-        if(!this._normalState)
+        if(!this._visibilityRequestSubscription)
         {
-            this._normalState = normalState;
-
-            this._clickSubscription = this._normalState.click.subscribe(() => this.toggleDialog());
-        }
-
-        let keyboardHandler = this.ngSelectPlugins[KEYBOARD_HANDLER] as KeyboardHandler;
-
-        if(this._keyboardHandler && this._keyboardHandler != keyboardHandler)
-        {
-            this._khPopupVisibilityRequestSubscription.unsubscribe();
-            this._khPopupVisibilityRequestSubscription = null;
-
-            this._keyboardHandler = null;
-        }
-
-        if(!this._keyboardHandler)
-        {
-            this._keyboardHandler = keyboardHandler;
-
-            this._khPopupVisibilityRequestSubscription = this._keyboardHandler.popupVisibilityRequest.subscribe(this._handleDialog);
-        }
-
-        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler;
-
-        if(this._valueHandler && this._valueHandler != valueHandler)
-        {
-            this._vhPopupVisibilityRequestSubscription.unsubscribe();
-            this._vhPopupVisibilityRequestSubscription = null;
-
-            this._valueHandler = null;
-        }
-
-        if(!this._valueHandler)
-        {
-            this._valueHandler = valueHandler;
-
-            this._vhPopupVisibilityRequestSubscription = this._valueHandler.popupVisibilityRequest.subscribe(this._handleDialog);
+            this._visibilityRequestSubscription = this.pluginBus.showHidePopup.subscribe(this._handleDialog);
         }
 
         if (this.options.visible)
@@ -244,6 +161,7 @@ export class DialogPopupComponent<TValue = any, TDialogOptions = any> implements
     public invalidateVisuals(): void
     {
         this._changeDetector.detectChanges();
+        this._dialogRef?.componentInstance?.invalidateVisuals();
     }
 
     /**
@@ -261,18 +179,16 @@ export class DialogPopupComponent<TValue = any, TDialogOptions = any> implements
     {
         if (visible)
         {
-            this._dialogRef = this._dialog.open(this._dialogComponent,
+            this._dialogRef = this._dialog.open<TComponent, DialogPopupComponentData<TDialogOptions, TValue, TCssClasses>>(this._dialogComponent as any,
+            {
+                panelClass: this.options?.cssClasses?.dialogDiv,
+                data:
                 {
-                    data: <DialogPopupComponentData<TValue, TDialogOptions>>
-                    {
-                        ngSelectPlugins: this.ngSelectPlugins,
-                        optionsGatherer: this.optionsGatherer,
-                        templateGatherer: this.templateGatherer,
-                        optionClick: this.optionClick,
-                        options: this.options
-                    },
-                    panelClass: this.options?.cssClasses?.dialogDiv
-                });
+                    ngSelectPlugins: this.ngSelectPlugins,
+                    options: this.options.dialogOptions,
+                    pluginBus: this.pluginBus
+                }
+            });
         }
         else
         {
