@@ -35,11 +35,6 @@ export class PluginBus<TValue = any> implements PluginBusEvents
     public showHidePopup: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     /**
-     * Occurs when popup visibility should be changed
-     */
-    public popupVisibilityChange: EventEmitter<void> = new EventEmitter<void>();
-
-    /**
      * Occurs when option should be selected
      */
     public optionSelect: EventEmitter<NgSelectOption> = new EventEmitter<NgSelectOption>();

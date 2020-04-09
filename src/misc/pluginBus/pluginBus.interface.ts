@@ -20,11 +20,6 @@ export interface PluginBusEvents
     readonly showHidePopup: EventEmitter<boolean>;
 
     /**
-     * Occurs when popup visibility should be changed
-     */
-    readonly popupVisibilityChange: EventEmitter<void>;
-
-    /**
      * Occurs when option should be selected
      */
     readonly optionSelect: EventEmitter<NgSelectOption>;

@@ -47,6 +47,11 @@ export interface PluginBusOptions<TValue = any>
      * Indication whether is NgSelect readonly or not
      */
     readonly?: boolean;
+
+    /**
+     * Indication that multiple values can be selected
+     */
+    multiple?: boolean;
 }
 
 /**

@@ -4,17 +4,12 @@ import {extend, isDescendant} from '@jscrpt/common';
 import {Subscription} from 'rxjs';
 
 import {EditPopupOptions, EditPopup} from './editPopup.interface';
-import {NgSelectPlugin, OptionsGatherer, TemplateGatherer} from '../../../misc';
+import {NgSelectPlugin, OptionsGatherer} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {POPUP_OPTIONS} from '../types';
-import {ɵNgSelectOption, NgSelectOption} from '../../../components/option';
-import {NormalState} from '../../normalState';
-import {NORMAL_STATE} from '../../normalState/types';
-import {KeyboardHandler} from '../../keyboardHandler';
-import {KEYBOARD_HANDLER} from '../../keyboardHandler/types';
-import {ValueHandler} from '../../valueHandler';
-import {VALUE_HANDLER} from '../../valueHandler/types';
+import {ɵNgSelectOption} from '../../../components/option';
+import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 
 /**
  * Default options for popup
@@ -62,34 +57,14 @@ export class EditPopupComponent implements EditPopup, NgSelectPlugin<EditPopupOp
     protected _optionsChangeSubscription: Subscription;
 
     /**
-     * Subscription for click event on normal state
+     * Subscription for toggle popup event
      */
-    protected _clickSubscription: Subscription;
+    protected _popupToggleSubscription: Subscription;
 
     /**
-     * Subscription for popup visibility request from keyboard handler
+     * Subscription for popup visibility change request
      */
-    protected _khPopupVisibilityRequestSubscription: Subscription;
-
-    /**
-     * Subscription for popup visibility request from value handler
-     */
-    protected _vhPopupVisibilityRequestSubscription: Subscription;
-
-    /**
-     * Normal state that is displayed
-     */
-    protected _normalState: NormalState;
-
-    /**
-     * Keyboard handler that is used
-     */
-    protected _keyboardHandler: KeyboardHandler;
-
-    /**
-     * Value handler that is used
-     */
-    protected _valueHandler: ValueHandler;
+    protected _visibilityRequestSubscription: Subscription;
 
     /**
      * Indication whether is popup visible
@@ -109,26 +84,6 @@ export class EditPopupComponent implements EditPopup, NgSelectPlugin<EditPopupOp
     {
         this._options = extend(true, this._options, options);
     }
-
-    /**
-     * Instance of options gatherer, that is used for obtaining available options
-     */
-    public optionsGatherer: OptionsGatherer;
-
-    /**
-     * Gatherer used for obtaining custom templates
-     */
-    public templateGatherer: TemplateGatherer;
-
-    /**
-     * HTML element that represents select itself
-     */
-    public selectElement: HTMLElement;
-
-    /**
-     * Occurs when user clicks on option, clicked options is passed as argument
-     */
-    public optionClick: EventEmitter<NgSelectOption> = new EventEmitter<NgSelectOption>();
 
     /**
      * Occurs when visibility of popup has changed
@@ -169,6 +124,7 @@ export class EditPopupComponent implements EditPopup, NgSelectPlugin<EditPopupOp
 
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
+                @Optional() public pluginBus: PluginBus,
                 public pluginElement: ElementRef,
                 protected _changeDetector: ChangeDetectorRef,
                 @Inject(POPUP_OPTIONS) @Optional() options?: EditPopupOptions,
@@ -214,29 +170,14 @@ export class EditPopupComponent implements EditPopup, NgSelectPlugin<EditPopupOp
      */
     public ngOnDestroy()
     {
-        if(this._optionsChangeSubscription)
-        {
-            this._optionsChangeSubscription.unsubscribe();
-            this._optionsChangeSubscription = null;
-        }
+        this._optionsChangeSubscription?.unsubscribe();
+        this._optionsChangeSubscription = null;
 
-        if(this._clickSubscription)
-        {
-            this._clickSubscription.unsubscribe();
-            this._clickSubscription = null;
-        }
+        this._popupToggleSubscription?.unsubscribe();
+        this._popupToggleSubscription = null;
 
-        if(this._khPopupVisibilityRequestSubscription)
-        {
-            this._khPopupVisibilityRequestSubscription.unsubscribe();
-            this._khPopupVisibilityRequestSubscription = null;
-        }
-
-        if(this._vhPopupVisibilityRequestSubscription)
-        {
-            this._vhPopupVisibilityRequestSubscription.unsubscribe();
-            this._vhPopupVisibilityRequestSubscription = null;
-        }
+        this._visibilityRequestSubscription?.unsubscribe();
+        this._visibilityRequestSubscription = null;
 
         this._document.removeEventListener('mouseup', this._handleClickOutside);
     }
@@ -248,7 +189,7 @@ export class EditPopupComponent implements EditPopup, NgSelectPlugin<EditPopupOp
      */
     public initialize()
     {
-        if(this._optionsGatherer && this._optionsGatherer != this.optionsGatherer)
+        if(this._optionsGatherer && this._optionsGatherer != this.pluginBus.selectOptions.optionsGatherer)
         {
             this._optionsChangeSubscription.unsubscribe();
             this._optionsChangeSubscription = null;
@@ -258,60 +199,19 @@ export class EditPopupComponent implements EditPopup, NgSelectPlugin<EditPopupOp
 
         if(!this._optionsGatherer)
         {
-            this._optionsGatherer = this.optionsGatherer;
+            this._optionsGatherer = this.pluginBus.selectOptions.optionsGatherer;
 
             this._optionsChangeSubscription = this._optionsGatherer.availableOptionsChange.subscribe(() => this.loadOptions());
         }
 
-        let normalState = this.ngSelectPlugins[NORMAL_STATE] as NormalState;
-
-        if(this._normalState && this._normalState != normalState)
+        if(!this._popupToggleSubscription)
         {
-            this._clickSubscription.unsubscribe();
-            this._clickSubscription = null;
-
-            this._normalState = null;
+            this._popupToggleSubscription = this.pluginBus.togglePopup.subscribe(() => this.togglePopup());
         }
 
-        if(!this._normalState)
+        if(!this._visibilityRequestSubscription)
         {
-            this._normalState = normalState;
-
-            this._clickSubscription = this._normalState.click.subscribe(() => this.togglePopup());
-        }
-
-        let keyboardHandler = this.ngSelectPlugins[KEYBOARD_HANDLER] as KeyboardHandler;
-
-        if(this._keyboardHandler && this._keyboardHandler != keyboardHandler)
-        {
-            this._khPopupVisibilityRequestSubscription.unsubscribe();
-            this._khPopupVisibilityRequestSubscription = null;
-
-            this._keyboardHandler = null;
-        }
-
-        if(!this._keyboardHandler)
-        {
-            this._keyboardHandler = keyboardHandler;
-
-            this._khPopupVisibilityRequestSubscription = this._keyboardHandler.popupVisibilityRequest.subscribe(this._handleVisibilityChange);
-        }
-
-        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler;
-
-        if(this._valueHandler && this._valueHandler != valueHandler)
-        {
-            this._vhPopupVisibilityRequestSubscription.unsubscribe();
-            this._vhPopupVisibilityRequestSubscription = null;
-
-            this._valueHandler = null;
-        }
-
-        if(!this._valueHandler)
-        {
-            this._valueHandler = valueHandler;
-
-            this._vhPopupVisibilityRequestSubscription = this._valueHandler.popupVisibilityRequest.subscribe(this._handleVisibilityChange);
+            this._visibilityRequestSubscription = this.pluginBus.showHidePopup.subscribe(this._handleVisibilityChange);
         }
 
         this.loadOptions();
@@ -358,8 +258,8 @@ export class EditPopupComponent implements EditPopup, NgSelectPlugin<EditPopupOp
      */
     protected _handleClickOutside = (event: MouseEvent) =>
     {
-        if(this.selectElement != event.target &&
-           !isDescendant(this.selectElement, event.target as HTMLElement) &&
+        if(this.pluginBus.selectElement.nativeElement != event.target &&
+           !isDescendant(this.pluginBus.selectElement.nativeElement, event.target as HTMLElement) &&
            this.pluginElement.nativeElement != event.target &&
            !isDescendant(this.pluginElement.nativeElement, event.target as HTMLElement))
         {

@@ -12,6 +12,7 @@
    - `KeyboardHandler` plugin removed `selectElement`, `optionsGatherer`, `popupVisibilityRequest`, `optionSelect` properties, use new `PluginBus` instead
    - `NormalState` plugin removed `templateGatherer`, `click`, `focus`, `cancelOption`, `readonly` properties, use new `PluginBus` instead
    - `Positioner` plugin removed `selectElement`, `optionsGatherer` properties, use new `PluginBus` instead
+   - `Popup` plugin removed `multiple`, `optionsGatherer`, `templateGatherer`, `selectElement`, `optionClick` properties, use new `PluginBus` instead
 
 ## Version 7.2.0
 

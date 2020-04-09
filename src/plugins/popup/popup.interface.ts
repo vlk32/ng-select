@@ -1,6 +1,6 @@
 import {EventEmitter} from "@angular/core";
 
-import {NgSelectPlugin, VisualPluginOptions, OptionsGatherer, TemplateGatherer} from "../../misc";
+import {NgSelectPlugin, VisualPluginOptions} from "../../misc";
 import {NgSelectOption} from "../../components/option";
 
 /**
@@ -12,11 +12,6 @@ export interface PopupOptions<TCssClasses = any> extends VisualPluginOptions<TCs
      * Indication whether are popup options visible, or not
      */
     visible?: boolean;
-
-    /**
-     * Indication that multiple values can be selected
-     */
-    multiple?: boolean;
 }
 
 /**
@@ -24,26 +19,6 @@ export interface PopupOptions<TCssClasses = any> extends VisualPluginOptions<TCs
  */
 export interface Popup extends NgSelectPlugin
 {
-    /**
-     * Instance of options gatherer, that is used for obtaining available options
-     */
-    optionsGatherer: OptionsGatherer;
-
-    /**
-     * Gatherer used for obtaining custom templates
-     */
-    templateGatherer: TemplateGatherer;
-
-    /**
-     * HTML element that represents select itself
-     */
-    selectElement: HTMLElement;
-
-    /**
-     * Occurs when user clicks on option, clicked options is passed as argument
-     */
-    readonly optionClick: EventEmitter<NgSelectOption>;
-
     /**
      * Occurs when visibility of popup has changed
      */

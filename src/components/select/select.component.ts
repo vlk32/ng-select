@@ -12,7 +12,7 @@ import {KEYBOARD_HANDLER} from "../../plugins/keyboardHandler/types";
 import {NormalState, NormalStateContext} from "../../plugins/normalState";
 import {NORMAL_STATE} from "../../plugins/normalState/types";
 import {BasicNormalStateComponent} from "../../plugins/normalState/components";
-import {Popup, PopupOptions, PopupContext} from "../../plugins/popup";
+import {Popup, PopupContext} from "../../plugins/popup";
 import {POPUP} from "../../plugins/popup/types";
 import {BasicPopupComponent} from "../../plugins/popup/component";
 import {Positioner} from "../../plugins/positioner";
@@ -20,7 +20,7 @@ import {POSITIONER} from "../../plugins/positioner/types";
 import {BasicPositionerComponent} from "../../plugins/positioner/components";
 import {ReadonlyState} from "../../plugins/readonlyState";
 import {READONLY_STATE} from "../../plugins/readonlyState/types";
-import {ValueHandler, ValueHandlerOptions} from "../../plugins/valueHandler";
+import {ValueHandler} from "../../plugins/valueHandler";
 import {VALUE_HANDLER} from "../../plugins/valueHandler/types";
 import {BasicValueHandlerComponent} from "../../plugins/valueHandler/components";
 import {LiveSearch} from "../../plugins/liveSearch";
@@ -44,6 +44,8 @@ const defaultOptions: NgSelectOptions =
     autoInitialize: true,
     absolute: false,
     forceValueCheckOnInit: false,
+    multiple: false,
+    readonly: false,
     valueComparer: (source, target) =>
     {
         return source == target;
@@ -414,23 +416,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
                                          optionsGatherer: this,
                                          templateGatherer: this,
                                          readonly: readonlyDefault,
-                                         plugins:
-                                         {
-                                             popup:
-                                             {
-                                                 options: <PopupOptions>
-                                                 {
-                                                     multiple: multipleDefault
-                                                 }
-                                             },
-                                             valueHandler:
-                                             {
-                                                 options: <ValueHandlerOptions>
-                                                 {
-                                                     multiple: multipleDefault
-                                                 }
-                                             }
-                                         }
+                                         multiple: multipleDefault
                                      },
                                      defaultOptions,
                                      opts);

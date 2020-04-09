@@ -7,9 +7,9 @@
     <div *ngFor="let option of selectOptions"
          [ngClass]="options?.cssClasses?.optionItemDiv"
          [class.active]="option?.active"
-         (click)="optionClick?.emit(option)">
+         (click)="pluginBus?.optionSelect?.emit(option)">
         <div [ngClass]="options?.cssClasses?.optionItemTextDiv">
-            <ng-container *ngTemplateOutlet="templateGatherer?.optionTemplate || defaultOptionTextLook; context: {$implicit: option, popup: this}"></ng-container>
+            <ng-container *ngTemplateOutlet="pluginBus?.selectOptions?.templateGatherer?.optionTemplate || defaultOptionTextLook; context: {$implicit: option, popup: this}"></ng-container>
         </div>
     </div>
 </div>
