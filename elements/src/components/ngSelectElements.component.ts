@@ -1,6 +1,6 @@
-import {Component, ChangeDetectionStrategy, FactoryProvider, Input, ChangeDetectorRef, ElementRef, Inject, Attribute, ComponentFactoryResolver, ApplicationRef, Injector} from "@angular/core";
+import {Component, ChangeDetectionStrategy, FactoryProvider, Input, ChangeDetectorRef, ElementRef, Inject, Attribute, ComponentFactoryResolver, ApplicationRef, Injector, ClassProvider} from "@angular/core";
 import {isString} from '@jscrpt/common';
-import {NgSelectComponent, NG_SELECT_PLUGIN_INSTANCES, ngSelectPluginInstancesFactory, NgSelectOptions, NgSelectAction, NgSelectFunction, NgSelectPluginInstances, NgSelectPlugin, CodeOptionsGatherer, NgSelectOption} from "@anglr/select";
+import {NgSelectComponent, NG_SELECT_PLUGIN_INSTANCES, ngSelectPluginInstancesFactory, NgSelectOptions, NgSelectAction, NgSelectFunction, NgSelectPluginInstances, NgSelectPlugin, CodeOptionsGatherer, NgSelectOption, PluginBus} from "@anglr/select";
 import {Observable} from "rxjs";
 
 import {NgSelectWebComponent} from "./ngSelectElements.interface";
@@ -21,6 +21,11 @@ const NG_OPTION = "NG-OPTION";
         {
             provide: NG_SELECT_PLUGIN_INSTANCES,
             useFactory: ngSelectPluginInstancesFactory
+        },
+        <ClassProvider>
+        {
+            provide: PluginBus,
+            useClass: PluginBus
         }
     ],
     styles: [
@@ -98,12 +103,13 @@ export class NgSelectElementsComponent<TValue = any> extends NgSelectComponent<T
                 componentFactoryResolver: ComponentFactoryResolver,
                 appRef: ApplicationRef,
                 injector: Injector,
+                pluginBus: PluginBus<TValue>,
                 @Inject(NG_SELECT_PLUGIN_INSTANCES) protected pluginInstances: NgSelectPluginInstances,
                 @Attribute('readonly') readonly?: string,
                 @Attribute('disabled') disabled?: string,
                 @Attribute('multiple') multiple?: string)
     {
-        super(changeDetector, element, componentFactoryResolver, appRef, injector, pluginInstances, null, null, null, null, null, null, null, null, readonly, disabled, multiple);
+        super(changeDetector, element, componentFactoryResolver, appRef, injector, pluginBus, pluginInstances, null, null, null, null, null, null, null, null, readonly, disabled, multiple);
 
         this._selectOptions.optionsGatherer = this._codeOptionsGatherer;
 

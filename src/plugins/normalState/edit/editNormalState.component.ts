@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, ChangeDetectorRef, Inject, Optional, ElementRef, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, ChangeDetectionStrategy, ChangeDetectorRef, Inject, Optional, ElementRef, OnDestroy} from '@angular/core';
 import {extend} from '@jscrpt/common';
 import {StringLocalization, STRING_LOCALIZATION} from '@anglr/common';
 import {Subscription} from 'rxjs';
