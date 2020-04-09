@@ -3,7 +3,7 @@ import {extend} from '@jscrpt/common';
 import {STRING_LOCALIZATION, StringLocalization} from '@anglr/common';
 import {Subscription} from 'rxjs';
 
-import {EditLiveSearchOptions, EditLiveSearch, EditLiveSearchTexts} from './editLiveSearch.interface';
+import {EditLiveSearchOptions, EditLiveSearch} from './editLiveSearch.interface';
 import {NgSelectPlugin} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
@@ -14,6 +14,7 @@ import {Popup} from '../../popup';
 import {POPUP} from '../../popup/types';
 import {ɵNgSelectOption} from '../../../components/option';
 import {PluginBus} from '../../../misc/pluginBus/pluginBus';
+import {LiveSearchTexts} from '../liveSearch.interface';
 
 /**
  * Default options for live search
@@ -28,7 +29,8 @@ const defaultOptions: EditLiveSearchOptions =
     },
     texts:
     {
-        inputPlaceholder: 'Filter options'
+        inputPlaceholder: 'Nothing selected'
+        
     },
     keepSearchValue: false
 };
@@ -116,7 +118,7 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
      * Object containing available texts
      * @internal
      */
-    public texts: EditLiveSearchTexts = {};
+    public texts: LiveSearchTexts = {};
 
     //######################### public properties - children #########################
 

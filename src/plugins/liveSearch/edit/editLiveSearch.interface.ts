@@ -1,4 +1,4 @@
-import {LiveSearch, LiveSearchOptions, LiveSearchTexts} from "../liveSearch.interface";
+import {LiveSearch, LiveSearchOptions} from "../liveSearch.interface";
 
 /**
  * Css classes for edit live search
@@ -17,26 +17,10 @@ export interface CssClassesEditLiveSearch
 }
 
 /**
- * Texts that are used within EditLiveSearch
- */
-export interface EditLiveSearchTexts extends LiveSearchTexts
-{
-    /**
-     * Displayed as placeholder when nothing was selected
-     */
-    placeholderNothingSelected?: string;
-}
-
-/**
  * Edit live search options
  */
 export interface EditLiveSearchOptions extends LiveSearchOptions<CssClassesEditLiveSearch>
 {
-    /**
-     * Texts that are used within any EditLiveSearch
-     */
-    texts?: EditLiveSearchTexts;
-
     /**
      * Indication whether keep search value after popup close
      */

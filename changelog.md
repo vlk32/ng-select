@@ -7,10 +7,10 @@
 - added new method `initializePluginInstance` to `NgSelect` allowing initialization of external plugin instance
 - added `PluginBus` which serves serves as bus for shared events also shared select options and gatherers
 - added new extension method `patchOptions` which allows changing options without running initialization
-- added `placeholderNothingSelected` into `texts` for `EditLiveSearch` options
 - **Breaking Changes**
    - all plugins now have to have `pluginBus`
-   - `KeyboardHandler` handler removed `selectElement`, `optionsGatherer`, `popupVisibilityRequest`, `optionSelect` properties, use new `PluginBus` instead
+   - `KeyboardHandler` plugin removed `selectElement`, `optionsGatherer`, `popupVisibilityRequest`, `optionSelect` properties, use new `PluginBus` instead
+   - `NormalState` plugin removed `templateGatherer`, `click`, `focus`, `cancelOption`, `readonly` properties, use new `PluginBus` instead
 
 ## Version 7.2.0
 

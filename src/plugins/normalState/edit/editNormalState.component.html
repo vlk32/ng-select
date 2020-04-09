@@ -3,7 +3,7 @@
 <div [ngClass]="options?.cssClasses?.normalStateElement" [title]="valueHandler?.selectedOptions | ngSelectValue: texts?.nothingSelected">
     <ng-content></ng-content>
 
-    <div [ngClass]="options?.cssClasses?.selectedCarretWrapper" (click)="click.emit()">
+    <div [ngClass]="options?.cssClasses?.selectedCarretWrapper" (click)="pluginBus?.togglePopup.emit()">
         <span [ngClass]="options?.cssClasses?.selectedCarret"></span>
     </div>
 </div>

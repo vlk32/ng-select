@@ -1,7 +1,4 @@
-import {EventEmitter} from "@angular/core";
-
-import {NgSelectPlugin, VisualPluginOptions, TemplateGatherer} from "../../misc";
-import {NgSelectOption} from "../../components/option";
+import {NgSelectPlugin, VisualPluginOptions} from "../../misc";
 
 /**
  * Texts that are used within NormalState
@@ -23,11 +20,6 @@ export interface NormalStateOptions<TCssClasses = any> extends VisualPluginOptio
      * Texts that are used within any NormalState
      */
     texts?: NormalStateTexts;
-
-    /**
-     * Indication whether NgSelect should be in readonly state
-     */
-    readonly?: boolean;
 }
 
 /**
@@ -35,25 +27,6 @@ export interface NormalStateOptions<TCssClasses = any> extends VisualPluginOptio
  */
 export interface NormalState extends NgSelectPlugin
 {
-    /**
-     * Gatherer used for obtaining custom templates
-     */
-    templateGatherer: TemplateGatherer;
-
-    /**
-     * Occurs when user clicks on normal state
-     */
-    readonly click: EventEmitter<void>;
-
-    /**
-     * Occurs when normal state gains focus
-     */
-    readonly focus: EventEmitter<void>;
-
-    /**
-     * Occurs when user tries to cancel one of selected values
-     */
-    readonly cancelOption: EventEmitter<NgSelectOption>;
 }
 
 /**

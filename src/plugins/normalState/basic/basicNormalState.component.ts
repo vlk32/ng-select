@@ -1,17 +1,17 @@
-import {Component, ChangeDetectionStrategy, ChangeDetectorRef, Inject, Optional, ElementRef, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, ChangeDetectionStrategy, ChangeDetectorRef, Inject, Optional, ElementRef, OnDestroy} from '@angular/core';
 import {extend} from '@jscrpt/common';
 import {StringLocalization, STRING_LOCALIZATION} from '@anglr/common';
 import {Subscription} from 'rxjs';
 
 import {BasicNormalStateOptions, BasicNormalState} from './basicNormalState.interface';
-import {NgSelectPlugin, TemplateGatherer} from '../../../misc';
+import {NgSelectPlugin} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {NormalStateTexts} from '../normalState.interface';
 import {NORMAL_STATE_OPTIONS} from '../types';
 import {ValueHandler} from '../../valueHandler';
 import {VALUE_HANDLER} from '../../valueHandler/types';
-import {NgSelectOption} from '../../../components/option';
+import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 
 /**
  * Default options for normal state
@@ -28,8 +28,7 @@ const defaultOptions: BasicNormalStateOptions =
     texts:
     {
         nothingSelected: 'Nothing selected'
-    },
-    readonly: false
+    }
 };
 
 /**
@@ -75,26 +74,6 @@ export class BasicNormalStateComponent implements BasicNormalState, NgSelectPlug
         this._options = extend(true, this._options, options);
     }
 
-    /**
-     * Occurs when user clicks on normal state
-     */
-    public click: EventEmitter<void> = new EventEmitter<void>();
-
-    /**
-     * Occurs when normal state gains focus
-     */
-    public focus: EventEmitter<void> = new EventEmitter<void>();
-
-    /**
-     * Occurs when user tries to cancel one of selected values
-     */
-    public cancelOption: EventEmitter<NgSelectOption> = new EventEmitter<NgSelectOption>();
-
-    /**
-     * Gatherer used for obtaining custom templates
-     */
-    public templateGatherer: TemplateGatherer;
-
     //######################### public properties - template bindings #########################
 
     /**
@@ -111,6 +90,7 @@ export class BasicNormalStateComponent implements BasicNormalState, NgSelectPlug
 
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
+                @Optional() public pluginBus: PluginBus,
                 public pluginElement: ElementRef,
                 protected _changeDetector: ChangeDetectorRef,
                 @Inject(STRING_LOCALIZATION) protected _stringLocalization: StringLocalization,
@@ -128,11 +108,8 @@ export class BasicNormalStateComponent implements BasicNormalState, NgSelectPlug
     {
         this._destroyed = true;
 
-        if(this._textsChangedSubscription)
-        {
-            this._textsChangedSubscription.unsubscribe();
-            this._textsChangedSubscription = null;
-        }
+        this._textsChangedSubscription?.unsubscribe();
+        this._textsChangedSubscription = null;
     }
 
     //######################### public methods - implementation of BasicNormalState #########################
