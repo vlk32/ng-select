@@ -4,13 +4,14 @@
 
 - all generic types are now optional, all defaults to `any`
 - added new method `listenTo` to `NgSelect` allowing subscribing to select events
-- added new method `initializePluginInstance` to `NgSelect` allowing initialization of external plugin instance
 - added `PluginBus` which serves serves as bus for shared events also shared select options and gatherers
 - added new extension method `patchOptions` which allows changing options without running initialization
+- fixed removing of html element for absolute `popup` plugin
 - **Breaking Changes**
    - all plugins now have to have `pluginBus`
    - `KeyboardHandler` plugin removed `selectElement`, `optionsGatherer`, `popupVisibilityRequest`, `optionSelect` properties, use new `PluginBus` instead
    - `NormalState` plugin removed `templateGatherer`, `click`, `focus`, `cancelOption`, `readonly` properties, use new `PluginBus` instead
+   - `Positioner` plugin removed `selectElement`, `optionsGatherer` properties, use new `PluginBus` instead
 
 ## Version 7.2.0
 

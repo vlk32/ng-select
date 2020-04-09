@@ -128,5 +128,5 @@ export interface PluginDescription<PluginType = any>
     /**
      * Optional callback used for obtaining dynamic instance of plugin (allows direct communication with plugin)
      */
-    instanceCallback?: (instance: PluginType|null) => void;
+    instanceCallback?: (instance: NgSelectPlugin|null) => void;
 }

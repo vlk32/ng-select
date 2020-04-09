@@ -11,6 +11,7 @@ import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {POSITIONER_OPTIONS} from '../types';
 import {Popup} from '../../popup';
 import {POPUP} from '../../popup/types';
+import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 
 /**
  * Default options for positioner
@@ -84,18 +85,9 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
         this._options = extend(true, this._options, options);
     }
 
-    /**
-     * HTML element that represents select itself
-     */
-    public selectElement: HTMLElement;
-
-    /**
-     * Instance of options gatherer, that is used for obtaining available options
-     */
-    public optionsGatherer: OptionsGatherer;
-
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
+                @Optional() public pluginBus: PluginBus,
                 public pluginElement: ElementRef,
                 protected _changeDetector: ChangeDetectorRef,
                 @Inject(POSITIONER_OPTIONS) @Optional() options?: BasicPositionerOptions,
@@ -112,17 +104,11 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
      */
     public ngOnDestroy()
     {
-        if(this._visibilitySubscription)
-        {
-            this._visibilitySubscription.unsubscribe();
-            this._visibilitySubscription = null;
-        }
+        this._visibilitySubscription?.unsubscribe();
+        this._visibilitySubscription = null;
 
-        if(this._optionsChangeSubscription)
-        {
-            this._optionsChangeSubscription.unsubscribe();
-            this._optionsChangeSubscription = null;
-        }
+        this._optionsChangeSubscription?.unsubscribe();
+        this._optionsChangeSubscription = null;
 
         if(this._isBrowser)
         {
@@ -138,7 +124,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
      */
     public initialize()
     {
-        if(this._optionsGatherer && this._optionsGatherer != this.optionsGatherer)
+        if(this._optionsGatherer && this._optionsGatherer != this.pluginBus?.selectOptions.optionsGatherer)
         {
             this._optionsChangeSubscription.unsubscribe();
             this._optionsChangeSubscription = null;
@@ -148,11 +134,11 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
 
         if(!this._optionsGatherer)
         {
-            this._optionsGatherer = this.optionsGatherer;
+            this._optionsGatherer = this.pluginBus?.selectOptions.optionsGatherer;
 
             this._optionsChangeSubscription = this._optionsGatherer.availableOptionsChange.subscribe(() =>
             {
-                if(this._popup.popupElement && this.optionsGatherer.availableOptions && this.optionsGatherer.availableOptions.length)
+                if(this._popup.popupElement && this._optionsGatherer.availableOptions && this._optionsGatherer.availableOptions.length)
                 {
                     this._handlePosition();
                 }
@@ -201,7 +187,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
     protected _handleResizeAndScroll = () =>
     {
         this._updateMinWidth();
-        positionsWithFlip(this._popupElement, this.options.optionsCoordinates, this.selectElement, this.options.selectCoordinates, this._document);
+        positionsWithFlip(this._popupElement, this.options.optionsCoordinates, this.pluginBus.selectElement.nativeElement, this.options.selectCoordinates, this._document);
     };
 
     /**
@@ -243,7 +229,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
             return;
         }
 
-        let minWidth = this.selectElement.clientWidth;
+        let minWidth = this.pluginBus.selectElement.nativeElement.clientWidth;
 
         if(isNaN(minWidth) || !isNumber(minWidth))
         {

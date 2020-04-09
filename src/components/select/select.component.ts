@@ -2,7 +2,7 @@ import {Component, ChangeDetectionStrategy, FactoryProvider, Input, Inject, Chan
 import {extend, nameof, isBoolean, isPresent, isString} from "@jscrpt/common";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 
-import {NgSelectOptions, NgSelectPlugin, OptionsGatherer, PluginDescription, TemplateGatherer, NormalizeFunc} from "../../misc";
+import {NgSelectOptions, NgSelectPlugin, OptionsGatherer, PluginDescription, TemplateGatherer, NormalizeFunc, NgSelectPluginTypes} from "../../misc";
 import {NG_SELECT_OPTIONS, KEYBOARD_HANDLER_TYPE, NORMAL_STATE_TYPE, POPUP_TYPE, POSITIONER_TYPE, READONLY_STATE_TYPE, VALUE_HANDLER_TYPE, LIVE_SEARCH_TYPE} from "../../misc/types";
 import {NgSelect, NgSelectPluginInstances, NgSelectAction, NgSelectFunction} from "./select.interface";
 import {NG_SELECT_PLUGIN_INSTANCES} from "./types";
@@ -18,7 +18,7 @@ import {BasicPopupComponent} from "../../plugins/popup/component";
 import {Positioner} from "../../plugins/positioner";
 import {POSITIONER} from "../../plugins/positioner/types";
 import {BasicPositionerComponent} from "../../plugins/positioner/components";
-import {ReadonlyState, ReadonlyStateOptions} from "../../plugins/readonlyState";
+import {ReadonlyState} from "../../plugins/readonlyState";
 import {READONLY_STATE} from "../../plugins/readonlyState/types";
 import {ValueHandler, ValueHandlerOptions} from "../../plugins/valueHandler";
 import {VALUE_HANDLER} from "../../plugins/valueHandler/types";
@@ -582,25 +582,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
      */
     public setNormalStateComponent(normalState: NormalState)
     {
-        if(!normalState)
-        {
-            return;
-        }
-
-        this._pluginInstances[NORMAL_STATE] = normalState;
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.normalState && this._selectOptions.plugins.normalState.options)
-        {
-            normalState.options = this._selectOptions.plugins.normalState.options;
-        }
-
-        normalState.templateGatherer = this.selectOptions.templateGatherer;
-        normalState.initOptions();
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.normalState && this._selectOptions.plugins.normalState.instanceCallback)
-        {
-            this._selectOptions.plugins.normalState.instanceCallback(normalState);
-        }
+        this._registerNewPlugin(normalState, NORMAL_STATE, 'normalState');
     }
 
     /**
@@ -610,24 +592,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
      */
     public setKeyboardHandlerComponent(keyboardHandler: KeyboardHandler)
     {
-        if(!keyboardHandler)
-        {
-            return;
-        }
-
-        this._pluginInstances[KEYBOARD_HANDLER] = keyboardHandler;
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.keyboardHandler && this._selectOptions.plugins.keyboardHandler.options)
-        {
-            keyboardHandler.options = this._selectOptions.plugins.keyboardHandler.options;
-        }
-
-        keyboardHandler.initOptions();
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.keyboardHandler && this._selectOptions.plugins.keyboardHandler.instanceCallback)
-        {
-            this._selectOptions.plugins.keyboardHandler.instanceCallback(keyboardHandler);
-        }
+        this._registerNewPlugin(keyboardHandler, KEYBOARD_HANDLER, 'keyboardHandler');
     }
 
     /**
@@ -637,27 +602,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
      */
     public setPopupComponent(popup: Popup)
     {
-        if(!popup)
-        {
-            return;
-        }
-
-        this._pluginInstances[POPUP] = popup;
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.popup && this._selectOptions.plugins.popup.options)
-        {
-            popup.options = this._selectOptions.plugins.popup.options;
-        }
-
-        popup.selectElement = this._element.nativeElement;
-        popup.optionsGatherer = this.selectOptions.optionsGatherer;
-        popup.templateGatherer = this.selectOptions.templateGatherer;
-        popup.initOptions();
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.popup && this._selectOptions.plugins.popup.instanceCallback)
-        {
-            this._selectOptions.plugins.popup.instanceCallback(popup);
-        }
+        this._registerNewPlugin(popup, POPUP, 'popup');
     }
 
     /**
@@ -667,26 +612,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
      */
     public setPositionerComponent(positioner: Positioner)
     {
-        if(!positioner)
-        {
-            return;
-        }
-
-        this._pluginInstances[POSITIONER] = positioner;
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.positioner && this._selectOptions.plugins.positioner.options)
-        {
-            positioner.options = this._selectOptions.plugins.positioner.options;
-        }
-
-        positioner.selectElement = this._element.nativeElement;
-        positioner.optionsGatherer = this.selectOptions.optionsGatherer;
-        positioner.initOptions();
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.positioner && this._selectOptions.plugins.positioner.instanceCallback)
-        {
-            this._selectOptions.plugins.positioner.instanceCallback(positioner);
-        }
+        this._registerNewPlugin(positioner, POSITIONER, 'positioner');
     }
 
     /**
@@ -696,30 +622,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
      */
     public setReadonlyStateComponent(readonlyState: ReadonlyState)
     {
-        if(!readonlyState)
-        {
-            this._pluginInstances[READONLY_STATE] = null;
-
-            return;
-        }
-
-        this._pluginInstances[READONLY_STATE] = readonlyState;
-        this._pluginInstances[NORMAL_STATE] = readonlyState;
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.readonlyState && this._selectOptions.plugins.readonlyState.options)
-        {
-            readonlyState.options = this._selectOptions.plugins.readonlyState.options;
-        }
-
-        let options = readonlyState.options as ReadonlyStateOptions;
-
-        options.readonly = true;
-        readonlyState.initOptions();
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.readonlyState && this._selectOptions.plugins.readonlyState.instanceCallback)
-        {
-            this._selectOptions.plugins.readonlyState.instanceCallback(readonlyState);
-        }
+        this._registerNewPlugin(readonlyState, READONLY_STATE, 'readonlyState');
     }
 
     /**
@@ -729,28 +632,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
      */
     public setValueHandlerComponent(valueHandler: ValueHandler<TValue>)
     {
-        if(!valueHandler)
-        {
-            return;
-        }
-
-        this._pluginInstances[VALUE_HANDLER] = valueHandler;
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.valueHandler && this._selectOptions.plugins.valueHandler.options)
-        {
-            valueHandler.options = this._selectOptions.plugins.valueHandler.options;
-        }
-
-        valueHandler.valueComparer = this.selectOptions.valueComparer;
-        valueHandler.liveSearchFilter = this.selectOptions.liveSearchFilter;
-        valueHandler.normalizer = this.selectOptions.normalizer;
-        valueHandler.optionsGatherer = this.selectOptions.optionsGatherer;
-        valueHandler.initOptions();
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.valueHandler && this._selectOptions.plugins.valueHandler.instanceCallback)
-        {
-            this._selectOptions.plugins.valueHandler.instanceCallback(valueHandler);
-        }
+        this._registerNewPlugin(valueHandler, VALUE_HANDLER, 'valueHandler');
     }
 
     /**
@@ -760,24 +642,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
      */
     public setLiveSearchComponent(liveSearch: LiveSearch)
     {
-        if(!liveSearch)
-        {
-            return;
-        }
-
-        this._pluginInstances[LIVE_SEARCH] = liveSearch;
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.liveSearch && this._selectOptions.plugins.liveSearch.options)
-        {
-            liveSearch.options = this._selectOptions.plugins.liveSearch.options;
-        }
-
-        liveSearch.initOptions();
-
-        if(this._selectOptions.plugins && this._selectOptions.plugins.liveSearch && this._selectOptions.plugins.liveSearch.instanceCallback)
-        {
-            this._selectOptions.plugins.liveSearch.instanceCallback(liveSearch);
-        }
+        this._registerNewPlugin(liveSearch, LIVE_SEARCH, 'liveSearch');
     }
 
     //######################### public methods #########################
@@ -811,138 +676,33 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
     {
         this.selectOptions.optionsGatherer.ngSelectPlugins = this._pluginInstances;
 
+        let initOptionsPlugin = (pluginKey: string, pluginName: keyof NgSelectPluginTypes) =>
+        {
+            if(this._selectOptions.plugins[pluginName])
+            {
+                this._selectOptions.plugins[pluginName].type = resolveForwardRef(this._selectOptions.plugins[pluginName].type);
+
+                if(this._pluginInstances[pluginKey])
+                {
+                    if(this._selectOptions.plugins && this._selectOptions.plugins[pluginName] && this._selectOptions.plugins[pluginName].options)
+                    {
+                        this._pluginInstances[pluginKey].options = this._selectOptions.plugins[pluginName].options;
+                    }
+
+                    this._pluginInstances[pluginKey].initOptions();
+                }
+            }
+        }
+
         if(this._selectOptions.plugins)
         {
-            if(this._selectOptions.plugins.normalState)
-            {
-                this._selectOptions.plugins.normalState.type = resolveForwardRef(this._selectOptions.plugins.normalState.type);
-
-                if(this._pluginInstances[NORMAL_STATE])
-                {
-                    if(this._selectOptions.plugins && this._selectOptions.plugins.normalState && this._selectOptions.plugins.normalState.options)
-                    {
-                        this._pluginInstances[NORMAL_STATE].options = this._selectOptions.plugins.normalState.options;
-                    }
-
-                    let normalState = this._pluginInstances[NORMAL_STATE] as NormalState;
-                    normalState.templateGatherer = this.selectOptions.templateGatherer;
-
-                    this._pluginInstances[NORMAL_STATE].initOptions();
-                }
-            }
-
-            if(this._selectOptions.plugins.keyboardHandler)
-            {
-                this._selectOptions.plugins.keyboardHandler.type = resolveForwardRef(this._selectOptions.plugins.keyboardHandler.type);
-
-                if(this._pluginInstances[KEYBOARD_HANDLER])
-                {
-                    if(this._selectOptions.plugins && this._selectOptions.plugins.keyboardHandler && this._selectOptions.plugins.keyboardHandler.options)
-                    {
-                        this._pluginInstances[KEYBOARD_HANDLER].options = this._selectOptions.plugins.keyboardHandler.options;
-                    }
-
-                    let keyboardHandler = this._pluginInstances[KEYBOARD_HANDLER] as KeyboardHandler;
-                    keyboardHandler.selectElement = this._element.nativeElement;
-                    keyboardHandler.optionsGatherer = this.selectOptions.optionsGatherer;
-
-                    this._pluginInstances[KEYBOARD_HANDLER].initOptions();
-                }
-            }
-
-            if(this._selectOptions.plugins.popup)
-            {
-                this._selectOptions.plugins.popup.type = resolveForwardRef(this._selectOptions.plugins.popup.type);
-
-                if(this._pluginInstances[POPUP])
-                {
-                    if(this._selectOptions.plugins && this._selectOptions.plugins.popup && this._selectOptions.plugins.popup.options)
-                    {
-                        this._pluginInstances[POPUP].options = this._selectOptions.plugins.popup.options;
-                    }
-
-                    let popup = this._pluginInstances[POPUP] as Popup;
-                    popup.selectElement = this._element.nativeElement;
-                    popup.optionsGatherer = this.selectOptions.optionsGatherer;
-                    popup.templateGatherer = this.selectOptions.templateGatherer;
-
-                    this._pluginInstances[POPUP].initOptions();
-                }
-            }
-
-            if(this._selectOptions.plugins.positioner)
-            {
-                this._selectOptions.plugins.positioner.type = resolveForwardRef(this._selectOptions.plugins.positioner.type);
-
-                if(this._pluginInstances[POSITIONER])
-                {
-                    if(this._selectOptions.plugins && this._selectOptions.plugins.positioner && this._selectOptions.plugins.positioner.options)
-                    {
-                        this._pluginInstances[POSITIONER].options = this._selectOptions.plugins.positioner.options;
-                    }
-
-                    let positioner = this._pluginInstances[POSITIONER] as Positioner;
-                    positioner.selectElement = this._element.nativeElement;
-                    positioner.optionsGatherer = this.selectOptions.optionsGatherer;
-
-                    this._pluginInstances[POSITIONER].initOptions();
-                }
-            }
-
-            if(this._selectOptions.plugins.readonlyState)
-            {
-                this._selectOptions.plugins.readonlyState.type = resolveForwardRef(this._selectOptions.plugins.readonlyState.type);
-
-                if(this._pluginInstances[READONLY_STATE])
-                {
-                    if(this._selectOptions.plugins && this._selectOptions.plugins.readonlyState && this._selectOptions.plugins.readonlyState.options)
-                    {
-                        this._pluginInstances[READONLY_STATE].options = this._selectOptions.plugins.readonlyState.options;
-                    }
-
-                    let options = this._pluginInstances[READONLY_STATE].options as ReadonlyStateOptions;
-
-                    options.readonly = true;
-                    this._pluginInstances[READONLY_STATE].initOptions();
-                }
-            }
-
-            if(this._selectOptions.plugins.valueHandler)
-            {
-                this._selectOptions.plugins.valueHandler.type = resolveForwardRef(this._selectOptions.plugins.valueHandler.type);
-
-                if(this._pluginInstances[VALUE_HANDLER])
-                {
-                    if(this._selectOptions.plugins && this._selectOptions.plugins.valueHandler && this._selectOptions.plugins.valueHandler.options)
-                    {
-                        this._pluginInstances[VALUE_HANDLER].options = this._selectOptions.plugins.valueHandler.options;
-                    }
-
-                    let valueHandler = this._pluginInstances[VALUE_HANDLER] as ValueHandler<TValue>;
-
-                    valueHandler.valueComparer = this.selectOptions.valueComparer;
-                    valueHandler.liveSearchFilter = this.selectOptions.liveSearchFilter;
-                    valueHandler.normalizer = this.selectOptions.normalizer;
-                    valueHandler.optionsGatherer = this.selectOptions.optionsGatherer;
-                    
-                    this._pluginInstances[VALUE_HANDLER].initOptions();
-                }
-            }
-
-            if(this._selectOptions.plugins.liveSearch)
-            {
-                this._selectOptions.plugins.liveSearch.type = resolveForwardRef(this._selectOptions.plugins.liveSearch.type);
-
-                if(this._pluginInstances[LIVE_SEARCH])
-                {
-                    if(this._selectOptions.plugins && this._selectOptions.plugins.liveSearch && this._selectOptions.plugins.liveSearch.options)
-                    {
-                        this._pluginInstances[LIVE_SEARCH].options = this._selectOptions.plugins.liveSearch.options;
-                    }
-
-                    this._pluginInstances[LIVE_SEARCH].initOptions();
-                }
-            }
+            initOptionsPlugin(NORMAL_STATE, 'normalState');
+            initOptionsPlugin(KEYBOARD_HANDLER, 'keyboardHandler');
+            initOptionsPlugin(POPUP, 'popup');
+            initOptionsPlugin(POSITIONER, 'positioner');
+            initOptionsPlugin(READONLY_STATE, 'readonlyState');
+            initOptionsPlugin(VALUE_HANDLER, 'valueHandler');
+            initOptionsPlugin(LIVE_SEARCH, 'liveSearch');
         }
     }
 
@@ -952,16 +712,6 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
     public invalidateVisuals(): void
     {
         this._changeDetector.detectChanges();
-    }
-
-    /**
-     * Initialize external plugin instance
-     * @param plugin - External select plugin instance to be initialized with internal properties
-     */
-    public initializePluginInstance(plugin: NgSelectPlugin): void
-    {
-        plugin.ngSelectPlugins = this._pluginInstances;
-        plugin.pluginBus = this._pluginBus;
     }
 
     /**
@@ -1053,8 +803,37 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
         if(this._absolutePopup)
         {
             this._appRef.detachView(this._absolutePopup.hostView);
+            ((this._absolutePopup.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement)?.remove();
             this._absolutePopup.destroy();
             this._absolutePopup = null;
+        }
+    }
+
+    /**
+     * Registers newly created plugin
+     * @param plugin - Plugin to be registered
+     * @param pluginKey - Key of plugin used for pluginInstances
+     * @param pluginName - Name property for plugin from options
+     */
+    protected _registerNewPlugin(plugin: NgSelectPlugin, pluginKey: string, pluginName: keyof NgSelectPluginTypes)
+    {
+        if(!plugin)
+        {
+            return;
+        }
+
+        this._pluginInstances[pluginKey] = plugin;
+
+        if(this._selectOptions.plugins && this._selectOptions.plugins[pluginName] && this._selectOptions.plugins[pluginName].options)
+        {
+            plugin.options = this._selectOptions.plugins[pluginName].options;
+        }
+
+        plugin.initOptions();
+
+        if(this._selectOptions.plugins && this._selectOptions.plugins[pluginName] && this._selectOptions.plugins[pluginName].instanceCallback)
+        {
+            this._selectOptions.plugins[pluginName].instanceCallback(plugin);
         }
     }
 }

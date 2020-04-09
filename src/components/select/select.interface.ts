@@ -42,12 +42,6 @@ export interface NgSelect<TValue = any>
     initOptions(): void;
 
     /**
-     * Initialize external plugin instance
-     * @param plugin - External select plugin instance to be initialized with internal properties
-     */
-    initializePluginInstance(plugin: NgSelectPlugin): void;
-
-    /**
      * Gets instance of plugin by its id
      * @param pluginId - Id of plugin, use constants
      */

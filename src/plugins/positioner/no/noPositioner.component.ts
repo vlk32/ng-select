@@ -2,10 +2,11 @@ import {NoPositioner, NoPositionerOptions} from "./noPositioner.interface";
 import {ChangeDetectionStrategy, Component, ElementRef, Inject, Optional} from "@angular/core";
 import {extend} from "@jscrpt/common";
 
-import {NgSelectPlugin, OptionsGatherer} from '../../../misc';
+import {NgSelectPlugin} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {POSITIONER_OPTIONS} from '../types';
+import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 
 /**
  * Default options for positioner
@@ -48,14 +49,9 @@ export class NoPositionerComponent implements NoPositioner, NgSelectPlugin<NoPos
     }
 
     /**
-     * HTML element that represents select itself
+     * Plugin bus used for inter plugin shared events
      */
-    public selectElement: HTMLElement;
-
-    /**
-     * Instance of options gatherer, that is used for obtaining available options
-     */
-    public optionsGatherer: OptionsGatherer;
+    public pluginBus: PluginBus;
 
 
     //######################### constructor #########################

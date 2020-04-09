@@ -1,4 +1,4 @@
-import {PluginOptions, NgSelectPlugin, OptionsGatherer} from "../../misc";
+import {PluginOptions, NgSelectPlugin} from "../../misc";
 
 /**
  * Options for positioner plugin
@@ -21,13 +21,4 @@ export interface PositionerOptions extends PluginOptions
  */
 export interface Positioner extends NgSelectPlugin
 {
-    /**
-     * HTML element that represents select itself
-     */
-    selectElement: HTMLElement;
-
-    /**
-     * Instance of options gatherer, that is used for obtaining available options
-     */
-    optionsGatherer: OptionsGatherer;
 }
