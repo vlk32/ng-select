@@ -1,7 +1,4 @@
-import {EventEmitter} from "@angular/core";
-
-import {PluginOptions, NgSelectPlugin, OptionsGatherer} from "../../misc";
-import {NgSelectOption} from "../../components/option";
+import {PluginOptions, NgSelectPlugin} from "../../misc";
 
 /**
  * Options for keyboard handler plugin
@@ -15,23 +12,4 @@ export interface KeyboardHandlerOptions extends PluginOptions
  */
 export interface KeyboardHandler extends NgSelectPlugin
 {
-    /**
-     * HTML element that represents select itself
-     */
-    selectElement: HTMLElement;
-
-    /**
-     * Instance of options gatherer, that is used for obtaining available options
-     */
-    optionsGatherer: OptionsGatherer;
-
-    /**
-     * Occurs when there is requested for change of visibility of popup using keyboard
-     */
-    readonly popupVisibilityRequest: EventEmitter<boolean>;
-
-    /**
-     * Occurs when option was selected using keyboard
-     */
-    readonly optionSelect: EventEmitter<NgSelectOption>;
 }

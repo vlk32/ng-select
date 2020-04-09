@@ -11,6 +11,7 @@ import {LiveSearchTexts} from '../liveSearch.interface';
 import {LIVE_SEARCH_OPTIONS} from '../types';
 import {Popup} from '../../popup';
 import {POPUP} from '../../popup/types';
+import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 
 /**
  * Default options for live search
@@ -79,6 +80,11 @@ export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin
     }
 
     /**
+     * Plugin bus used for inter plugin shared events
+     */
+    public pluginBus: PluginBus;
+
+    /**
      * HTML element that represents live search
      */
     public get liveSearchElement(): HTMLElement
@@ -130,17 +136,11 @@ export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin
      */
     public ngOnDestroy()
     {
-        if(this._visibilityChangeSubscription)
-        {
-            this._visibilityChangeSubscription.unsubscribe();
-            this._visibilityChangeSubscription = null;
-        }
+        this._visibilityChangeSubscription?.unsubscribe();
+        this._visibilityChangeSubscription = null;
 
-        if(this._textsChangedSubscription)
-        {
-            this._textsChangedSubscription.unsubscribe();
-            this._textsChangedSubscription = null;
-        }
+        this._textsChangedSubscription?.unsubscribe();
+        this._textsChangedSubscription = null;
     }
 
     //######################### public methods - implementation of BasicLiveSearch #########################
@@ -170,8 +170,8 @@ export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin
             {
                 if(!this.options.keepSearchValue)
                 {
-                    this.searchValue = '';
-                    this.searchValueChange.emit();
+                    this.handleInput('');
+                    
                     this._changeDetector.detectChanges();
                 }
             });

@@ -3,19 +3,17 @@ import {extend} from '@jscrpt/common';
 import {STRING_LOCALIZATION, StringLocalization} from '@anglr/common';
 import {Subscription} from 'rxjs';
 
-import {EditLiveSearchOptions, EditLiveSearch} from './editLiveSearch.interface';
+import {EditLiveSearchOptions, EditLiveSearch, EditLiveSearchTexts} from './editLiveSearch.interface';
 import {NgSelectPlugin} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
-import {LiveSearchTexts} from '../liveSearch.interface';
 import {LIVE_SEARCH_OPTIONS} from '../types';
-import {NormalState, NormalStateOptions} from '../../normalState';
-import {NORMAL_STATE} from '../../normalState/types';
 import {ValueHandler} from '../../valueHandler';
 import {VALUE_HANDLER} from '../../valueHandler/types';
 import {Popup} from '../../popup';
 import {POPUP} from '../../popup/types';
 import {ɵNgSelectOption} from '../../../components/option';
+import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 
 /**
  * Default options for live search
@@ -48,11 +46,6 @@ const defaultOptions: EditLiveSearchOptions =
 export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<EditLiveSearchOptions>, OnDestroy
 {
     //######################### protected fields #########################
-
-    /**
-     * Normal state plugin used within `NgSelect`
-     */
-    protected _normalState: NormalState;
 
     /**
      * Popup plugin used within `NgSelect`
@@ -123,21 +116,7 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
      * Object containing available texts
      * @internal
      */
-    public texts: LiveSearchTexts = {};
-
-    /**
-     * Options that are passed to normalState
-     * @internal
-     */
-    public get normalStateOptions(): NormalStateOptions
-    {
-        if(!this._normalState)
-        {
-            return null;
-        }
-
-        return this._normalState.options as NormalStateOptions;
-    }
+    public texts: EditLiveSearchTexts = {};
 
     //######################### public properties - children #########################
 
@@ -150,6 +129,7 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
 
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
+                @Optional() public pluginBus: PluginBus,
                 public pluginElement: ElementRef,
                 protected _changeDetector: ChangeDetectorRef,
                 @Inject(STRING_LOCALIZATION) protected _stringLocalization: StringLocalization,
@@ -165,17 +145,11 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
      */
     public ngOnDestroy()
     {
-        if(this._textsChangedSubscription)
-        {
-            this._textsChangedSubscription.unsubscribe();
-            this._textsChangedSubscription = null;
-        }
+        this._textsChangedSubscription?.unsubscribe();
+        this._textsChangedSubscription = null;
 
-        if(this._valueChangedSubscription)
-        {
-            this._valueChangedSubscription.unsubscribe();
-            this._valueChangedSubscription = null;
-        }
+        this._valueChangedSubscription?.unsubscribe();
+        this._valueChangedSubscription = null;
     }
 
     //######################### public methods - implementation of EditLiveSearch #########################
@@ -186,18 +160,6 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
     public initialize()
     {
         this._textsChangedSubscription = this._stringLocalization.textsChange.subscribe(() => this._initTexts());
-
-        let normalState = this.ngSelectPlugins[NORMAL_STATE] as NormalState;
-
-        if(this._normalState && this._normalState != normalState)
-        {
-            this._normalState = null;
-        }
-
-        if(!this._normalState)
-        {
-            this._normalState = normalState;
-        }
 
         let popup = this.ngSelectPlugins[POPUP] as Popup;
 
@@ -285,13 +247,13 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
             this._valueHandler.setValue(null);
 
             //do not change active if active is visible
-            if(!this._valueHandler.optionsGatherer.availableOptions.find((option: ɵNgSelectOption) => option.active))
+            if(!this.pluginBus.selectOptions.optionsGatherer.availableOptions.find((option: ɵNgSelectOption) => option.active))
             {
                 let option: ɵNgSelectOption = this._valueHandler.findAvailableOption(value);
 
                 if(option)
                 {
-                    this._valueHandler.optionsGatherer.options.forEach((option: ɵNgSelectOption) => option.active = false);
+                    this.pluginBus.selectOptions.optionsGatherer.options.forEach((option: ɵNgSelectOption) => option.active = false);
                     option.active = true;
                     this._popup.invalidateVisuals();
                 }
@@ -308,11 +270,8 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
     {
         element.select();
 
-        if(this._normalState)
-        {
-            this._normalState.click.emit();
-            this._normalState.focus.emit();
-        }
+        this.pluginBus.togglePopup.emit();
+        this.pluginBus.focus.emit();
     }
 
     //######################### protected methods #########################
@@ -322,12 +281,10 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
      */
     protected _initTexts()
     {
-        if(!this.normalStateOptions)
+        Object.keys(this.options.texts).forEach(key =>
         {
-            return;
-        }
-
-        this.texts.inputPlaceholder = this._stringLocalization.get(this.normalStateOptions.texts.nothingSelected);
+            this.texts[key] = this._stringLocalization.get(this.options.texts[key]);
+        });
 
         this._changeDetector.detectChanges();
     }

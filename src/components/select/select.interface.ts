@@ -1,6 +1,7 @@
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 import {NgSelectPlugin, NgSelectOptions} from "../../misc";
+import {PluginBusEvents} from '../../misc/pluginBus/pluginBus.interface';
 
 /**
  * Interface describing object storing all existing plugin instances for NgSelect
@@ -33,18 +34,31 @@ export interface NgSelect<TValue = any>
     /**
      * Initialize component, automatically called once if not blocked by options
      */
-    initialize();
+    initialize(): void;
 
     /**
      * Initialize options, automaticaly called during init phase, but can be used to reinitialize NgSelectOptions
      */
-    initOptions();
+    initOptions(): void;
+
+    /**
+     * Initialize external plugin instance
+     * @param plugin - External select plugin instance to be initialized with internal properties
+     */
+    initializePluginInstance(plugin: NgSelectPlugin): void;
 
     /**
      * Gets instance of plugin by its id
      * @param pluginId - Id of plugin, use constants
      */
     getPlugin<PluginType extends NgSelectPlugin>(pluginId: string): PluginType;
+
+    /**
+     * Subscribes for event
+     * @param eventName - Name of event that should be listened to
+     * @param handler - Function used for handling event
+     */
+    listenTo<TParam = void>(eventName: keyof PluginBusEvents, handler: (data: TParam) => void): Subscription;
 
     /**
      * Explicitly runs invalidation of content (change detection)
@@ -55,7 +69,7 @@ export interface NgSelect<TValue = any>
      * Executes actions on NgSelect
      * @param actions - Array of actions that are executed over NgSelect
      */
-    execute(...actions: NgSelectAction<TValue>[]);
+    execute(...actions: NgSelectAction<TValue>[]): void;
 
     /**
      * Executes function on NgSelect and returns result

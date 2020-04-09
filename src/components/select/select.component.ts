@@ -30,6 +30,7 @@ import {NgSelectOption, NgSelectOptGroup} from "../option";
 import {OptionComponent} from "../option/option.component";
 import {OptGroupComponent} from "../option/optgroup.component";
 import {PluginBus} from '../../misc/pluginBus/pluginBus';
+import {PluginBusEvents} from '../../misc/pluginBus/pluginBus.interface';
 
 //TODO - dynamic change of absolute popup
 //TODO - check if dynamic element is correctly removed from html
@@ -191,6 +192,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
     public set selectOptions(options: NgSelectOptions<TValue>)
     {
         this._selectOptions = extend(true, this._selectOptions, options);
+        this._pluginBus.selectOptions = this._selectOptions;
     }
 
     /**
@@ -309,9 +311,10 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
     //######################### constructors #########################
     constructor(protected _changeDetector: ChangeDetectorRef,
                 protected _element: ElementRef<HTMLElement>,
-                private componentFactoryResolver: ComponentFactoryResolver,
-                private appRef: ApplicationRef,
-                private injector: Injector,
+                protected _componentFactoryResolver: ComponentFactoryResolver,
+                protected _appRef: ApplicationRef,
+                protected _injector: Injector,
+                protected _pluginBus: PluginBus<TValue>,
                 @Inject(NG_SELECT_PLUGIN_INSTANCES) protected _pluginInstances: NgSelectPluginInstances,
                 @Inject(NG_SELECT_OPTIONS) @Optional() options?: NgSelectOptions<TValue>,
                 @Inject(NORMAL_STATE_TYPE) @Optional() normalStateType?: Type<NormalState>,
@@ -431,6 +434,9 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
                                      },
                                      defaultOptions,
                                      opts);
+
+        this._pluginBus.selectElement = this._element;
+        this._pluginBus.selectOptions = this._selectOptions;
     }
 
     //######################### public methods - implementation of OnChanges #########################
@@ -616,8 +622,6 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
             keyboardHandler.options = this._selectOptions.plugins.keyboardHandler.options;
         }
 
-        keyboardHandler.selectElement = this._element.nativeElement;
-        keyboardHandler.optionsGatherer = this.selectOptions.optionsGatherer;
         keyboardHandler.initOptions();
 
         if(this._selectOptions.plugins && this._selectOptions.plugins.keyboardHandler && this._selectOptions.plugins.keyboardHandler.instanceCallback)
@@ -951,12 +955,32 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
     }
 
     /**
+     * Initialize external plugin instance
+     * @param plugin - External select plugin instance to be initialized with internal properties
+     */
+    public initializePluginInstance(plugin: NgSelectPlugin): void
+    {
+        plugin.ngSelectPlugins = this._pluginInstances;
+        plugin.pluginBus = this._pluginBus;
+    }
+
+    /**
      * Gets instance of plugin by its id
      * @param pluginId - Id of plugin, use constants
      */
     public getPlugin<PluginType extends NgSelectPlugin>(pluginId: string): PluginType
     {
         return this._pluginInstances[pluginId] as PluginType;
+    }
+
+    /**
+     * Subscribes for event
+     * @param eventName - Name of event that should be listened to
+     * @param handler - Function used for handling event
+     */
+    public listenTo<TParam = void>(eventName: keyof PluginBusEvents, handler: (data: TParam) => void): Subscription
+    {
+        return this._pluginBus[eventName].subscribe(handler);
     }
 
     /**
@@ -1004,12 +1028,12 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
         }
 
         // 1. Create a component reference from the component 
-        const componentRef = this.componentFactoryResolver
+        const componentRef = this._componentFactoryResolver
             .resolveComponentFactory(component)
-            .create(this.injector);
+            .create(this._injector);
         
         // 2. Attach component to the appRef so that it's inside the ng component tree
-        this.appRef.attachView(componentRef.hostView);
+        this._appRef.attachView(componentRef.hostView);
         
         // 3. Get DOM element from component
         const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
@@ -1028,7 +1052,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
     {
         if(this._absolutePopup)
         {
-            this.appRef.detachView(this._absolutePopup.hostView);
+            this._appRef.detachView(this._absolutePopup.hostView);
             this._absolutePopup.destroy();
             this._absolutePopup = null;
         }

@@ -5,6 +5,7 @@ import {NoLiveSearchOptions, NoLiveSearch} from './noLiveSearch.interface';
 import {NgSelectPlugin} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
+import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 
 /**
  * Component used for no live search
@@ -30,6 +31,11 @@ export class NoLiveSearchComponent implements NoLiveSearch, NgSelectPlugin<NoLiv
      * Options for NgSelect plugin
      */
     public options: NoLiveSearchOptions;
+
+    /**
+     * Plugin bus used for inter plugin shared events
+     */
+    public pluginBus: PluginBus;
 
     /**
      * HTML element that represents live search
