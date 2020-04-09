@@ -3,14 +3,13 @@ import {Subscription} from 'rxjs';
 
 import {NgSelectPlugin, OptionsGatherer, CompareValueFunc, LiveSearchFilter, NormalizeFunc} from '../../misc';
 import {NgSelectPluginInstances} from '../../components/select';
-import {KeyboardHandler} from '../keyboardHandler';
-import {KEYBOARD_HANDLER} from '../keyboardHandler/types';
 import {Popup} from '../popup';
 import {POPUP} from '../popup/types';
 import {ɵNgSelectOption, NgSelectOption} from '../../components/option';
 import {NormalState} from '../normalState';
 import {NORMAL_STATE} from '../normalState/types';
 import {ValueHandler, ValueHandlerOptions} from './valueHandler.interface';
+import {PluginBus} from '../../misc/pluginBus/pluginBus';
 
 /**
  * Base class for value handlers
@@ -25,11 +24,6 @@ export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandl
     protected _options: TOptions;
 
     /**
-     * Keyboard handler that is used
-     */
-    protected _keyboardHandler: KeyboardHandler;
-
-    /**
      * Popup that is used
      */
     protected _popup: Popup;
@@ -40,24 +34,19 @@ export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandl
     protected _normalState: NormalState;
 
     /**
-     * Subscription for option selection using keyboard
+     * Subscription for option selection
      */
     protected _optionSelectSubscription: Subscription;
 
     /**
-     * Subscription for option selection using mouse
+     * Subscription for option cancelation
      */
-    protected _optionClickSubscription: Subscription;
+    protected _optionCancelSubscription: Subscription;
 
     /**
      * Subscription for changes of options in options gatherer
      */
     protected _optionsChangeSubscription: Subscription;
-
-    /**
-     * Subscription for canceling an option
-     */
-    protected _cancelOptionSubscription: Subscription;
 
     /**
      * Instance of previous options gatherer, that is used for obtaining available options
@@ -75,31 +64,6 @@ export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandl
      * Occurs when value of NgSelect changes
      */
     public valueChange: EventEmitter<void> = new EventEmitter<void>();
-
-    /**
-     * Instance of options gatherer, that is used for obtaining available options
-     */
-    public optionsGatherer: OptionsGatherer<TValue>;
-
-    /**
-     * Function of value comparer that is used for comparison of values
-     */
-    public valueComparer: CompareValueFunc<TValue>;
-
-    /**
-     * Function for filtering options
-     */
-    public liveSearchFilter: LiveSearchFilter<TValue>;
-
-    /**
-     * Normalizer used for normalizing values, usually when filtering
-     */
-    public normalizer: NormalizeFunc<TValue>;
-
-    /**
-     * Occurs when there is requested for change of visibility of popup using keyboard
-     */
-    public popupVisibilityRequest: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     /**
      * Current value of NgSelect
@@ -126,9 +90,36 @@ export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandl
         return null;
     }
 
+    //######################### protected properties #########################
+
+    /**
+     * Function of value comparer that is used for comparison of values
+     */
+    protected get valueComparer(): CompareValueFunc<TValue>
+    {
+        return this.pluginBus?.selectOptions?.valueComparer;
+    }
+
+    /**
+     * Method that is used for filtering when live search is running on static data
+     */
+    protected get liveSearchFilter(): LiveSearchFilter<TValue>
+    {
+        return this.pluginBus?.selectOptions?.liveSearchFilter;
+    }
+
+    /**
+     * Normalizer used for normalizing values
+     */
+    protected get normalizer(): NormalizeFunc<TValue>
+    {
+        return this.pluginBus?.selectOptions?.normalizer;
+    }
+
     //######################### constructor #########################
     constructor(public ngSelectPlugins: NgSelectPluginInstances,
-                public pluginElement: ElementRef)
+                public pluginElement: ElementRef,
+                public pluginBus: PluginBus)
     {
     }
 
@@ -139,29 +130,14 @@ export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandl
      */
     public ngOnDestroy()
     {
-        if(this._optionSelectSubscription)
-        {
-            this._optionSelectSubscription.unsubscribe();
-            this._optionSelectSubscription = null;
-        }
+        this._optionSelectSubscription?.unsubscribe();
+        this._optionSelectSubscription = null;
 
-        if(this._optionClickSubscription)
-        {
-            this._optionClickSubscription.unsubscribe();
-            this._optionClickSubscription = null;
-        }
+        this._optionsChangeSubscription?.unsubscribe();
+        this._optionsChangeSubscription = null;
 
-        if(this._optionsChangeSubscription)
-        {
-            this._optionsChangeSubscription.unsubscribe();
-            this._optionsChangeSubscription = null;
-        }
-
-        if(this._cancelOptionSubscription)
-        {
-            this._cancelOptionSubscription.unsubscribe();
-            this._cancelOptionSubscription = null;
-        }
+        this._optionCancelSubscription?.unsubscribe();
+        this._optionCancelSubscription = null;
     }
 
     //######################### public methods - implementation of DynamicValueHandler #########################
@@ -177,7 +153,7 @@ export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandl
      */
     public initialize()
     {
-        if(this._optionsGatherer && this._optionsGatherer != this.optionsGatherer)
+        if(this._optionsGatherer && this._optionsGatherer != this.pluginBus?.selectOptions?.optionsGatherer)
         {
             this._optionsChangeSubscription.unsubscribe();
             this._optionsChangeSubscription = null;
@@ -187,61 +163,26 @@ export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandl
 
         if(!this._optionsGatherer)
         {
-            this._optionsGatherer = this.optionsGatherer;
+            this._optionsGatherer = this.pluginBus?.selectOptions?.optionsGatherer;
 
             this._optionsChangeSubscription = this._optionsGatherer.optionsChange.subscribe(() => this._loadOptions());
         }
 
-        let keyboardHandler = this.ngSelectPlugins[KEYBOARD_HANDLER] as KeyboardHandler;
-
-        if(this._keyboardHandler && this._keyboardHandler != keyboardHandler)
+        if(!this._optionSelectSubscription)
         {
-            this._optionSelectSubscription.unsubscribe();
-            this._optionSelectSubscription = null;
-
-            this._keyboardHandler = null;
+            this._optionSelectSubscription = this.pluginBus.optionSelect.subscribe(this._setValue);
         }
 
-        if(!this._keyboardHandler)
+        if(!this._optionCancelSubscription)
         {
-            this._keyboardHandler = keyboardHandler;
-
-            this._optionSelectSubscription = this._keyboardHandler.optionSelect.subscribe(this._setValue);
+            this._optionCancelSubscription = this.pluginBus.optionCancel.subscribe(this._cancelValue);
         }
 
         let popup = this.ngSelectPlugins[POPUP] as Popup;
-
-        if(this._popup && this._popup != popup)
-        {
-            this._optionClickSubscription.unsubscribe();
-            this._optionClickSubscription = null;
-
-            this._popup = null;
-        }
-
-        if(!this._popup)
-        {
-            this._popup = popup;
-
-            this._optionClickSubscription = this._popup.optionClick.subscribe(this._setValue);
-        }
+        this._popup = popup;
 
         let normalState = this.ngSelectPlugins[NORMAL_STATE] as NormalState;
-
-        if(this._normalState && this._normalState != normalState)
-        {
-            this._cancelOptionSubscription.unsubscribe();
-            this._cancelOptionSubscription = null;
-
-            this._normalState = null;
-        }
-
-        if(!this._normalState)
-        {
-            this._normalState = normalState;
-
-            this._cancelOptionSubscription = this._normalState.cancelOption.subscribe(this._cancelValue);
-        }
+        this._normalState = normalState;
 
         this._loadOptions();
     }

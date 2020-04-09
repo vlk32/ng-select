@@ -7,6 +7,7 @@ import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {VALUE_HANDLER_OPTIONS} from '../types';
 import {ɵNgSelectOption, } from '../../../components/option';
 import {ValueHandlerBase} from '../valueHandlerBase';
+import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 
 /**
  * Default options for value handler
@@ -50,10 +51,11 @@ export class BasicValueHandlerComponent<TValue = any> extends ValueHandlerBase<T
 
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() ngSelectPlugins: NgSelectPluginInstances,
+                @Optional() pluginBus: PluginBus,
                 pluginElement: ElementRef,
                 @Inject(VALUE_HANDLER_OPTIONS) @Optional() options?: BasicValueHandlerOptions)
     {
-        super(ngSelectPlugins, pluginElement);
+        super(ngSelectPlugins, pluginElement, pluginBus);
 
         this._options = extend(true, {}, defaultOptions, options);
     }
@@ -91,7 +93,7 @@ export class BasicValueHandlerComponent<TValue = any> extends ValueHandlerBase<T
     protected _setValue = (option: ɵNgSelectOption<TValue>) =>
     {
         //multiple values are allowed
-        if(this.options.multiple)
+        if(this.pluginBus.selectOptions.multiple)
         {
             if(!Array.isArray(this.selectedOptions))
             {
@@ -129,9 +131,9 @@ export class BasicValueHandlerComponent<TValue = any> extends ValueHandlerBase<T
         this.valueChange.emit();
 
         //close popup if not multiple
-        if(!this.options.multiple)
+        if(!this.pluginBus.selectOptions.multiple)
         {
-            this.popupVisibilityRequest.emit(false);
+            this.pluginBus.showHidePopup.emit(false);
         }
         else
         {
@@ -167,20 +169,20 @@ export class BasicValueHandlerComponent<TValue = any> extends ValueHandlerBase<T
         }
 
         //no options available yet
-        if(!this.optionsGatherer.options || !this.optionsGatherer.options.length)
+        if(!this._optionsGatherer.options || !this._optionsGatherer.options.length)
         {
             this._unmappedValue = value;
 
             return;
         }
 
-        if(this.options.multiple)
+        if(this.pluginBus.selectOptions.multiple)
         {
             if(Array.isArray(value))
             {
                 let items = value;
 
-                this.selectedOptions = this.optionsGatherer.options.filter(itm => !!items.find(it => this.valueComparer(it, itm.value)));
+                this.selectedOptions = this._optionsGatherer.options.filter(itm => !!items.find(it => this.valueComparer(it, itm.value)));
             }
             else
             {
@@ -197,7 +199,7 @@ export class BasicValueHandlerComponent<TValue = any> extends ValueHandlerBase<T
             {
                 let item = value;
 
-                this.selectedOptions = this.optionsGatherer.options.find(itm => this.valueComparer(itm.value, item));
+                this.selectedOptions = this._optionsGatherer.options.find(itm => this.valueComparer(itm.value, item));
             }
         }
 

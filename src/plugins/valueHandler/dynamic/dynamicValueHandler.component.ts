@@ -7,6 +7,7 @@ import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {VALUE_HANDLER_OPTIONS} from '../types';
 import {ɵNgSelectOption} from '../../../components/option';
 import {ValueHandlerBase} from '../valueHandlerBase';
+import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 
 /**
  * Default options for value handler
@@ -44,10 +45,11 @@ export class DynamicValueHandlerComponent<TValue = any> extends ValueHandlerBase
 
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() ngSelectPlugins: NgSelectPluginInstances,
+                @Optional() pluginBus: PluginBus,
                 pluginElement: ElementRef,
                 @Inject(VALUE_HANDLER_OPTIONS) @Optional() options?: DynamicValueHandlerOptions<TValue>)
     {
-        super(ngSelectPlugins, pluginElement);
+        super(ngSelectPlugins, pluginElement, pluginBus);
 
         this._options = extend(true, {}, defaultOptions, options);
     }
@@ -85,7 +87,7 @@ export class DynamicValueHandlerComponent<TValue = any> extends ValueHandlerBase
     protected _setValue = (option: ɵNgSelectOption<TValue>) =>
     {
         //multiple values are allowed
-        if(this.options.multiple)
+        if(this.pluginBus.selectOptions.multiple)
         {
             if(!Array.isArray(this.selectedOptions))
             {
@@ -121,9 +123,9 @@ export class DynamicValueHandlerComponent<TValue = any> extends ValueHandlerBase
         this.valueChange.emit();
 
         //close popup if not multiple
-        if(!this.options.multiple)
+        if(!this.pluginBus.selectOptions.multiple)
         {
-            this.popupVisibilityRequest.emit(false);
+            this.pluginBus.showHidePopup.emit(false);
         }
         else
         {
@@ -156,7 +158,7 @@ export class DynamicValueHandlerComponent<TValue = any> extends ValueHandlerBase
             return;
         }
 
-        if(this.options.multiple)
+        if(this.pluginBus.selectOptions.multiple)
         {
             if(Array.isArray(value))
             {

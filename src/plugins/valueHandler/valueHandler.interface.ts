@@ -1,20 +1,13 @@
 import {EventEmitter} from "@angular/core";
 
-import {PluginOptions, NgSelectPlugin, OptionsGatherer, CompareValueFunc, LiveSearchFilter, NormalizeFunc} from "../../misc";
+import {PluginOptions, NgSelectPlugin} from "../../misc";
 import {NgSelectOption} from "../../components/option";
-
-//TODO - think how to clean usage of optionsGatherer, valueComparerer, liveSearchFilter, normalizerFunc, templateGatherer, move them into base plugin ?
-//TODO - think of passing select options to each plugin (may solve also upper problem, but also multiple and readonly)
 
 /**
  * Options for value handler plugin
  */
 export interface ValueHandlerOptions extends PluginOptions
 {
-    /**
-     * Indication that multiple values can be selected
-     */
-    multiple?: boolean;
 }
 
 /**
@@ -22,26 +15,6 @@ export interface ValueHandlerOptions extends PluginOptions
  */
 export interface ValueHandler<TValue = any> extends NgSelectPlugin
 {
-    /**
-     * Instance of options gatherer, that is used for obtaining available options
-     */
-    optionsGatherer: OptionsGatherer<TValue>;
-
-    /**
-     * Function of value comparer that is used for comparison of values
-     */
-    valueComparer: CompareValueFunc<TValue>;
-
-    /**
-     * Function for filtering options
-     */
-    liveSearchFilter: LiveSearchFilter<TValue>;
-
-    /**
-     * Normalizer used for normalizing values, usually when filtering
-     */
-    normalizer: NormalizeFunc<TValue>;
-
     /**
      * Current selected options of NgSelect
      */
@@ -56,11 +29,6 @@ export interface ValueHandler<TValue = any> extends NgSelectPlugin
      * Occurs when value of NgSelect changes
      */
     readonly valueChange: EventEmitter<void>;
-
-    /**
-     * Occurs when there is requested for change of visibility of popup using keyboard
-     */
-    readonly popupVisibilityRequest: EventEmitter<boolean>;
 
     /**
      * Sets value for NgSelect

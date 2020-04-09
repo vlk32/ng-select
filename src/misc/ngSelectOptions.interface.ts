@@ -52,6 +52,21 @@ export interface PluginBusOptions<TValue = any>
      * Indication that multiple values can be selected
      */
     multiple?: boolean;
+
+    /**
+     * Function of value comparer that is used for comparison of values
+     */
+    valueComparer?: CompareValueFunc<TValue>;
+
+    /**
+     * Method that is used for filtering when live search is running on static data
+     */
+    liveSearchFilter?: LiveSearchFilter<TValue>;
+
+    /**
+     * Normalizer used for normalizing values
+     */
+    normalizer?: NormalizeFunc<TValue>;
 }
 
 /**
@@ -83,19 +98,4 @@ export interface NgSelectOptions<TValue = any> extends PluginBusOptions<TValue>
      * Indication whether force value check on initialization of select, this allows to change value of form control to value of valueHandler
      */
     forceValueCheckOnInit?: boolean;
-
-    /**
-     * Function of value comparer that is used for comparison of values
-     */
-    valueComparer?: CompareValueFunc<TValue>;
-
-    /**
-     * Method that is used for filtering when live search is running on static data
-     */
-    liveSearchFilter?: LiveSearchFilter<TValue>;
-
-    /**
-     * Normalizer used for normalizing values
-     */
-    normalizer?: NormalizeFunc<TValue>;
 }
