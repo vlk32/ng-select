@@ -1,10 +1,29 @@
-import {Component, ChangeDetectionStrategy, Inject, OnDestroy, OnInit, ChangeDetectorRef, EventEmitter} from "@angular/core";
+import {Component, ChangeDetectionStrategy, Inject, OnDestroy, OnInit, ChangeDetectorRef} from "@angular/core";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {OptionsGatherer, TemplateGatherer, NgSelectOption} from "@anglr/select";
+import {OptionsGatherer, ɵNgSelectOption} from "@anglr/select";
+import {extend} from '@jscrpt/common';
 import {Subscription} from "rxjs";
 
-import {DialogPopupComponentData, DialogPopupContentComponent, DialogPopupOptions} from "../../plugins/popup/dialog/dialogPopup.interface";
+import {DialogPopupComponentData, DialogPopupContentComponent} from "../../plugins/popup/dialog/dialogPopup.interface";
+import {BasicDialogPopupOptions, CssClassesBasicDialogPopup} from './basicDialogPopup.interface';
 
+/**
+ * Default options for popup
+ * @internal
+ */
+const defaultOptions: BasicDialogPopupOptions =
+{
+    cssClasses:
+    {
+        optionChecked: 'fa fa-check',
+        optionItemDiv: 'option-item',
+        optionItemTextDiv: 'option-item-text'
+    }
+};
+
+/**
+ * Basic dialog popup
+ */
 @Component(
 {
     selector: 'ng-select-basic-dialog-popup',
@@ -12,54 +31,38 @@ import {DialogPopupComponentData, DialogPopupContentComponent, DialogPopupOption
     styleUrls: ['basicDialogPopup.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BasicDialogPopupComponent<TValue = any, TDialogOptions = any> implements DialogPopupContentComponent<TValue, TDialogOptions>, OnInit, OnDestroy
+export class BasicDialogPopupComponent<TValue = any> implements DialogPopupContentComponent<BasicDialogPopupOptions, TValue, CssClassesBasicDialogPopup>, OnInit, OnDestroy
 {
-    //######################### private properties #########################
+    //######################### protected properties #########################
 
     /**
      * Subscription for available options change
      */
-    private _availableOptionsSubscription: Subscription;
-
-    //######################### public properties - template bindings #########################
-
-    /**
-     * Array of provided options for select
-     */
-    public selectOptions: NgSelectOption<TValue>[];
+    protected _optionsChangeSubscription: Subscription;
 
     /**
      * Instance of options gatherer, that is used for obtaining available options
      */
-    public optionsGatherer: OptionsGatherer<TValue>;
+    protected _optionsGatherer: OptionsGatherer<TValue>;
+
+    //######################### public properties - template bindings #########################
 
     /**
-     * Gatherer used for obtaining custom templates
+     * Options for NgSelect plugin
      */
-    public templateGatherer: TemplateGatherer;
+    public options: BasicDialogPopupOptions;
 
     /**
-     * Dialogs popup options
+     * Array of provided options for select
      */
-    options: DialogPopupOptions<TDialogOptions>;
-
-    /**
-     * Occurs when user clicks on option, clicked options is passed as argument
-     */
-    optionClick: EventEmitter<NgSelectOption<TValue>>;
+    public selectOptions: ɵNgSelectOption<TValue>[];
 
     //######################### constructor #########################
-    constructor(public dialog: MatDialogRef<BasicDialogPopupComponent<TValue, TDialogOptions>, DialogPopupComponentData<TValue, TDialogOptions>>,
-                private _changeDetector: ChangeDetectorRef,
-                @Inject(MAT_DIALOG_DATA) public data: DialogPopupComponentData<TValue, TDialogOptions>)
+    constructor(public dialog: MatDialogRef<BasicDialogPopupComponent<TValue>>,
+                protected _changeDetector: ChangeDetectorRef,
+                @Inject(MAT_DIALOG_DATA) public data: DialogPopupComponentData<BasicDialogPopupOptions, TValue, CssClassesBasicDialogPopup>)
     {
-        if (data)
-        {
-            this.templateGatherer = data.templateGatherer;
-            this.optionsGatherer = data.optionsGatherer;
-            this.optionClick = data.optionClick;
-            this.options = data.options;
-        }
+        this.options = extend(true, {}, defaultOptions, data.options);
     }
 
     //######################### public methods - implementation of OnInit #########################
@@ -69,13 +72,23 @@ export class BasicDialogPopupComponent<TValue = any, TDialogOptions = any> imple
      */
     public ngOnInit()
     {
-        if (this.optionsGatherer)
+        if(this._optionsGatherer && this._optionsGatherer != this.data.pluginBus.selectOptions.optionsGatherer)
         {
-            this.selectOptions = this.optionsGatherer.availableOptions;
-            this._availableOptionsSubscription = this.optionsGatherer.availableOptionsChange.subscribe(() => 
+            this._optionsChangeSubscription.unsubscribe();
+            this._optionsChangeSubscription = null;
+
+            this._optionsGatherer = null;
+        }
+
+        if(!this._optionsGatherer)
+        {
+            this._optionsGatherer = this.data.pluginBus.selectOptions.optionsGatherer;
+            this.selectOptions = this._optionsGatherer.availableOptions;
+
+            this._optionsChangeSubscription = this._optionsGatherer.availableOptionsChange.subscribe(() =>
             {
-                this.selectOptions = this.optionsGatherer.availableOptions;
-                this._changeDetector.detectChanges();
+                this.selectOptions = this._optionsGatherer.availableOptions;
+                this._changeDetector.detectChanges()
             });
         }
     }
@@ -87,7 +100,17 @@ export class BasicDialogPopupComponent<TValue = any, TDialogOptions = any> imple
      */
     public ngOnDestroy()
     {
-        this._availableOptionsSubscription?.unsubscribe();
-        this._availableOptionsSubscription = null;
+        this._optionsChangeSubscription?.unsubscribe();
+        this._optionsChangeSubscription = null;
+    }
+
+    //######################### public methods #########################
+
+    /**
+     * Explicitly runs invalidation of content (change detection)
+     */
+    public invalidateVisuals(): void
+    {
+        this._changeDetector.detectChanges();
     }
 }

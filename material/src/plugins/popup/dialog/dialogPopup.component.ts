@@ -17,9 +17,6 @@ const defaultOptions: DialogPopupOptions =
     dialogOptions: {},
     cssClasses:
     {
-        optionChecked: 'fa fa-check',
-        optionItemDiv: 'option-item',
-        optionItemTextDiv: 'option-item-text',
         dialogDiv: 'popup-div'
     },
     visible: false

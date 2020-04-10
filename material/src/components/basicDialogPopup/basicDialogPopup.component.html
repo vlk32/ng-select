@@ -2,12 +2,12 @@
 <ng-template #defaultOptionTextLook let-option>{{option?.text}}</ng-template>
 
 <div *ngFor="let option of selectOptions"
-     [ngClass]="'option-item'"
+     [ngClass]="options?.cssClasses?.optionItemDiv"
      [class.selected]="option?.selected"
-     (click)="optionClick?.emit(option)">
+     (click)="data?.pluginBus?.optionSelect?.emit(option)">
     <div [ngClass]="options?.cssClasses?.optionItemTextDiv">
-        <ng-container *ngTemplateOutlet="templateGatherer?.optionTemplate || defaultOptionTextLook; context: {$implicit: option, popup: this}"></ng-container>
+        <ng-container *ngTemplateOutlet="data?.pluginBus?.selectOptions?.templateGatherer?.optionTemplate || defaultOptionTextLook; context: {$implicit: option, popup: this}"></ng-container>
     </div>
 
-    <div *ngIf="option?.selected && options?.multiple" [ngClass]="options?.cssClasses?.optionChecked"></div>
+    <div *ngIf="option?.selected && data?.pluginBus?.selectOptions?.multiple" [ngClass]="options?.cssClasses?.optionChecked"></div>
 </div>
