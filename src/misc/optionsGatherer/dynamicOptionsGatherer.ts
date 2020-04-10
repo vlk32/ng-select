@@ -9,6 +9,7 @@ import {NgSelectOption} from "../../components/option";
 import {DynamicOptionsGathererOptions} from "./dynamicOptionsGatherer.interface";
 import {LiveSearch} from "../../plugins/liveSearch";
 import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
+import {PluginBus} from '../pluginBus/pluginBus';
 
 /**
  * Class that is used as for options gathering in dynamic way, for example from external source when writing
@@ -64,6 +65,11 @@ export class DynamicOptionsGatherer<TValue = any> implements OptionsGatherer<TVa
      * NgSelect plugin instances available for gatherer
      */
     public ngSelectPlugins: NgSelectPluginInstances;
+
+    /**
+     * Plugin bus used for inter plugin shared events
+     */
+    public pluginBus: PluginBus<TValue>;
 
     //######################### constructor #########################
     constructor(protected _options: DynamicOptionsGathererOptions<TValue>)

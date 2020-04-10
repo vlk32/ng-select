@@ -8,6 +8,7 @@ import {NgSelectPluginInstances} from "../../components/select";
 import {LiveSearch} from "../../plugins/liveSearch";
 import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
 import {NormalizeFunc} from "../ngSelectOptions.interface";
+import {PluginBus} from '../pluginBus/pluginBus';
 
 /**
  * Options gatherer used for static options gathering from code
@@ -81,6 +82,11 @@ export class CodeOptionsGatherer<TValue = any> implements OptionsGatherer<TValue
      * NgSelect plugin instances available for gatherer
      */
     public ngSelectPlugins: NgSelectPluginInstances;
+
+    /**
+     * Plugin bus used for inter plugin shared events
+     */
+    public pluginBus: PluginBus<TValue>;
 
     //######################### constructor #########################
     constructor(private _liveSearchFilter?: LiveSearchFilter<TValue>,

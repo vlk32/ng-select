@@ -14,6 +14,7 @@
    - `focus`, hanles gaining focus
 - added new extension method `patchOptions` which allows changing options without running initialization
 - fixed removing of html element for absolute `popup` plugin
+- `optionsGatherer` extended with `pluginBus`
 - **Breaking Changes**
    - all plugins now have to have `pluginBus`
    - `KeyboardHandler` plugin removed `selectElement`, `optionsGatherer`, `popupVisibilityRequest`, `optionSelect` properties, use new `PluginBus` instead

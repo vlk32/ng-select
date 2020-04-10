@@ -3,6 +3,7 @@ import {EventEmitter} from "@angular/core";
 import {NgSelectOption} from "../../components/option/option.interface";
 import {NgSelectPluginInstances} from "../../components/select";
 import {NormalizeFunc} from "../ngSelectOptions.interface";
+import {PluginBus} from '../pluginBus/pluginBus';
 
 /**
  * Callback that is used for filtering static values during live search
@@ -41,6 +42,11 @@ export interface OptionsGatherer<TValue = any>
      * NgSelect plugin instances available for gatherer
      */
     ngSelectPlugins: NgSelectPluginInstances;
+
+    /**
+     * Plugin bus used for inter plugin shared events
+     */
+    pluginBus: PluginBus;
 
     /**
      * Initialize gatherer during initialization phase

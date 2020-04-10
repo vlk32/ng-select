@@ -661,6 +661,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
     public initOptions()
     {
         this.selectOptions.optionsGatherer.ngSelectPlugins = this._pluginInstances;
+        this.selectOptions.optionsGatherer.pluginBus = this._pluginBus;
 
         let initOptionsPlugin = (pluginKey: string, pluginName: keyof NgSelectPluginTypes) =>
         {
