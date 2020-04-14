@@ -3,8 +3,8 @@
         <input [ngClass]="options?.cssClasses?.input"
                type="text"
                [value]="searchValueDisplayed"
-               (input)="handleInput($event.target.value, true)"
-               (focus)="handleFocus($event.target)"
+               (input)="handleInput($any($event.target).value, true)"
+               (focus)="handleFocus($any($event.target))"
                placeholder="{{texts?.inputPlaceholder}}"
                [disabled]="pluginBus?.selectOptions.readonly">
     </div>

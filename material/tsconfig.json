@@ -5,7 +5,8 @@
         "baseUrl": ".",
         "paths": 
         {
-            "@anglr/select": ["../src/select"]
+            "@anglr/select": ["../src/select"],
+            "@anglr/select/extensions": ["../extensions/src/extensions"]
         }
     },
     "files":

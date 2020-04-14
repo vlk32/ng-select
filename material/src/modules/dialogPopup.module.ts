@@ -4,9 +4,10 @@ import {MatDialogModule} from "@angular/material/dialog";
 
 import {BasicDialogPopupComponent} from "../components/basicDialogPopup/types";
 import {DialogPopupComponent} from "../plugins/popup/dialog/dialogPopup.component";
+import {DialogPopupDirective} from '../directives/types';
 
 /**
- * Module allows using of angular material dialog for metadata selector
+ * Module allows using of angular material dialog for select popup
  */
 @NgModule(
 {
@@ -18,14 +19,16 @@ import {DialogPopupComponent} from "../plugins/popup/dialog/dialogPopup.componen
     declarations:
     [
         DialogPopupComponent,
-        BasicDialogPopupComponent
+        BasicDialogPopupComponent,
+        DialogPopupDirective
     ],
     exports:
     [
         DialogPopupComponent,
-        BasicDialogPopupComponent
+        BasicDialogPopupComponent,
+        DialogPopupDirective
     ]
 })
-export class DialogPopupModule
+export class NgSelectDialogPopupModule
 {
 }

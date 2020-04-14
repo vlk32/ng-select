@@ -1,4 +1,5 @@
 import {Popup, PopupOptions, NgSelectPluginInstances, PluginBus, VisualPluginOptions} from "@anglr/select";
+import {ComponentType} from '@angular/cdk/portal';
 
 /**
  * Css classes for dialog popup
@@ -19,7 +20,7 @@ export interface DialogPopupOptions<TComponent extends DialogPopupContentCompone
     /**
      * Component that is used to show popup content in dialog
      */
-    dialogComponent: TComponent;
+    dialogComponent?: ComponentType<TComponent>;
 
     /**
      * Options passed to dialog component

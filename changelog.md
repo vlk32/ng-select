@@ -22,6 +22,7 @@
 - `optionsGatherer` extended with `pluginBus`
 - added `NormalStateAbstractComponent` for easier implementation of new `normalState` plugin
 - added `PopupAbstractComponent` for easier implementation of new `popup` plugin
+- added `DialogPopupDirective` allowing changing popup to dialog using directive
 
 ### BREAKING CHANGES
 
@@ -33,6 +34,7 @@
 - `ValueHandler` plugin removed `multiple`, `optionsGatherer`, `valueComparer`, `liveSearchFilter`, `normalizer`, `popupVisibilityRequest` properties, use new `PluginBus` instead
 - *subpackage* `@anglr/select/material` 
    - completely changed types for `DialogPopup`
+   - renamed `DialogPopupModule` to `NgSelectDialogPopupModule`
 
 ## Version 7.2.0
 

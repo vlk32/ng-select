@@ -420,10 +420,13 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
                                      {
                                          optionsGatherer: this,
                                          templateGatherer: this,
+                                     },
+                                     defaultOptions,
+                                     <NgSelectOptions<TValue>>
+                                     {
                                          readonly: readonlyDefault,
                                          multiple: multipleDefault
                                      },
-                                     defaultOptions,
                                      opts);
 
         this._pluginBus.selectElement = this._element;
@@ -652,7 +655,8 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
         this._pluginInstances[LIVE_SEARCH].initialize();
         this._pluginInstances[KEYBOARD_HANDLER].initialize();
         this._pluginInstances[VALUE_HANDLER].initialize();
-        this._pluginInstances[NORMAL_STATE].initialize();
+        this._pluginInstances[NORMAL_STATE]?.initialize();
+        this._pluginInstances[READONLY_STATE]?.initialize();
         this._pluginInstances[POPUP].initialize();
         this._pluginInstances[POSITIONER].initialize();
 
@@ -811,6 +815,8 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
     {
         if(!plugin)
         {
+            this._pluginInstances[pluginKey] = null;
+
             return;
         }
 

@@ -1,6 +1,7 @@
 import {NgSelectPlugin, NgSelectPluginInstances, NG_SELECT_PLUGIN_INSTANCES, PluginBus, POPUP_OPTIONS, ɵNgSelectOption} from "@anglr/select";
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Inject, OnDestroy, Optional, resolveForwardRef} from "@angular/core";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {ComponentType} from '@angular/cdk/portal';
 import {extend} from "@jscrpt/common";
 import {Subscription} from "rxjs";
 
@@ -53,7 +54,7 @@ export class DialogPopupComponent<TComponent extends DialogPopupContentComponent
     /**
      * Component that is used for handling metadata selection itself
      */
-    protected _dialogComponent?: TComponent;
+    protected _dialogComponent?: ComponentType<TComponent>;
 
     /**
      * Popup dialog reference
@@ -176,7 +177,7 @@ export class DialogPopupComponent<TComponent extends DialogPopupContentComponent
     {
         if (visible)
         {
-            this._dialogRef = this._dialog.open<TComponent, DialogPopupComponentData<TDialogOptions, TValue, TCssClasses>>(this._dialogComponent as any,
+            this._dialogRef = this._dialog.open<TComponent, DialogPopupComponentData<TDialogOptions, TValue, TCssClasses>>(this._dialogComponent,
             {
                 panelClass: this.options?.cssClasses?.dialogDiv,
                 data:
