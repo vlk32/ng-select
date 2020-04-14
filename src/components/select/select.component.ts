@@ -33,7 +33,6 @@ import {PluginBus} from '../../misc/pluginBus/pluginBus';
 import {PluginBusEvents} from '../../misc/pluginBus/pluginBus.interface';
 
 //TODO - dynamic change of absolute popup
-//TODO - check if dynamic element is correctly removed from html
 
 /**
  * Default 'NgSelectOptions'
@@ -283,6 +282,12 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
      * @internal
      */
     public ngSelectPlugins: NgSelectPluginInstances;
+
+    /**
+     * Plugin bus used for inter plugin shared events
+     * @internal
+     */
+    public pluginBus: PluginBus<TValue>;
 
     //######################### public properties - template bindings #########################
 
