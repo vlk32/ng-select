@@ -29,7 +29,7 @@ const defaultOptions: EditLiveSearchOptions =
     },
     texts:
     {
-        inputPlaceholder: 'Nothing selected'
+        inputPlaceholder: 'Select item'
 
     },
     keepSearchValue: false,

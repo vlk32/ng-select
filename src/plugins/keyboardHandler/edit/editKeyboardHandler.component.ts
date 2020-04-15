@@ -12,6 +12,8 @@ import {POPUP} from '../../popup/types';
 import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 import {ValueHandler} from '../../valueHandler';
 import {VALUE_HANDLER} from '../../valueHandler/types';
+import {LiveSearch} from '../../liveSearch';
+import {LIVE_SEARCH} from '../../liveSearch/types';
 
 /**
  * Default options for keyboard handler
@@ -48,6 +50,11 @@ export class EditKeyboardHandlerComponent implements EditKeyboardHandler, NgSele
      * Value handler used for hanling current value
      */
     protected _valueHandler: ValueHandler;
+
+    /**
+     * Live search plugin currently used in NgSelect
+     */
+    protected _liveSearch: LiveSearch;
 
     //######################### protected properties #########################
 
@@ -129,6 +136,18 @@ export class EditKeyboardHandlerComponent implements EditKeyboardHandler, NgSele
         if(!this._valueHandler)
         {
             this._valueHandler = valueHandler;
+        }
+
+        let liveSearch = this.ngSelectPlugins[LIVE_SEARCH] as LiveSearch;
+
+        if(this._liveSearch && this._liveSearch != liveSearch)
+        {
+            this._liveSearch = null;
+        }
+
+        if(!this._liveSearch)
+        {
+            this._liveSearch = liveSearch;
         }
     }
 
@@ -220,6 +239,17 @@ export class EditKeyboardHandlerComponent implements EditKeyboardHandler, NgSele
             }
 
             this.pluginBus.showHidePopup.emit(false);
+        }
+
+        //cancel event if multi and empty
+        if(event.key == "Backspace" && this.pluginBus.selectOptions.multiple && !this._liveSearch.searchValue)
+        {
+            let options = this._valueHandler.selectedOptions;
+
+            if(options && Array.isArray(options) && options.length)
+            {
+                this.pluginBus.optionCancel.emit(options[options.length - 1]);
+            }
         }
 
         //close on esc

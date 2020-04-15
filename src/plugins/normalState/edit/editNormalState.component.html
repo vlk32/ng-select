@@ -1,14 +1,15 @@
-<!-- <ng-template #defaultLook>{{valueHandler?.selectedOptions | ngSelectValue: texts?.nothingSelected}}</ng-template> -->
-
 <div [ngClass]="options?.cssClasses?.normalStateElement" [title]="valueHandler?.selectedOptions | ngSelectValue: texts?.nothingSelected">
+    <ng-template [ngIf]="pluginBus.selectOptions.multiple">
+        <div *ngFor="let option of valueHandler?.selectedOptions" [ngClass]="options?.cssClasses?.selectedMultiValueContainer">
+            <span>{{option.value}}</span>
+            <span [ngClass]="options?.cssClasses?.selectedMultiValueCancel"
+                  (click)="pluginBus.optionCancel.emit(option)">x</span>
+        </div>
+    </ng-template>
+
     <ng-content></ng-content>
 
     <div [ngClass]="options?.cssClasses?.selectedCarretWrapper" (click)="pluginBus?.togglePopup.emit(); pluginBus?.liveSearchFocus?.emit()">
         <span [ngClass]="options?.cssClasses?.selectedCarret"></span>
     </div>
 </div>
-
-<!-- <button [ngClass]="options?.cssClasses?.normalStateElement" (click)="click.emit()" [disabled]="!!options?.readonly" type="button" [title]="valueHandler?.selectedOptions | ngSelectValue: texts?.nothingSelected">
-    <span [ngClass]="options?.cssClasses?.selectedValue"><ng-container *ngTemplateOutlet="templateGatherer?.normalStateTemplate || defaultLook; context: {$implicit: this}"></ng-container></span>
-    <span [ngClass]="options?.cssClasses?.selectedCarret"></span>
-</button> -->

@@ -24,6 +24,16 @@ export interface CssClassesEditNormalState
      * Applied to HTML element that represents normal default state visible to user
      */
     normalStateElement?: string;
+
+    /**
+     * Applied to container displaying single multi value
+     */
+    selectedMultiValueContainer?: string;
+
+    /**
+     * Applied to element used for canceling selected value
+     */
+    selectedMultiValueCancel?: string;
 }
 
 /**

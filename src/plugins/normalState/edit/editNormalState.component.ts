@@ -10,6 +10,8 @@ import {NormalStateAbstractComponent} from '../normalStateAbstract.component';
 import {NORMAL_STATE_OPTIONS} from '../types';
 import {CssClassesEditNormalState, EditNormalState, EditNormalStateOptions} from './editNormalState.interface';
 
+//TODO - think of templating how to do it for edit select
+
 /**
  * Default options for normal state
  * @internal
@@ -22,6 +24,8 @@ const defaultOptions: EditNormalStateOptions =
         selectedCarretWrapper: 'selected-caret',
         selectedCarret: 'fa fa-caret-down',
         selectedValue: 'selected-value',
+        selectedMultiValueContainer: 'selected-multi-value',
+        selectedMultiValueCancel: 'selected-multi-value-cancel'
     },
     texts:
     {

@@ -19,10 +19,6 @@ div.btn-select:hover .selected-caret
     background-color: #F2F2F2;
 }
 
-div.btn-select:active
-{
-}
-
 div.btn-select .selected-value
 {
     flex: 1;
@@ -39,5 +35,26 @@ div.btn-select .selected-caret
     align-items: center;
     justify-content: center;
     flex-direction: row;
+    cursor: pointer;
+}
+
+.selected-multi-value
+{
+    align-self: center;
+    padding: 1px 4px;
+    border-radius: 4px;
+    margin-left: 3px;
+    margin-right: 3px;
+    background: #BBB;
+}
+
+.selected-multi-value-cancel
+{
+    margin-left: 4px;
+}
+
+.selected-multi-value-cancel:hover
+{
+    opacity: 0.8;
     cursor: pointer;
 }
