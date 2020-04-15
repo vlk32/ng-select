@@ -4,7 +4,7 @@ import {Subscription} from "rxjs";
 
 import {OptionsGatherer, LiveSearchFilter} from "./optionsGatherer.interface";
 import {NgSelectOption} from "../../components/option";
-import {NgSelectPluginInstances} from "../../components/select";
+import {NgSelectPluginInstances, NgSelect} from "../../components/select";
 import {LiveSearch} from "../../plugins/liveSearch";
 import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
 import {NormalizeFunc} from "../ngSelectOptions.interface";
@@ -87,6 +87,11 @@ export class CodeOptionsGatherer<TValue = any> implements OptionsGatherer<TValue
      * Plugin bus used for inter plugin shared events
      */
     public pluginBus: PluginBus<TValue>;
+
+    /**
+     * Select element that implements default gatherers
+     */
+    public select: NgSelect<TValue>;
 
     //######################### constructor #########################
     constructor(private _liveSearchFilter?: LiveSearchFilter<TValue>,

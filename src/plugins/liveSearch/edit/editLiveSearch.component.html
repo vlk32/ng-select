@@ -1,10 +1,12 @@
 <div style="display: none;">
     <div #liveSearchElement [ngClass]="options?.cssClasses?.wrapperDiv">
-        <input [ngClass]="options?.cssClasses?.input"
+        <input #inputElement
+               [ngClass]="options?.cssClasses?.input"
                type="text"
                [value]="searchValueDisplayed"
                (input)="handleInput($any($event.target).value, true)"
                (focus)="handleFocus($any($event.target))"
+               (click)="handleFocus($any($event.target), true)"
                placeholder="{{texts?.inputPlaceholder}}"
                [disabled]="pluginBus?.selectOptions.readonly">
     </div>

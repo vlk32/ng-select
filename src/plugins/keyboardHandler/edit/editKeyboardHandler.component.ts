@@ -1,7 +1,7 @@
 import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef, OnDestroy} from '@angular/core';
 import {extend} from '@jscrpt/common';
 
-import {BasicKeyboardHandlerOptions, BasicKeyboardHandler} from './basicKeyboardHandler.interface';
+import {EditKeyboardHandlerOptions, EditKeyboardHandler} from './editKeyboardHandler.interface';
 import {NgSelectPlugin} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
@@ -15,27 +15,27 @@ import {PluginBus} from '../../../misc/pluginBus/pluginBus';
  * Default options for keyboard handler
  * @internal
  */
-const defaultOptions: BasicKeyboardHandlerOptions =
+const defaultOptions: EditKeyboardHandlerOptions =
 {
 };
 
 /**
- * Component used for obtaining basic keyboard handler html element
+ * Component used for obtaining edit keyboard handler html element
  */
 @Component(
 {
-    selector: "ng-basic-keyboard-handler",
+    selector: "ng-edit-keyboard-handler",
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BasicKeyboardHandlerComponent implements BasicKeyboardHandler, NgSelectPlugin<BasicKeyboardHandlerOptions>, OnDestroy
+export class EditKeyboardHandlerComponent implements EditKeyboardHandler, NgSelectPlugin<EditKeyboardHandlerOptions>, OnDestroy
 {
     //######################### protected fields #########################
 
     /**
      * Options for NgSelect plugin
      */
-    protected _options: BasicKeyboardHandlerOptions;
+    protected _options: EditKeyboardHandlerOptions;
 
     /**
      * Popup that is displayed
@@ -52,16 +52,16 @@ export class BasicKeyboardHandlerComponent implements BasicKeyboardHandler, NgSe
         return this.pluginBus.selectOptions.optionsGatherer.availableOptions;
     }
 
-    //######################### public properties - implementation of BasicKeyboardHandler #########################
+    //######################### public properties - implementation of EditKeyboardHandler #########################
 
     /**
      * Options for NgSelect plugin
      */
-    public get options(): BasicKeyboardHandlerOptions
+    public get options(): EditKeyboardHandlerOptions
     {
         return this._options;
     }
-    public set options(options: BasicKeyboardHandlerOptions)
+    public set options(options: EditKeyboardHandlerOptions)
     {
         this._options = extend(true, this._options, options);
     }
@@ -70,7 +70,7 @@ export class BasicKeyboardHandlerComponent implements BasicKeyboardHandler, NgSe
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
                 @Optional() public pluginBus: PluginBus,
                 public pluginElement: ElementRef,
-                @Inject(KEYBOARD_HANDLER_OPTIONS) @Optional() options?: BasicKeyboardHandlerOptions)
+                @Inject(KEYBOARD_HANDLER_OPTIONS) @Optional() options?: EditKeyboardHandlerOptions)
     {
         this._options = extend(true, {}, defaultOptions, options);
     }
@@ -88,7 +88,7 @@ export class BasicKeyboardHandlerComponent implements BasicKeyboardHandler, NgSe
         }
     }
 
-    //######################### public methods - implementation of BasicKeyboardHandler #########################
+    //######################### public methods - implementation of EditKeyboardHandler #########################
 
     /**
      * Initialize plugin, to be ready to use, initialize communication with other plugins
@@ -140,6 +140,7 @@ export class BasicKeyboardHandlerComponent implements BasicKeyboardHandler, NgSe
             this.pluginBus.showHidePopup.emit(true);
             let activeOption = this.availableOptions.find(itm => itm.active);
 
+            //update active option
             if(activeOption)
             {
                 let index = this.availableOptions.indexOf(activeOption);

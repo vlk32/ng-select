@@ -25,6 +25,16 @@ export interface EditLiveSearchOptions extends LiveSearchOptions<CssClassesEditL
      * Indication whether keep search value after popup close
      */
     keepSearchValue?: boolean;
+
+    /**
+     * Indication whether cancel selected value if non existing value is in live search, works for single value
+     */
+    nonExistingCancel?: boolean;
+
+    /**
+     * Indication whether use non existing value in live search as new value, works for multi value and only with dynamic value handler
+     */
+    useNonExistingAsValue?: boolean;
 }
 
 /**

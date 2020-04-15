@@ -9,6 +9,7 @@ import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 import {PopupAbstractComponent} from '../popupAbstract.component';
 import {POPUP_OPTIONS} from '../types';
 import {CssClassesEditPopup, EditPopup, EditPopupOptions} from './editPopup.interface';
+import {ɵNgSelectOption} from '../../../components/option';
 
 /**
  * Default options for popup
@@ -38,6 +39,16 @@ const defaultOptions: EditPopupOptions =
 })
 export class EditPopupComponent extends PopupAbstractComponent<CssClassesEditPopup, EditPopupOptions> implements EditPopup, NgSelectPlugin<EditPopupOptions>, AfterViewInit, OnDestroy
 {
+    //######################### protected properties #########################
+
+    /**
+     * Gets currently available options
+     */
+    protected get availableOptions(): ɵNgSelectOption[]
+    {
+        return this.pluginBus.selectOptions.optionsGatherer.availableOptions;
+    }
+
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() ngSelectPlugins: NgSelectPluginInstances,
                 @Optional() pluginBus: PluginBus,
@@ -49,5 +60,32 @@ export class EditPopupComponent extends PopupAbstractComponent<CssClassesEditPop
         super(ngSelectPlugins, pluginBus, pluginElement, changeDetector, document);
 
         this._options = extend(true, {}, defaultOptions, options);
+    }
+
+    //######################### public methods - template bindings #########################
+
+    /**
+     * Handles mouse move and changes active option
+     * @param option - Option to be set as active
+     * @internal
+     */
+    public handleMouseActivation(option: ɵNgSelectOption): void
+    {
+        this.availableOptions.forEach(option => option.active = false);
+
+        option.active = true;
+    }
+
+    //######################### protected methods #########################
+
+    /**
+     * Loads options
+     */
+    protected loadOptions()
+    {
+        //filter out selected
+
+        this.selectOptions = this._optionsGatherer.availableOptions;
+        this._changeDetector.detectChanges();
     }
 }

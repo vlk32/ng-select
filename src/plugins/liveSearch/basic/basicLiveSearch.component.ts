@@ -61,6 +61,11 @@ export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin
     protected _visibilityChangeSubscription: Subscription;
 
     /**
+     * Subscription for live search focus request
+     */
+    protected _liveSearchFocusSubscription: Subscription;
+
+    /**
      * Options for NgSelect plugin
      */
     protected _options: BasicLiveSearchOptions;
@@ -78,11 +83,6 @@ export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin
     {
         this._options = extend(true, this._options, options);
     }
-
-    /**
-     * Plugin bus used for inter plugin shared events
-     */
-    public pluginBus: PluginBus;
 
     /**
      * HTML element that represents live search
@@ -119,8 +119,16 @@ export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin
     @ViewChild('liveSearchElement')
     public liveSearchElementChild: ElementRef<HTMLElement>;
 
+    /**
+     * View child that represents input element
+     * @internal
+     */
+    @ViewChild('inputElement')
+    public inputElementChild: ElementRef<HTMLInputElement>;
+
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
+                @Optional() public pluginBus: PluginBus,
                 public pluginElement: ElementRef,
                 protected _changeDetector: ChangeDetectorRef,
                 @Inject(STRING_LOCALIZATION) protected _stringLocalization: StringLocalization,
@@ -141,6 +149,9 @@ export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin
 
         this._textsChangedSubscription?.unsubscribe();
         this._textsChangedSubscription = null;
+
+        this._liveSearchFocusSubscription?.unsubscribe();
+        this._liveSearchFocusSubscription = null;
     }
 
     //######################### public methods - implementation of BasicLiveSearch #########################
@@ -174,6 +185,14 @@ export class BasicLiveSearchComponent implements BasicLiveSearch, NgSelectPlugin
                     
                     this._changeDetector.detectChanges();
                 }
+            });
+        }
+
+        if(!this._liveSearchFocusSubscription)
+        {
+            this._liveSearchFocusSubscription = this.pluginBus.liveSearchFocus.subscribe(() =>
+            {
+                this.inputElementChild?.nativeElement.focus();
             });
         }
 

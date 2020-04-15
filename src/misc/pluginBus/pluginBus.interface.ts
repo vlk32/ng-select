@@ -33,4 +33,9 @@ export interface PluginBusEvents
      * Occurs when any part of select gains focus
      */
     readonly focus: EventEmitter<void>;
+
+    /**
+     * Occurs when live search should gain focus
+     */
+    readonly liveSearchFocus: EventEmitter<void>;
 }

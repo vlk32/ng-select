@@ -48,4 +48,9 @@ export class PluginBus<TValue = any> implements PluginBusEvents
      * Occurs when any part of select gains focus
      */
     public focus: EventEmitter<void> = new EventEmitter<void>();
+
+    /**
+     * Occurs when live search should gain focus
+     */
+    public liveSearchFocus: EventEmitter<void> = new EventEmitter<void>();
 }

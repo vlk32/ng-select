@@ -5,6 +5,7 @@ import {NgSelectEditDirective} from '../directives/ngSelectEdit/ngSelectEdit.dir
 import {EditNormalStateComponent} from '../plugins/normalState/edit/editNormalState.component';
 import {EditLiveSearchComponent} from '../plugins/liveSearch/edit/editLiveSearch.component';
 import {EditPopupComponent} from '../plugins/popup/edit/editPopup.component';
+import {EditKeyboardHandlerComponent} from '../plugins/keyboardHandler/edit/editKeyboardHandler.component';
 import {NgSelectModule} from './ngSelect.module';
 
 /**
@@ -22,14 +23,16 @@ import {NgSelectModule} from './ngSelect.module';
         NgSelectEditDirective,
         EditNormalStateComponent,
         EditLiveSearchComponent,
-        EditPopupComponent
+        EditPopupComponent,
+        EditKeyboardHandlerComponent
     ],
     exports:
     [
         NgSelectEditDirective,
         EditNormalStateComponent,
         EditLiveSearchComponent,
-        EditPopupComponent
+        EditPopupComponent,
+        EditKeyboardHandlerComponent
     ]
 })
 export class NgSelectEditModule

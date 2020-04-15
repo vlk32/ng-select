@@ -1,7 +1,7 @@
 import {EventEmitter} from "@angular/core";
 
 import {NgSelectOption} from "../../components/option/option.interface";
-import {NgSelectPluginInstances} from "../../components/select";
+import {NgSelectPluginInstances, NgSelect} from "../../components/select";
 import {NormalizeFunc} from "../ngSelectOptions.interface";
 import {PluginBus} from '../pluginBus/pluginBus';
 
@@ -46,7 +46,12 @@ export interface OptionsGatherer<TValue = any>
     /**
      * Plugin bus used for inter plugin shared events
      */
-    pluginBus: PluginBus;
+    pluginBus: PluginBus<TValue>;
+
+    /**
+     * Select element that implements default gatherers
+     */
+    select: NgSelect<TValue>;
 
     /**
      * Initialize gatherer during initialization phase

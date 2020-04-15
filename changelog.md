@@ -1,10 +1,24 @@
 # Changelog
 
-## Version 8.0.0 (2020-04-14)
+## Version 8.1.0 (2020-04-15)
 
 ### Bug Fixes
 
 - fixed removing of html element for absolute `popup` plugin
+
+### Features
+
+- added new module `NgSelectEditModule` which contains components for displaying select with editation and tags
+- added new component `EditLiveSearchComponent` which allows is used within `EditNormalStateComponent` for editing and displaying selected value
+- added new component `EditNormalStateComponent` which uses `EditLiveSearchComponent` for editing and displaying selected value
+- added new component `EditPopupComponent` which is used for editing and displaying selected value
+- added new component `EditKeyboardHandlerComponent` which is used handling keyboard events in edit select
+- added new directive `NgSelectEditDirective` which configures `NgSelect` to use edit plugin components
+- added new option for select, `normalizer` which is function which allows normalization of value before using it in search
+- `optionsGatherer` extended with `select` containing select instance itself
+- `PluginBus` extended with `liveSearchFocus` used for emitting event that should set focus on live search input
+
+## Version 8.0.0 (2020-04-14)
 
 ### Features
 
@@ -52,16 +66,6 @@
 
 - updated to latest stable *Angular* 9
 - added generating of API doc
-
-## Version 6.3.0
-
-- added new module `NgSelectEditModule` which contains components for displaying select with editation and tags
-- added new component `EditLiveSearchComponent` which allows is used within `EditNormalStateComponent` for editing and displaying selected value
-- added new component `EditNormalStateComponent` which uses `EditLiveSearchComponent` for editing and displaying selected value
-- added new component `EditPopupComponent` which is used for editing and displaying selected value
-- added new directive `NgSelectEditDirective` which configures `NgSelect` to use edit plugin components
-- added new option for select `normalizer` which is function which allows normalization of value before using it in search
-- extended `ValueHandler` with new method `findAvailableOption` allowing search for option
 
 ## Version 6.2.1
 

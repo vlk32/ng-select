@@ -32,7 +32,9 @@ const defaultOptions: EditLiveSearchOptions =
         inputPlaceholder: 'Nothing selected'
         
     },
-    keepSearchValue: false
+    keepSearchValue: false,
+    nonExistingCancel: false,
+    useNonExistingAsValue: false
 };
 
 /**
@@ -70,9 +72,24 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
     protected _valueChangedSubscription: Subscription;
 
     /**
+     * Subscription for live search focus request
+     */
+    protected _liveSearchFocusSubscription: Subscription;
+
+    /**
      * Options for NgSelect plugin
      */
     protected _options: EditLiveSearchOptions;
+
+    //######################### protected properties #########################
+
+    /**
+     * Gets currently available options
+     */
+    protected get availableOptions(): ɵNgSelectOption[]
+    {
+        return this.pluginBus.selectOptions.optionsGatherer.availableOptions;
+    }
 
     //######################### public properties - implementation of EditLiveSearch #########################
 
@@ -129,6 +146,13 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
     @ViewChild('liveSearchElement')
     public liveSearchElementChild: ElementRef<HTMLElement>;
 
+    /**
+     * View child that represents input element
+     * @internal
+     */
+    @ViewChild('inputElement')
+    public inputElementChild: ElementRef<HTMLInputElement>;
+
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
                 @Optional() public pluginBus: PluginBus,
@@ -152,6 +176,9 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
 
         this._valueChangedSubscription?.unsubscribe();
         this._valueChangedSubscription = null;
+
+        this._liveSearchFocusSubscription?.unsubscribe();
+        this._liveSearchFocusSubscription = null;
     }
 
     //######################### public methods - implementation of EditLiveSearch #########################
@@ -173,6 +200,14 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
         if(!this._popup)
         {
             this._popup = popup;
+        }
+
+        if(!this._liveSearchFocusSubscription)
+        {
+            this._liveSearchFocusSubscription = this.pluginBus.liveSearchFocus.subscribe(() =>
+            {
+                this.inputElementChild?.nativeElement.focus();
+            });
         }
 
         let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler;
@@ -204,7 +239,9 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
                 }
                 else
                 {
+                    //reset filtering of available options
                     this.handleInput(null);
+                    //set selected into live search
                     this.searchValueDisplayed = selected.text;
                     this._changeDetector.detectChanges();
                 }
@@ -251,7 +288,7 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
             //do not change active if active is visible
             if(!this.pluginBus.selectOptions.optionsGatherer.availableOptions.find((option: ɵNgSelectOption) => option.active))
             {
-                let option: ɵNgSelectOption = this._valueHandler.findAvailableOption(value);
+                let option: ɵNgSelectOption = this.pluginBus.selectOptions.optionsGatherer.availableOptions.find(itm => this.pluginBus.selectOptions.liveSearchFilter(value, this.pluginBus.selectOptions.normalizer)(itm));
 
                 if(option)
                 {
@@ -266,13 +303,20 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
     /**
      * Handles focus event
      * @param element - Element that got focus
+     * @param show - Indication whether show popup
      * @internal
      */
-    public handleFocus(element: HTMLInputElement)
+    public handleFocus(element: HTMLInputElement, show: boolean = false)
     {
         element.select();
 
-        this.pluginBus.togglePopup.emit();
+        this._activateSelectedOrFirst();
+
+        if(show)
+        {
+            this.pluginBus.showHidePopup.emit(true);
+        }
+
         this.pluginBus.focus.emit();
     }
 
@@ -289,5 +333,26 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
         });
 
         this._changeDetector.detectChanges();
+    }
+
+    /**
+     * Activates first available option or selected option
+     */
+    protected _activateSelectedOrFirst()
+    {
+        let activeOption = this.availableOptions.find(itm => itm.active);
+        let selectedOptions = this.availableOptions.filter(itm => itm.selected);
+
+        //nothing active, nothing selected 
+        if(!activeOption && !selectedOptions.length)
+        {
+            this.availableOptions[0].active = true;
+        }
+        //nothing active
+        else if(!activeOption)
+        {
+            //last selected as sactive
+            selectedOptions[selectedOptions.length - 1].active = true;
+        }
     }
 }

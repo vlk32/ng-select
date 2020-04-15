@@ -1,6 +1,6 @@
 import {Observable, Subscription} from "rxjs";
 
-import {NgSelectPlugin, NgSelectOptions} from "../../misc";
+import {NgSelectPlugin, NgSelectOptions, OptionsGatherer, TemplateGatherer} from "../../misc";
 import {PluginBusEvents} from '../../misc/pluginBus/pluginBus.interface';
 
 /**
@@ -14,7 +14,7 @@ export interface NgSelectPluginInstances
 /**
  * Public API for NgSelect
  */
-export interface NgSelect<TValue = any>
+export interface NgSelect<TValue = any> extends OptionsGatherer<TValue>, TemplateGatherer
 {
     /**
      * Occurs every time when NgSelect is initialized or reinitialized, if value is false NgSelect was not initialized yet

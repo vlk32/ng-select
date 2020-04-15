@@ -4,7 +4,7 @@ import {Subscription, Observable} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 
 import {OptionsGatherer} from "./optionsGatherer.interface";
-import {NgSelectPluginInstances} from "../../components/select";
+import {NgSelectPluginInstances, NgSelect} from "../../components/select";
 import {NgSelectOption} from "../../components/option";
 import {DynamicOptionsGathererOptions} from "./dynamicOptionsGatherer.interface";
 import {LiveSearch} from "../../plugins/liveSearch";
@@ -70,6 +70,11 @@ export class DynamicOptionsGatherer<TValue = any> implements OptionsGatherer<TVa
      * Plugin bus used for inter plugin shared events
      */
     public pluginBus: PluginBus<TValue>;
+
+    /**
+     * Select element that implements default gatherers
+     */
+    public select: NgSelect<TValue>;
 
     //######################### constructor #########################
     constructor(protected _options: DynamicOptionsGathererOptions<TValue>)

@@ -201,29 +201,6 @@ export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandl
     {
     }
 
-    /**
-     * Returns first found options or null
-     * @param text - Text of option that is being searched
-     * @param exact - Indication whether return only option which is exact match
-     */
-    public findAvailableOption(text: string, exact?: boolean): NgSelectOption<TValue>
-    {
-        if(!this._optionsGatherer)
-        {
-            return null;
-        }
-
-        let option = this._optionsGatherer.availableOptions.find(itm => this.liveSearchFilter(text, this.normalizer)(itm));
-
-        //TODO - finish
-        if(exact)
-        {
-            
-        }
-
-        return option;
-    }
-
     //######################### protected methods #########################
 
     /**

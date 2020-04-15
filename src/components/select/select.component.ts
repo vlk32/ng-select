@@ -2,7 +2,7 @@ import {Component, ChangeDetectionStrategy, FactoryProvider, Input, Inject, Chan
 import {extend, nameof, isBoolean, isPresent, isString} from "@jscrpt/common";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 
-import {NgSelectOptions, NgSelectPlugin, OptionsGatherer, PluginDescription, TemplateGatherer, NormalizeFunc, NgSelectPluginTypes} from "../../misc";
+import {NgSelectOptions, NgSelectPlugin, PluginDescription, NormalizeFunc, NgSelectPluginTypes} from "../../misc";
 import {NG_SELECT_OPTIONS, KEYBOARD_HANDLER_TYPE, NORMAL_STATE_TYPE, POPUP_TYPE, POSITIONER_TYPE, READONLY_STATE_TYPE, VALUE_HANDLER_TYPE, LIVE_SEARCH_TYPE} from "../../misc/types";
 import {NgSelect, NgSelectPluginInstances, NgSelectAction, NgSelectFunction} from "./select.interface";
 import {NG_SELECT_PLUGIN_INSTANCES} from "./types";
@@ -136,7 +136,7 @@ export function ngSelectPluginInstancesFactory()
         }`
     ]
 })
-export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChanges, OnInit, AfterViewInit, OnDestroy, OptionsGatherer<TValue>, TemplateGatherer
+export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChanges, OnInit, AfterViewInit, OnDestroy
 {
     //######################### protected fields #########################
 
@@ -288,6 +288,12 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
      * @internal
      */
     public pluginBus: PluginBus<TValue>;
+
+    /**
+     * Select element that implements default gatherers
+     * @internal
+     */
+    public select: NgSelect<TValue>;
 
     //######################### public properties - template bindings #########################
 
@@ -507,16 +513,10 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
      */
     public ngOnDestroy()
     {
-        if(this._searchValueChangeSubscription)
-        {
-            this._searchValueChangeSubscription.unsubscribe();
-            this._searchValueChangeSubscription = null;
-        }
+        this._searchValueChangeSubscription?.unsubscribe();
+        this._searchValueChangeSubscription = null;
 
-        if(this.selectOptions.optionsGatherer)
-        {
-            this.selectOptions.optionsGatherer.destroyGatherer();
-        }
+        this.selectOptions.optionsGatherer?.destroyGatherer();
 
         this._destroyAbsolutePopup();
     }
@@ -671,6 +671,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
     {
         this.selectOptions.optionsGatherer.ngSelectPlugins = this._pluginInstances;
         this.selectOptions.optionsGatherer.pluginBus = this._pluginBus;
+        this.selectOptions.optionsGatherer.select = this;
 
         let initOptionsPlugin = (pluginKey: string, pluginName: keyof NgSelectPluginTypes) =>
         {
@@ -774,21 +775,21 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
         }
 
         // 1. Create a component reference from the component 
-        const componentRef = this._componentFactoryResolver
+        this._absolutePopup = this._componentFactoryResolver
             .resolveComponentFactory(component)
             .create(this._injector);
         
         // 2. Attach component to the appRef so that it's inside the ng component tree
-        this._appRef.attachView(componentRef.hostView);
+        this._appRef.attachView(this._absolutePopup.hostView);
         
         // 3. Get DOM element from component
-        const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
+        const domElem = (this._absolutePopup.hostView as EmbeddedViewRef<any>)
             .rootNodes[0] as HTMLElement;
         
         // 4. Append DOM element to the body
         document.body.appendChild(domElem);
 
-        this.setPopupComponent(componentRef.instance);
+        this.setPopupComponent(this._absolutePopup.instance);
     }
 
     /**
@@ -799,7 +800,6 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
         if(this._absolutePopup)
         {
             this._appRef.detachView(this._absolutePopup.hostView);
-            ((this._absolutePopup.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement)?.remove();
             this._absolutePopup.destroy();
             this._absolutePopup = null;
         }
