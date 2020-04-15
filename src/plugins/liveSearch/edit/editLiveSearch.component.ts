@@ -30,7 +30,7 @@ const defaultOptions: EditLiveSearchOptions =
     texts:
     {
         inputPlaceholder: 'Nothing selected'
-        
+
     },
     keepSearchValue: false,
     nonExistingCancel: false,
@@ -165,7 +165,7 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
     }
 
     //######################### public methods - implementation of OnDestroy #########################
-    
+
     /**
      * Called when component is destroyed
      */
@@ -283,7 +283,16 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
         {
             this.searchValueDisplayed = value;
 
-            this._valueHandler.setValue(null);
+            //single value select
+            if(!this.pluginBus.selectOptions.multiple)
+            {
+                //cancel value
+                if(this._options.nonExistingCancel)
+                {
+                    this._valueHandler.setValue(null);
+                }
+                //otherwise keep last value
+            }
 
             //do not change active if active is visible
             if(!this.pluginBus.selectOptions.optionsGatherer.availableOptions.find((option: ɵNgSelectOption) => option.active))
@@ -320,6 +329,31 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
         this.pluginBus.focus.emit();
     }
 
+    /**
+     * Handles blur of live search
+     */
+    public handleBlur()
+    {
+        //not multiple and selected value
+        if(!this.pluginBus.selectOptions.multiple)
+        {
+            //use selected text
+            if(this._valueHandler.selectedOptions && !Array.isArray(this._valueHandler.selectedOptions))
+            {
+                this.searchValueDisplayed = this._valueHandler.selectedOptions.text;
+            }
+            //reset text
+            else
+            {
+                this.searchValueDisplayed = '';
+            }
+        }
+
+        //reset available options
+        this.searchValue = null;
+        this.searchValueChange.emit();
+    }
+
     //######################### protected methods #########################
 
     /**
@@ -343,10 +377,15 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
         let activeOption = this.availableOptions.find(itm => itm.active);
         let selectedOptions = this.availableOptions.filter(itm => itm.selected);
 
-        //nothing active, nothing selected 
+        //nothing active, nothing selected
         if(!activeOption && !selectedOptions.length)
         {
-            this.availableOptions[0].active = true;
+            let first = this.availableOptions[0];
+
+            if(first)
+            {
+                first.active = true;
+            }
         }
         //nothing active
         else if(!activeOption)

@@ -10,6 +10,8 @@ import {ɵNgSelectOption} from '../../../components/option';
 import {Popup} from '../../popup';
 import {POPUP} from '../../popup/types';
 import {PluginBus} from '../../../misc/pluginBus/pluginBus';
+import {ValueHandler} from '../../valueHandler';
+import {VALUE_HANDLER} from '../../valueHandler/types';
 
 /**
  * Default options for keyboard handler
@@ -41,6 +43,11 @@ export class EditKeyboardHandlerComponent implements EditKeyboardHandler, NgSele
      * Popup that is displayed
      */
     protected _popup: Popup;
+
+    /**
+     * Value handler used for hanling current value
+     */
+    protected _valueHandler: ValueHandler;
 
     //######################### protected properties #########################
 
@@ -111,6 +118,18 @@ export class EditKeyboardHandlerComponent implements EditKeyboardHandler, NgSele
         {
             this._popup = popup;
         }
+
+        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler;
+
+        if(this._valueHandler && this._valueHandler != valueHandler)
+        {
+            this._valueHandler = null;
+        }
+        
+        if(!this._valueHandler)
+        {
+            this._valueHandler = valueHandler;
+        }
     }
 
     /**
@@ -162,6 +181,7 @@ export class EditKeyboardHandlerComponent implements EditKeyboardHandler, NgSele
                     index = this.availableOptions.length - 1;
                 }
 
+                //first if oveflow
                 index = index % this.availableOptions.length;
 
                 this.availableOptions[index].active = true;
@@ -189,7 +209,21 @@ export class EditKeyboardHandlerComponent implements EditKeyboardHandler, NgSele
             event.preventDefault();
         }
 
-        if(event.key == "Tab" || event.key == "Escape")
+        //select if active
+        if(event.key == "Tab")
+        {
+            let active = this.availableOptions.find(itm => itm.active);
+            
+            if(active)
+            {
+                this._valueHandler.setValue(active.value);
+            }
+
+            this.pluginBus.showHidePopup.emit(false);
+        }
+
+        //close on esc
+        if(event.key == "Escape")
         {
             this.pluginBus.showHidePopup.emit(false);
         }
