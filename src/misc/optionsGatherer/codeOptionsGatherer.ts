@@ -10,6 +10,8 @@ import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
 import {NormalizeFunc} from "../ngSelectOptions.interface";
 import {PluginBus} from '../pluginBus/pluginBus';
 
+//TODO - refactor options gatherer live search and normalizer usage for all
+
 /**
  * Options gatherer used for static options gathering from code
  */

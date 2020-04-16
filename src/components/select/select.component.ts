@@ -33,6 +33,7 @@ import {PluginBus} from '../../misc/pluginBus/pluginBus';
 import {PluginBusEvents} from '../../misc/pluginBus/pluginBus.interface';
 
 //TODO - dynamic change of absolute popup
+//TODO - dynamic change of options gatherer destroy called properly ?
 
 /**
  * Default 'NgSelectOptions'

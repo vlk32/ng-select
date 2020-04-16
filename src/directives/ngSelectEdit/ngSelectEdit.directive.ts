@@ -5,6 +5,8 @@ import {EditNormalStateComponent} from "../../plugins/normalState/edit/editNorma
 import {EditLiveSearchComponent} from "../../plugins/liveSearch/edit/editLiveSearch.component";
 import {EditPopupComponent} from "../../plugins/popup/edit/editPopup.component";
 import {EditKeyboardHandlerComponent} from '../../plugins/keyboardHandler/components';
+import {NgSelectComponent} from '../../components/select/select.component';
+import {ExcludingOptionsGatherer} from '../../misc/optionsGatherer/types';
 
 /**
  * Directive that applies options for NgSelect which enable usage of NgSelect edit (jira like) style
@@ -38,4 +40,12 @@ import {EditKeyboardHandlerComponent} from '../../plugins/keyboardHandler/compon
 })
 export class NgSelectEditDirective
 {
+    //######################### constructor #########################
+    constructor(select: NgSelectComponent)
+    {
+        select.selectOptions =
+        {
+            optionsGatherer: new ExcludingOptionsGatherer()
+        };
+    }
 }

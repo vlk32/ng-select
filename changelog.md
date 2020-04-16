@@ -15,6 +15,7 @@
 - added new component `EditPopupComponent` which is used for editing and displaying selected value
 - added new component `EditKeyboardHandlerComponent` which is used handling keyboard events in edit select
 - added new directive `NgSelectEditDirective` which configures `NgSelect` to use edit plugin components
+- added new `ExcludingOptionsGatherer` which allows removal of selected options from available options, extends built in options gatherer
 - added new option for select, `normalizer` which is function which allows normalization of value before using it in search
 - `optionsGatherer` extended with `select` containing select instance itself
 - `PluginBus` extended with `liveSearchFocus` used for emitting event that should set focus on live search input
