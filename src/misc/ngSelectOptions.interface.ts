@@ -54,6 +54,11 @@ export interface PluginBusOptions<TValue = any>
     multiple?: boolean;
 
     /**
+     * Indication whether use non existing value in live search as new value, use with dynamic value handler
+     */
+    useNonExistingAsValue?: boolean;
+
+    /**
      * Function of value comparer that is used for comparison of values
      */
     valueComparer?: CompareValueFunc<TValue>;

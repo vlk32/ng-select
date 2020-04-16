@@ -26,12 +26,14 @@ const defaultOptions: EditNormalStateOptions =
         selectedCarret: 'fa fa-caret-down',
         selectedValue: 'selected-value',
         selectedMultiValueContainer: 'selected-multi-value',
-        selectedMultiValueCancel: 'selected-multi-value-cancel'
+        selectedMultiValueCancel: 'selected-multi-value-cancel',
+        cancelSelectedElement: 'fa cancel-selected'
     },
     texts:
     {
         nothingSelected: 'Nothing selected'
-    }
+    },
+    cancelButton: false
 };
 
 /**
@@ -67,5 +69,24 @@ export class EditNormalStateComponent extends NormalStateAbstractComponent<CssCl
         super(ngSelectPlugins, pluginBus, pluginElement, changeDetector, stringLocalization);
 
         this._options = extend(true, {}, defaultOptions, options);
+    }
+
+    //######################### public methods - template bindings #########################
+
+    /**
+     * Cancel selected options
+     */
+    public cancelSelected(): void
+    {
+        if(Array.isArray(this.selectedOptions))
+        {
+            let options = [...this.selectedOptions];
+
+            options.forEach(opt => this.pluginBus.optionCancel.emit(opt));
+        }
+        else
+        {
+            this.pluginBus.optionCancel.emit(this.selectedOptions);
+        }
     }
 }

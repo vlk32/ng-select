@@ -32,11 +32,6 @@ export interface EditLiveSearchOptions extends LiveSearchOptions<CssClassesEditL
     nonExistingCancel?: boolean;
 
     /**
-     * Indication whether use non existing value in live search as new value, works for multi value and only with dynamic value handler
-     */
-    useNonExistingAsValue?: boolean;
-
-    /**
      * Min length of input that will filter down available options
      */
     minLengthSearch?: number;

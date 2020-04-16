@@ -215,21 +215,32 @@ export class EditKeyboardHandlerComponent implements EditKeyboardHandler, NgSele
             event.preventDefault();
         }
 
-        //prevent enter if popup is opened
+        //prevent enter if popup is opened and select option
         if(event.key == "Enter" && this._popup.popupElement)
         {
             let activeOption = this.availableOptions.find(itm => itm.active);
-
+            
             if(activeOption)
             {
                 this.pluginBus.optionSelect.emit(activeOption);
+            }
+            //add non existing
+            else if(this.pluginBus.selectOptions.useNonExistingAsValue)
+            {
+                this.pluginBus.optionSelect.emit(
+                <ɵNgSelectOption>
+                {
+                    text: this._liveSearch.searchValue,
+                    value: this._liveSearch.searchValue,
+                    selected: true
+                });
             }
 
             event.preventDefault();
         }
 
-        //select if active
-        if(event.key == "Tab")
+        //select if active if popup is opened
+        if(event.key == "Tab" && this._popup.popupElement)
         {
             let active = this.availableOptions.find(itm => itm.active);
             
@@ -237,8 +248,20 @@ export class EditKeyboardHandlerComponent implements EditKeyboardHandler, NgSele
             {
                 this.pluginBus.optionSelect.emit(active);
             }
+            //add non existing
+            else if(this.pluginBus.selectOptions.useNonExistingAsValue)
+            {
+                this.pluginBus.optionSelect.emit(
+                <ɵNgSelectOption>
+                {
+                    text: this._liveSearch.searchValue,
+                    value: this._liveSearch.searchValue,
+                    selected: true
+                });
+            }
 
             this.pluginBus.showHidePopup.emit(false);
+            this.pluginBus.updateDisplayedValue.emit();
         }
 
         //cancel event if multi and empty

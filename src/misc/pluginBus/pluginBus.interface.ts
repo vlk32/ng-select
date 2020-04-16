@@ -38,4 +38,9 @@ export interface PluginBusEvents
      * Occurs when live search should gain focus
      */
     readonly liveSearchFocus: EventEmitter<void>;
+
+    /**
+     * Occurs when there is need for updating displayed value
+     */
+    readonly updateDisplayedValue: EventEmitter<void>;
 }

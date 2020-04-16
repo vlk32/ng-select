@@ -318,6 +318,8 @@ export class PopupAbstractComponent<TCssClasses = any, TOptions extends PopupOpt
            !isDescendant(this.pluginElement.nativeElement, event.target as HTMLElement))
         {
             this.togglePopup();
+
+            this.pluginBus.updateDisplayedValue.emit();
         }
     }
 

@@ -55,6 +55,23 @@ div.btn-select .selected-caret
 
 .selected-multi-value-cancel:hover
 {
-    opacity: 0.8;
+    opacity: 0.7;
     cursor: pointer;
 }
+
+.cancel-selected
+{
+    cursor: pointer;
+    align-self: center;
+    padding: 2px 4px;
+}
+
+.cancel-selected:hover
+{
+    opacity: 0.7;
+}
+
+.cancel-selected:before 
+{
+    content: "\f00d"; 
+} 

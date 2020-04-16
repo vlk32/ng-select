@@ -7,7 +7,6 @@
                (input)="handleInput($any($event.target).value, true)"
                (focus)="handleFocus($any($event.target))"
                (click)="handleFocus($any($event.target), true)"
-               (blur)="handleBlur()"
                placeholder="{{texts?.inputPlaceholder}}"
                [disabled]="pluginBus?.selectOptions.readonly">
     </div>

@@ -93,12 +93,11 @@ export class DynamicValueHandlerComponent<TValue = any> extends ValueHandlerBase
             {
                 this.selectedOptions = [];
             }
-            else
+            
+            if(Array.isArray(this.selectedOptions))
             {
-                let opt: ɵNgSelectOption<TValue>;
-
                 //value exists, removing from list
-                if((opt = this.selectedOptions.find(selOpt => this.valueComparer(selOpt.value, opt.value))))
+                if(this.selectedOptions.find(selOpt => this.valueComparer(selOpt.value, option.value)))
                 {
                     let index = this.selectedOptions.indexOf(option);
                     this.selectedOptions.splice(index, 1);

@@ -4,7 +4,7 @@ import {STRING_LOCALIZATION, StringLocalization} from '@anglr/common';
 import {Subscription} from 'rxjs';
 
 import {EditLiveSearchOptions, EditLiveSearch} from './editLiveSearch.interface';
-import {NgSelectPlugin} from '../../../misc';
+import {NgSelectPlugin, OptionsGatherer} from '../../../misc';
 import {NgSelectPluginInstances} from '../../../components/select';
 import {NG_SELECT_PLUGIN_INSTANCES} from '../../../components/select/types';
 import {LIVE_SEARCH_OPTIONS} from '../types';
@@ -34,7 +34,6 @@ const defaultOptions: EditLiveSearchOptions =
     },
     keepSearchValue: false,
     nonExistingCancel: false,
-    useNonExistingAsValue: false,
     minLengthSearch: 0
 };
 
@@ -63,6 +62,16 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
     protected _valueHandler: ValueHandler;
 
     /**
+     * Instance of previous options gatherer, that is used for obtaining available options
+     */
+    protected _optionsGatherer: OptionsGatherer;
+
+    /**
+     * Subscription for changes of options in options gatherer
+     */
+    protected _optionsChangeSubscription: Subscription;
+
+    /**
      * Subscription for changes in texts
      */
     protected _textsChangedSubscription: Subscription;
@@ -76,6 +85,11 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
      * Subscription for live search focus request
      */
     protected _liveSearchFocusSubscription: Subscription;
+
+    /**
+     * Subscription for update displayed value request
+     */
+    protected _updateDisplayedValueSubscription: Subscription;
 
     /**
      * Options for NgSelect plugin
@@ -172,6 +186,9 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
      */
     public ngOnDestroy()
     {
+        this._optionsChangeSubscription?.unsubscribe();
+        this._optionsChangeSubscription = null;
+
         this._textsChangedSubscription?.unsubscribe();
         this._textsChangedSubscription = null;
 
@@ -180,6 +197,9 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
 
         this._liveSearchFocusSubscription?.unsubscribe();
         this._liveSearchFocusSubscription = null;
+
+        this._updateDisplayedValueSubscription?.unsubscribe();
+        this._updateDisplayedValueSubscription = null;
     }
 
     //######################### public methods - implementation of EditLiveSearch #########################
@@ -190,6 +210,44 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
     public initialize()
     {
         this._textsChangedSubscription = this._stringLocalization.textsChange.subscribe(() => this._initTexts());
+
+        if(this._optionsGatherer && this._optionsGatherer != this.pluginBus.selectOptions.optionsGatherer)
+        {
+            this._optionsChangeSubscription.unsubscribe();
+            this._optionsChangeSubscription = null;
+
+            this._optionsGatherer = null;
+        }
+
+        if(!this._optionsGatherer)
+        {
+            this._optionsGatherer = this.pluginBus.selectOptions.optionsGatherer;
+
+            this._optionsChangeSubscription = this._optionsGatherer.availableOptionsChange.subscribe(() =>
+            {
+                //do not change active if active is visible
+                if(!this.pluginBus.selectOptions.optionsGatherer.availableOptions.find((option: ɵNgSelectOption) => option.active))
+                {
+                    //only when input is filled at least with one char
+                    if(this.searchValue)
+                    {
+                        let option: ɵNgSelectOption = this.pluginBus.selectOptions.optionsGatherer.availableOptions.find(itm => this.pluginBus.selectOptions.liveSearchFilter(this.searchValue, this.pluginBus.selectOptions.normalizer)(itm));
+    
+                        if(option)
+                        {
+                            this.pluginBus.selectOptions.optionsGatherer.options.forEach((option: ɵNgSelectOption) => option.active = false);
+                            option.active = true;
+                            this._popup.invalidateVisuals();
+                        }
+                    }
+                    //select first
+                    else
+                    {
+                        this._activateSelectedOrFirst();
+                    }
+                }
+            });
+        }
 
         let popup = this.ngSelectPlugins[POPUP] as Popup;
 
@@ -208,6 +266,14 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
             this._liveSearchFocusSubscription = this.pluginBus.liveSearchFocus.subscribe(() =>
             {
                 this.inputElementChild?.nativeElement.focus();
+            });
+        }
+
+        if(!this._updateDisplayedValueSubscription)
+        {
+            this._updateDisplayedValueSubscription = this.pluginBus.updateDisplayedValue.subscribe(() =>
+            {
+                this.handleBlur();
             });
         }
 
@@ -301,19 +367,6 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
                 }
                 //otherwise keep last value
             }
-
-            //do not change active if active is visible
-            if(!this.pluginBus.selectOptions.optionsGatherer.availableOptions.find((option: ɵNgSelectOption) => option.active))
-            {
-                let option: ɵNgSelectOption = this.pluginBus.selectOptions.optionsGatherer.availableOptions.find(itm => this.pluginBus.selectOptions.liveSearchFilter(value, this.pluginBus.selectOptions.normalizer)(itm));
-
-                if(option)
-                {
-                    this.pluginBus.selectOptions.optionsGatherer.options.forEach((option: ɵNgSelectOption) => option.active = false);
-                    option.active = true;
-                    this._popup.invalidateVisuals();
-                }
-            }
         }
     }
 
@@ -356,10 +409,16 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
                 this.searchValueDisplayed = '';
             }
         }
+        //reset text
+        else
+        {
+            this.searchValueDisplayed = '';
+        }
 
         //reset available options
         this.searchValue = null;
         this.searchValueChange.emit();
+        this._changeDetector.detectChanges();
     }
 
     //######################### protected methods #########################

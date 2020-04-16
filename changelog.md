@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - fixed removing of html element for absolute `popup` plugin
+- fixed `DynamicValueHandler` adding value to multi select
 
 ### Features
 
@@ -17,6 +18,7 @@
 - added new option for select, `normalizer` which is function which allows normalization of value before using it in search
 - `optionsGatherer` extended with `select` containing select instance itself
 - `PluginBus` extended with `liveSearchFocus` used for emitting event that should set focus on live search input
+- `PluginBus` extended with `updateDisplayedValue` used for emitting event that should update displayed value if needed
 
 ### BREAKING CHANGES
 

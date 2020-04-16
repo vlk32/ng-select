@@ -9,6 +9,10 @@
 
     <ng-content></ng-content>
 
+    <div *ngIf="options?.cancelButton"
+         (click)="cancelSelected()"
+         [ngClass]="options?.cssClasses?.cancelSelectedElement"></div>
+
     <div [ngClass]="options?.cssClasses?.selectedCarretWrapper" (click)="pluginBus?.togglePopup.emit(); pluginBus?.liveSearchFocus?.emit()">
         <span [ngClass]="options?.cssClasses?.selectedCarret"></span>
     </div>

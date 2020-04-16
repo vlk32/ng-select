@@ -34,6 +34,11 @@ export interface CssClassesEditNormalState
      * Applied to element used for canceling selected value
      */
     selectedMultiValueCancel?: string;
+
+    /**
+     * Applied to element that is used as cancel selected button
+     */
+    cancelSelectedElement?: string;
 }
 
 /**
@@ -41,6 +46,10 @@ export interface CssClassesEditNormalState
  */
 export interface EditNormalStateOptions extends NormalStateOptions<CssClassesEditNormalState>
 {
+    /**
+     * Indication whether display cancel button
+     */
+    cancelButton?: boolean;
 }
 
 /**

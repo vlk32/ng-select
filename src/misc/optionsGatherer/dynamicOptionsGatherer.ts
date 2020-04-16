@@ -1,5 +1,5 @@
 import {EventEmitter} from "@angular/core";
-import {isPresent, isBlank} from "@jscrpt/common";
+import {isPresent} from "@jscrpt/common";
 import {Subscription, Observable} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 
@@ -10,6 +10,8 @@ import {DynamicOptionsGathererOptions} from "./dynamicOptionsGatherer.interface"
 import {LiveSearch} from "../../plugins/liveSearch";
 import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
 import {PluginBus} from '../pluginBus/pluginBus';
+import {Popup} from '../../plugins/popup';
+import {POPUP} from '../../plugins/popup/types';
 
 /**
  * Class that is used as for options gathering in dynamic way, for example from external source when writing
@@ -29,9 +31,24 @@ export class DynamicOptionsGatherer<TValue = any> implements OptionsGatherer<TVa
     protected _searchValueChangeSubscription: Subscription;
 
     /**
+     * Subscription for visibility change of popup
+     */
+    protected _visibilitySubscription: Subscription;
+
+    /**
      * Minimal number of characters required for searching
      */
-    protected _minLength: number = 2;
+    protected _minLength: number = 1;
+
+    /**
+     * Popup that is displayed
+     */
+    protected _popup: Popup;
+
+    /**
+     * Indication that first initial call was performed
+     */
+    protected _initialized: boolean = false;
 
     //######################### public properties - implementation of OptionsGatherer #########################
 
@@ -107,6 +124,31 @@ export class DynamicOptionsGatherer<TValue = any> implements OptionsGatherer<TVa
             this._liveSearch = null;
         }
 
+        let popup: Popup = this.ngSelectPlugins[POPUP] as Popup;
+
+        if(this._popup && this._popup != popup)
+        {
+            this._visibilitySubscription.unsubscribe();
+            this._visibilitySubscription = null;
+
+            this._popup = null;
+        }
+
+        if(!this._popup)
+        {
+            this._popup = popup;
+
+            this._visibilitySubscription = this._popup.visibilityChange.subscribe(async () =>
+            {
+                if(this._initialized)
+                {
+                    return;
+                }
+
+                await this._processOptionsChange();
+            });
+        }
+
         if(!this._liveSearch)
         {
             this._liveSearch = liveSearch;
@@ -118,19 +160,7 @@ export class DynamicOptionsGatherer<TValue = any> implements OptionsGatherer<TVa
                 searchValueChange = searchValueChange.pipe(debounceTime(this._options.delay));
             }
 
-            this._searchValueChangeSubscription = searchValueChange.subscribe(async () =>
-            {
-                if(isBlank(this._liveSearch.searchValue) || this._liveSearch.searchValue.length < this._minLength)
-                {
-                    this.options = [];
-                    this.optionsChange.emit();
-
-                    return;
-                }
-
-                this.options = await this._options.dynamicOptionsCallback(this._liveSearch.searchValue);
-                this.optionsChange.emit();
-            });
+            this._searchValueChangeSubscription = searchValueChange.subscribe(async () => await this._processOptionsChange());
         }
     }
 
@@ -139,10 +169,31 @@ export class DynamicOptionsGatherer<TValue = any> implements OptionsGatherer<TVa
      */
     public destroyGatherer(): void
     {
-        if(this._searchValueChangeSubscription)
+        this._searchValueChangeSubscription?.unsubscribe();
+        this._searchValueChangeSubscription = null;
+
+        this._visibilitySubscription?.unsubscribe();
+        this._visibilitySubscription = null;
+    }
+
+    //######################### protected methods #########################
+
+    /**
+     * Process options change request
+     */
+    protected async _processOptionsChange()
+    {
+        this._initialized = true;
+
+        if((this._liveSearch.searchValue?.length ?? 0) < this._minLength)
         {
-            this._searchValueChangeSubscription.unsubscribe();
-            this._searchValueChangeSubscription = null;
+            this.options = [];
+            this.optionsChange.emit();
+
+            return;
         }
+
+        this.options = await this._options.dynamicOptionsCallback(this._liveSearch.searchValue ?? '');
+        this.optionsChange.emit();
     }
 }

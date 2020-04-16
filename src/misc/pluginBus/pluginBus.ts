@@ -53,4 +53,9 @@ export class PluginBus<TValue = any> implements PluginBusEvents
      * Occurs when live search should gain focus
      */
     public liveSearchFocus: EventEmitter<void> = new EventEmitter<void>();
+
+    /**
+     * Occurs when there is need for updating displayed value
+     */
+    readonly updateDisplayedValue: EventEmitter<void> = new EventEmitter<void>();
 }
