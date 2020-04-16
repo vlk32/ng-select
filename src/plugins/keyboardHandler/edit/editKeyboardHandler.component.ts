@@ -235,7 +235,7 @@ export class EditKeyboardHandlerComponent implements EditKeyboardHandler, NgSele
             
             if(active)
             {
-                this._valueHandler.setValue(active.value);
+                this.pluginBus.optionSelect.emit(active);
             }
 
             this.pluginBus.showHidePopup.emit(false);

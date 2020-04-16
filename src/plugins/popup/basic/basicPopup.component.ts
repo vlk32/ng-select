@@ -1,5 +1,6 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, OnDestroy, Optional} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
+import {STRING_LOCALIZATION, StringLocalization} from '@anglr/common';
 import {extend} from '@jscrpt/common';
 
 import {NgSelectPluginInstances} from '../../../components/select';
@@ -23,6 +24,10 @@ const defaultOptions: BasicPopupOptions =
         optionItemTextDiv: 'option-item-text',
         popupDiv: 'popup-div'
     },
+    texts:
+    {
+        noAvailableOptions: 'No items found'
+    },
     visible: false
 };
 
@@ -43,10 +48,11 @@ export class BasicPopupComponent extends PopupAbstractComponent<CssClassesBasicP
                 @Optional() pluginBus: PluginBus,
                 pluginElement: ElementRef,
                 changeDetector: ChangeDetectorRef,
-                @Inject(POPUP_OPTIONS) @Optional() options?: BasicPopupOptions,
+                @Inject(POPUP_OPTIONS) @Optional() options: BasicPopupOptions,
+                @Inject(STRING_LOCALIZATION) stringLocalization: StringLocalization,
                 @Inject(DOCUMENT) document?: HTMLDocument)
     {
-        super(ngSelectPlugins, pluginBus, pluginElement, changeDetector, document);
+        super(ngSelectPlugins, pluginBus, pluginElement, changeDetector, document, stringLocalization);
 
         this._options = extend(true, {}, defaultOptions, options);
     }

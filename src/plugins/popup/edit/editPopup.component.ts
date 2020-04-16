@@ -1,5 +1,6 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, OnDestroy, Optional} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
+import {STRING_LOCALIZATION, StringLocalization} from '@anglr/common';
 import {extend} from '@jscrpt/common';
 
 import {NgSelectPluginInstances} from '../../../components/select';
@@ -24,6 +25,10 @@ const defaultOptions: EditPopupOptions =
         optionItemTextDiv: 'option-item-text',
         popupDiv: 'popup-div'
     },
+    texts:
+    {
+        noAvailableOptions: 'No items found'
+    },
     visible: false
 };
 
@@ -42,6 +47,14 @@ export class EditPopupComponent extends PopupAbstractComponent<CssClassesEditPop
     //######################### protected properties #########################
 
     /**
+     * Gets indication whether keep open popup after value change
+     */
+    protected get keepOpen(): boolean
+    {
+        return false;
+    }
+
+    /**
      * Gets currently available options
      */
     protected get availableOptions(): ɵNgSelectOption[]
@@ -54,10 +67,11 @@ export class EditPopupComponent extends PopupAbstractComponent<CssClassesEditPop
                 @Optional() pluginBus: PluginBus,
                 pluginElement: ElementRef,
                 changeDetector: ChangeDetectorRef,
-                @Inject(POPUP_OPTIONS) @Optional() options?: EditPopupOptions,
+                @Inject(POPUP_OPTIONS) @Optional() options: EditPopupOptions,
+                @Inject(STRING_LOCALIZATION) stringLocalization: StringLocalization,
                 @Inject(DOCUMENT) document?: HTMLDocument)
     {
-        super(ngSelectPlugins, pluginBus, pluginElement, changeDetector, document);
+        super(ngSelectPlugins, pluginBus, pluginElement, changeDetector, document, stringLocalization);
 
         this._options = extend(true, {}, defaultOptions, options);
     }
@@ -83,8 +97,6 @@ export class EditPopupComponent extends PopupAbstractComponent<CssClassesEditPop
      */
     protected loadOptions()
     {
-        //filter out selected
-
         this.selectOptions = this._optionsGatherer.availableOptions;
         this._changeDetector.detectChanges();
     }

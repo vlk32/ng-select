@@ -9,6 +9,7 @@ import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 import {NormalStateAbstractComponent} from '../normalStateAbstract.component';
 import {NORMAL_STATE_OPTIONS} from '../types';
 import {CssClassesEditNormalState, EditNormalState, EditNormalStateOptions} from './editNormalState.interface';
+import {NgSelectOption} from '../../../components/option';
 
 //TODO - think of templating how to do it for edit select
 
@@ -45,6 +46,16 @@ const defaultOptions: EditNormalStateOptions =
 })
 export class EditNormalStateComponent extends NormalStateAbstractComponent<CssClassesEditNormalState, EditNormalStateOptions> implements EditNormalState, NgSelectPlugin<EditNormalStateOptions>, OnDestroy
 {
+    //######################### public properties - template bindings #########################
+
+    /**
+     * Gets currently selected options
+     */
+    public get selectedOptions(): NgSelectOption[]
+    {
+        return this.valueHandler?.selectedOptions as NgSelectOption[];
+    }
+
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() ngSelectPlugins: NgSelectPluginInstances,
                 @Optional() pluginBus: PluginBus,

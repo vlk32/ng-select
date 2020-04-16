@@ -34,7 +34,8 @@ const defaultOptions: EditLiveSearchOptions =
     },
     keepSearchValue: false,
     nonExistingCancel: false,
-    useNonExistingAsValue: false
+    useNonExistingAsValue: false,
+    minLengthSearch: 0
 };
 
 /**
@@ -228,22 +229,28 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
             {
                 let selected = this._valueHandler.selectedOptions;
 
-                if(!selected || (Array.isArray(selected) && !selected.length))
+                if(!selected)
                 {
                     return;
                 }
 
+                //reset filtering of available options
+                this.handleInput(null);
+
                 if(Array.isArray(selected))
                 {
-
+                    this.searchValueDisplayed = '';
+                    this.inputElementChild?.nativeElement.focus();
+                    this._changeDetector.detectChanges();
                 }
                 else
                 {
-                    //reset filtering of available options
-                    this.handleInput(null);
                     //set selected into live search
                     this.searchValueDisplayed = selected.text;
                     this._changeDetector.detectChanges();
+
+                    //select current text
+                    this.inputElementChild?.nativeElement.select();
                 }
             });
         }
@@ -281,6 +288,7 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
 
         if(inputChange)
         {
+            this.pluginBus.showHidePopup.emit(true);
             this.searchValueDisplayed = value;
 
             //single value select

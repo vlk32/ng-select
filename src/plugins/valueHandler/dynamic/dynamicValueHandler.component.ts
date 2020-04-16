@@ -121,16 +121,6 @@ export class DynamicValueHandlerComponent<TValue = any> extends ValueHandlerBase
 
         this._normalState.invalidateVisuals();
         this.valueChange.emit();
-
-        //close popup if not multiple
-        if(!this.pluginBus.selectOptions.multiple)
-        {
-            this.pluginBus.showHidePopup.emit(false);
-        }
-        else
-        {
-            this._popup.invalidateVisuals();
-        }
     }
 
     /**

@@ -16,4 +16,6 @@
 
         <div *ngIf="option?.selected && pluginBus?.selectOptions?.multiple" [ngClass]="options?.cssClasses?.optionChecked"></div>
     </div>
+
+    <div *ngIf="!selectOptions?.length">{{texts?.noAvailableOptions}}</div>
 </div>

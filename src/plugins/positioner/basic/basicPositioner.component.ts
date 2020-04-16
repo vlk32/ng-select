@@ -138,7 +138,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
 
             this._optionsChangeSubscription = this._optionsGatherer.availableOptionsChange.subscribe(() =>
             {
-                if(this._popup.popupElement && this._optionsGatherer.availableOptions && this._optionsGatherer.availableOptions.length)
+                if(this._popup.popupElement && this._optionsGatherer.availableOptions)
                 {
                     this._handlePosition();
                 }

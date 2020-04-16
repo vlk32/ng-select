@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 8.1.0 (2020-04-15)
+## Version 9.0.0 (2020-04-16)
 
 ### Bug Fixes
 
@@ -17,6 +17,12 @@
 - added new option for select, `normalizer` which is function which allows normalization of value before using it in search
 - `optionsGatherer` extended with `select` containing select instance itself
 - `PluginBus` extended with `liveSearchFocus` used for emitting event that should set focus on live search input
+
+### BREAKING CHANGES
+
+- `valueHandler` plugin does not handle `popup` plugin visibility change anymore
+- `popup` plugin now has *text* for displaying text when no results *available options*
+- base `PopupAbstractComponent` class requires `StringLocalization` service as constructor parameter
 
 ## Version 8.0.0 (2020-04-14)
 

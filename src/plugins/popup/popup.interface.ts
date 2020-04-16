@@ -4,6 +4,17 @@ import {NgSelectPlugin, VisualPluginOptions} from "../../misc";
 import {NgSelectOption} from "../../components/option";
 
 /**
+ * Texts that are used within Popup
+ */
+export interface PopupTexts
+{
+    /**
+     * Displayed when there is are no available options to be displayed
+     */
+    noAvailableOptions?: string;
+}
+
+/**
  * Options for popup plugin
  */
 export interface PopupOptions<TCssClasses = any> extends VisualPluginOptions<TCssClasses>
@@ -12,6 +23,11 @@ export interface PopupOptions<TCssClasses = any> extends VisualPluginOptions<TCs
      * Indication whether are popup options visible, or not
      */
     visible?: boolean;
+
+    /**
+     * Texts that are used within any Popup
+     */
+    texts?: PopupTexts;
 }
 
 /**

@@ -129,16 +129,6 @@ export class BasicValueHandlerComponent<TValue = any> extends ValueHandlerBase<T
 
         this._normalState.invalidateVisuals();
         this.valueChange.emit();
-
-        //close popup if not multiple
-        if(!this.pluginBus.selectOptions.multiple)
-        {
-            this.pluginBus.showHidePopup.emit(false);
-        }
-        else
-        {
-            this._popup.invalidateVisuals();
-        }
     }
 
     /**
@@ -178,6 +168,7 @@ export class BasicValueHandlerComponent<TValue = any> extends ValueHandlerBase<T
 
         if(this.pluginBus.selectOptions.multiple)
         {
+            console.trace();
             if(Array.isArray(value))
             {
                 let items = value;

@@ -3,8 +3,6 @@ import {Subscription} from 'rxjs';
 
 import {NgSelectPlugin, OptionsGatherer, CompareValueFunc, LiveSearchFilter, NormalizeFunc} from '../../misc';
 import {NgSelectPluginInstances} from '../../components/select';
-import {Popup} from '../popup';
-import {POPUP} from '../popup/types';
 import {ɵNgSelectOption, NgSelectOption} from '../../components/option';
 import {NormalState} from '../normalState';
 import {NORMAL_STATE} from '../normalState/types';
@@ -22,11 +20,6 @@ export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandl
      * Options for NgSelect plugin
      */
     protected _options: TOptions;
-
-    /**
-     * Popup that is used
-     */
-    protected _popup: Popup;
 
     /**
      * Normal state that is used
@@ -177,9 +170,6 @@ export abstract class ValueHandlerBase<TValue = any, TOptions extends ValueHandl
         {
             this._optionCancelSubscription = this.pluginBus.optionCancel.subscribe(this._cancelValue);
         }
-
-        let popup = this.ngSelectPlugins[POPUP] as Popup;
-        this._popup = popup;
 
         let normalState = this.ngSelectPlugins[NORMAL_STATE] as NormalState;
         this._normalState = normalState;

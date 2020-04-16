@@ -1,4 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, OnDestroy, QueryList, ViewChildren, Directive} from '@angular/core';
+import {StringLocalization} from '@anglr/common';
 import {extend, isDescendant} from '@jscrpt/common';
 import {Subscription} from 'rxjs';
 
@@ -6,7 +7,9 @@ import {ɵNgSelectOption} from '../../components/option';
 import {NgSelectPluginInstances} from '../../components/select';
 import {NgSelectPlugin, OptionsGatherer} from '../../misc';
 import {PluginBus} from '../../misc/pluginBus/pluginBus';
-import {Popup, PopupOptions} from './popup.interface';
+import {Popup, PopupOptions, PopupTexts} from './popup.interface';
+import {ValueHandler} from '../valueHandler';
+import {VALUE_HANDLER} from '../valueHandler/types';
 
 
 /**
@@ -43,9 +46,34 @@ export class PopupAbstractComponent<TCssClasses = any, TOptions extends PopupOpt
     protected _visibilityRequestSubscription: Subscription;
 
     /**
+     * Subscription for changes of selected value
+     */
+    protected _valueChangedSubscription: Subscription;
+
+    /**
+     * Subscription for changes in texts
+     */
+    protected _textsChangedSubscription: Subscription;
+
+    /**
      * Indication whether is popup visible
      */
     protected _popupVisible: boolean = false;
+
+    /**
+     * Value handler plugin used within `NgSelect`
+     */
+    protected _valueHandler: ValueHandler;
+
+    //######################### protected properties #########################
+
+    /**
+     * Gets indication whether keep open popup after value change
+     */
+    protected get keepOpen(): boolean
+    {
+        return this.pluginBus.selectOptions.multiple;
+    }
 
     //######################### public properties - implementation of Popup #########################
 
@@ -88,6 +116,12 @@ export class PopupAbstractComponent<TCssClasses = any, TOptions extends PopupOpt
      * @internal
      */
     public selectOptions: ɵNgSelectOption[];
+
+    /**
+     * Object containing available texts
+     * @internal
+     */
+    public texts: PopupTexts = {};
     
     //######################### public properties - children #########################
 
@@ -103,7 +137,8 @@ export class PopupAbstractComponent<TCssClasses = any, TOptions extends PopupOpt
                 public pluginBus: PluginBus,
                 public pluginElement: ElementRef,
                 protected _changeDetector: ChangeDetectorRef,
-                protected _document?: HTMLDocument)
+                protected _document: HTMLDocument,
+                protected _stringLocalization: StringLocalization)
     {
     }
 
@@ -150,8 +185,14 @@ export class PopupAbstractComponent<TCssClasses = any, TOptions extends PopupOpt
         this._popupToggleSubscription?.unsubscribe();
         this._popupToggleSubscription = null;
 
+        this._valueChangedSubscription?.unsubscribe();
+        this._valueChangedSubscription = null;
+
         this._visibilityRequestSubscription?.unsubscribe();
         this._visibilityRequestSubscription = null;
+
+        this._textsChangedSubscription?.unsubscribe();
+        this._textsChangedSubscription = null;
 
         this._document.removeEventListener('mouseup', this._handleClickOutside);
     }
@@ -163,6 +204,8 @@ export class PopupAbstractComponent<TCssClasses = any, TOptions extends PopupOpt
      */
     public initialize()
     {
+        this._textsChangedSubscription = this._stringLocalization.textsChange.subscribe(() => this._initTexts());
+
         if(this._optionsGatherer && this._optionsGatherer != this.pluginBus.selectOptions.optionsGatherer)
         {
             this._optionsChangeSubscription.unsubscribe();
@@ -188,7 +231,31 @@ export class PopupAbstractComponent<TCssClasses = any, TOptions extends PopupOpt
             this._visibilityRequestSubscription = this.pluginBus.showHidePopup.subscribe(this._handleVisibilityChange);
         }
 
+        let valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler;
+
+        if(this._valueHandler && this._valueHandler != valueHandler)
+        {
+            this._valueChangedSubscription.unsubscribe();
+            this._valueChangedSubscription = null;
+
+            this._valueHandler = null;
+        }
+
+        if(!this._valueHandler)
+        {
+            this._valueHandler = valueHandler;
+
+            this._valueChangedSubscription = this._valueHandler.valueChange.subscribe(() =>
+            {
+                if(!this.keepOpen)
+                {
+                    this._handleVisibilityChange(false);
+                }
+            });
+        }
+
         this.loadOptions();
+        this._initTexts();
     }
 
     /**
@@ -207,6 +274,19 @@ export class PopupAbstractComponent<TCssClasses = any, TOptions extends PopupOpt
     }
 
     //######################### protected methods #########################
+
+    /**
+     * Initialize texts
+     */
+    protected _initTexts()
+    {
+        Object.keys(this.options.texts).forEach(key =>
+        {
+            this.texts[key] = this._stringLocalization.get(this.options.texts[key]);
+        });
+
+        this._changeDetector.detectChanges();
+    }
 
     /**
      * Loads options
