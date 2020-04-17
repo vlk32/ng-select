@@ -1,16 +1,12 @@
 import {EventEmitter} from "@angular/core";
-import {isBlank} from "@jscrpt/common";
 import {Subscription} from "rxjs";
 
-import {OptionsGatherer, LiveSearchFilter} from "./optionsGatherer.interface";
+import {OptionsGatherer} from "./optionsGatherer.interface";
 import {NgSelectOption} from "../../components/option";
 import {NgSelectPluginInstances, NgSelect} from "../../components/select";
 import {LiveSearch} from "../../plugins/liveSearch";
 import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
-import {NormalizeFunc} from "../ngSelectOptions.interface";
 import {PluginBus} from '../pluginBus/pluginBus';
-
-//TODO - refactor options gatherer live search and normalizer usage for all
 
 /**
  * Options gatherer used for static options gathering from code
@@ -95,24 +91,6 @@ export class CodeOptionsGatherer<TValue = any> implements OptionsGatherer<TValue
      */
     public select: NgSelect<TValue>;
 
-    //######################### constructor #########################
-    constructor(private _liveSearchFilter?: LiveSearchFilter<TValue>,
-                private _normalizer?: NormalizeFunc<TValue>)
-    {
-        if(isBlank(this._normalizer))
-        {
-            this._normalizer = value => value;
-        }
-
-        if(isBlank(this._liveSearchFilter))
-        {
-            this._liveSearchFilter = (query: string, normalizer?: NormalizeFunc) =>
-            {
-                return itm => normalizer(itm.text).indexOf(normalizer(query)) >= 0;
-            };
-        }
-    }
-
     //######################### public methods - implmentation of OptionsGatherer #########################
 
     /**
@@ -144,7 +122,7 @@ export class CodeOptionsGatherer<TValue = any> implements OptionsGatherer<TValue
                     return;
                 }
 
-                this._availableOptions = this.options.filter(this._liveSearchFilter(this._liveSearch.searchValue, this._normalizer));
+                this._availableOptions = this.options.filter(this.pluginBus.selectOptions.liveSearchFilter(this._liveSearch.searchValue, this.pluginBus.selectOptions.normalizer));
                 this._availableOptionsChange.emit();
             });
         }

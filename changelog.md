@@ -26,6 +26,7 @@
 - `valueHandler` plugin does not handle `popup` plugin visibility change anymore
 - `popup` plugin now has *text* for displaying text when no results *available options*
 - base `PopupAbstractComponent` class requires `StringLocalization` service as constructor parameter
+- `CodeOptionsGatherer` constructor does not accept `Normalizer` and `LiveSearch`, they are used from selection options
 
 ## Version 8.0.0 (2020-04-14)
 

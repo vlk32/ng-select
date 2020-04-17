@@ -9,7 +9,7 @@ import {ɵNgSelectOption, } from '../../../components/option';
 import {ValueHandlerBase} from '../valueHandlerBase';
 import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 
-//TODO - select _setValue, rejest non existing
+//TODO - select _setValue, reject non existing
 
 /**
  * Default options for value handler

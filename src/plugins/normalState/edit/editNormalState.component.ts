@@ -12,6 +12,7 @@ import {CssClassesEditNormalState, EditNormalState, EditNormalStateOptions} from
 import {NgSelectOption} from '../../../components/option';
 
 //TODO - think of templating how to do it for edit select
+//TODO - add way to collapse multi selected values
 
 /**
  * Default options for normal state
