@@ -1,5 +1,5 @@
-import {StringLocalization, STRING_LOCALIZATION} from '@anglr/common';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, OnDestroy, Optional} from '@angular/core';
+import {StringLocalization, STRING_LOCALIZATION} from '@anglr/common';
 import {extend} from '@jscrpt/common';
 
 import {NgSelectPluginInstances} from '../../../components/select';

@@ -55,11 +55,11 @@ export class EditPopupComponent extends PopupAbstractComponent<CssClassesEditPop
     }
 
     /**
-     * Gets currently available options
+     * Gets all options
      */
-    protected get availableOptions(): ɵNgSelectOption[]
+    protected get allOptions(): ɵNgSelectOption[]
     {
-        return this.pluginBus.selectOptions.optionsGatherer.availableOptions;
+        return this.pluginBus.selectOptions.optionsGatherer.options;
     }
 
     //######################### constructor #########################
@@ -85,19 +85,8 @@ export class EditPopupComponent extends PopupAbstractComponent<CssClassesEditPop
      */
     public handleMouseActivation(option: ɵNgSelectOption): void
     {
-        this.availableOptions.forEach(option => option.active = false);
+        this.allOptions.forEach(option => option.active = false);
 
         option.active = true;
-    }
-
-    //######################### protected methods #########################
-
-    /**
-     * Loads options
-     */
-    protected loadOptions()
-    {
-        this.selectOptions = this._optionsGatherer.availableOptions;
-        this._changeDetector.detectChanges();
     }
 }

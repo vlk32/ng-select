@@ -30,11 +30,6 @@ export interface EditLiveSearchOptions extends LiveSearchOptions<CssClassesEditL
      * Indication whether cancel selected value if non existing value is in live search, works for single value
      */
     nonExistingCancel?: boolean;
-
-    /**
-     * Min length of input that will filter down available options
-     */
-    minLengthSearch?: number;
 }
 
 /**

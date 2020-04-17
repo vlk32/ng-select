@@ -33,8 +33,7 @@ const defaultOptions: EditLiveSearchOptions =
 
     },
     keepSearchValue: false,
-    nonExistingCancel: false,
-    minLengthSearch: 0
+    nonExistingCancel: false
 };
 
 /**

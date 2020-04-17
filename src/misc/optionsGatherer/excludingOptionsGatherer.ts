@@ -2,7 +2,7 @@ import {EventEmitter} from "@angular/core";
 import {Subscription} from 'rxjs';
 
 import {OptionsGatherer} from "./optionsGatherer.interface";
-import {NgSelectOption} from "../../components/option";
+import {NgSelectOption, ɵNgSelectOption} from "../../components/option";
 import {NgSelectPluginInstances, NgSelect} from "../../components/select";
 import {PluginBus} from '../pluginBus/pluginBus';
 import {ValueHandler} from '../../plugins/valueHandler';
@@ -171,6 +171,16 @@ export class ExcludingOptionsGatherer<TValue = any> implements OptionsGatherer<T
         else if(!this.pluginBus.selectOptions.multiple)
         {
             this._availableOptions = this.select.availableOptions.filter(opt => !compare(normalize(opt.value), normalize(this._valueHandler.value)));
+        }
+
+        //deactivate selected
+        if(Array.isArray(this._valueHandler.selectedOptions))
+        {
+            this._valueHandler.selectedOptions.forEach((opt: ɵNgSelectOption) => opt.active = false);
+        }
+        else
+        {
+            (this._valueHandler.selectedOptions as ɵNgSelectOption).active = false;
         }
 
         this._availableOptionsChange.emit();
