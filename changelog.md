@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 9.0.0 (2020-04-16)
+## Version 9.0.0 (2020-04-17)
 
 ### Bug Fixes
 
@@ -30,6 +30,10 @@
 
 ## Version 8.0.0 (2020-04-14)
 
+### Bug fixes
+
+- fixed canceling value for `ValueHandlerBase` for multi value
+
 ### Features
 
 - all generic types are now optional, all defaults to `any`
@@ -47,6 +51,10 @@
 - added `NormalStateAbstractComponent` for easier implementation of new `normalState` plugin
 - added `PopupAbstractComponent` for easier implementation of new `popup` plugin
 - added `DialogPopupDirective` allowing changing popup to dialog using directive
+- added new `NoPositionerComponent` as `Positioner` plugin
+- *subpackage* `@anglr/select/material` 
+   - added new `DialogPopupModule` that allows usage of *DialogPopupComponent*
+   - added new `DialogPopupComponent` as `Popup` plugin (using angular cdk dialog)
 
 ### BREAKING CHANGES
 
@@ -59,14 +67,6 @@
 - *subpackage* `@anglr/select/material` 
    - completely changed types for `DialogPopup`
    - renamed `DialogPopupModule` to `NgSelectDialogPopupModule`
-
-## Version 7.2.0
-
-- *subpackage* `@anglr/select/material` 
-   - added new `DialogPopupModule` that allows usage of *DialogPopupComponent*
-   - added new `DialogPopupComponent` as `Popup` plugin (using angular cdk dialog)
-- added new `NoPositionerComponent` as `Positioner` plugin
-- fixed canceling value for `ValueHandlerBase` for multi value
 
 ## Version 7.1.0
 
