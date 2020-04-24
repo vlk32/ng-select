@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {CommonModule as NgCommonModule} from '@anglr/common';
 
 import {NgSelectValuePipe} from '../pipes/ngSelectValue.pipe';
+import {NgSelectHasValuePipe} from '../pipes/ngSelectHasValue.pipe';
 import {NgSelectControlValueAccessor} from '../misc/ngSelectControlValueAccessor.directive';
 import {BasicNormalStateComponent} from '../plugins/normalState/basic/basicNormalState.component';
 import {NoLiveSearchComponent} from '../plugins/liveSearch/no/noLiveSearch.component';
@@ -15,6 +16,8 @@ import {BasicValueHandlerComponent} from '../plugins/valueHandler/basic/basicVal
 import {OptionComponent} from '../components/option/option.component';
 import {OptGroupComponent} from '../components/option/optgroup.component';
 import {NgSelectComponent} from '../components/select/select.component';
+import {NgSelectAbsoluteDirective} from '../directives/ngSelectAbsolute/ngSelectAbsolute.directive';
+import {NgSelectPlaceholderDirective} from '../directives/ngSelectPlaceholder/ngSelectPlaceholder.directive';
 
 /**
  * Module for select and its options
@@ -32,6 +35,7 @@ import {NgSelectComponent} from '../components/select/select.component';
         OptGroupComponent,
         NgSelectComponent,
         NgSelectValuePipe,
+        NgSelectHasValuePipe,
         NgSelectControlValueAccessor,
         BasicNormalStateComponent,
         NoLiveSearchComponent,
@@ -40,7 +44,9 @@ import {NgSelectComponent} from '../components/select/select.component';
         NoPositionerComponent,
         BasicPositionerComponent,
         BasicKeyboardHandlerComponent,
-        BasicValueHandlerComponent
+        BasicValueHandlerComponent,
+        NgSelectAbsoluteDirective,
+        NgSelectPlaceholderDirective
     ],
     exports:
     [
@@ -48,7 +54,10 @@ import {NgSelectComponent} from '../components/select/select.component';
         OptGroupComponent,
         NgSelectComponent,
         NgSelectValuePipe,
-        NgSelectControlValueAccessor
+        NgSelectHasValuePipe,
+        NgSelectControlValueAccessor,
+        NgSelectAbsoluteDirective,
+        NgSelectPlaceholderDirective
     ]
 })
 export class NgSelectModule

@@ -25,7 +25,8 @@ const defaultOptions: BasicNormalStateOptions =
     texts:
     {
         nothingSelected: 'Nothing selected'
-    }
+    },
+    optionDisplayText: option => option.text
 };
 
 /**
@@ -38,7 +39,7 @@ const defaultOptions: BasicNormalStateOptions =
     styleUrls: ['basicNormalState.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BasicNormalStateComponent extends NormalStateAbstractComponent<CssClassesBasicNormalState, BasicNormalStateOptions> implements BasicNormalState, NgSelectPlugin<BasicNormalStateOptions>, OnDestroy
+export class BasicNormalStateComponent<TValue = any> extends NormalStateAbstractComponent<CssClassesBasicNormalState, BasicNormalStateOptions<TValue>, TValue> implements BasicNormalState, NgSelectPlugin<BasicNormalStateOptions>, OnDestroy
 {
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() ngSelectPlugins: NgSelectPluginInstances,

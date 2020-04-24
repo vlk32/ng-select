@@ -12,6 +12,8 @@ import {LIVE_SEARCH} from "../../plugins/liveSearch/types";
 import {PluginBus} from '../pluginBus/pluginBus';
 import {Popup} from '../../plugins/popup';
 import {POPUP} from '../../plugins/popup/types';
+import {VALUE_HANDLER} from '../../plugins/valueHandler/types';
+import {ValueHandler} from '../../plugins/valueHandler';
 
 /**
  * Class that is used as for options gathering in dynamic way, for example from external source when writing
@@ -49,6 +51,11 @@ export class DynamicOptionsGatherer<TValue = any> implements OptionsGatherer<TVa
      * Indication that first initial call was performed
      */
     protected _initialized: boolean = false;
+
+    /**
+     * Currently used value handler plugin
+     */
+    protected _valueHandler: ValueHandler;
 
     //######################### public properties - implementation of OptionsGatherer #########################
 
@@ -134,6 +141,8 @@ export class DynamicOptionsGatherer<TValue = any> implements OptionsGatherer<TVa
             this._popup = null;
         }
 
+        this._valueHandler = this.ngSelectPlugins[VALUE_HANDLER] as ValueHandler;
+
         if(!this._popup)
         {
             this._popup = popup;
@@ -183,17 +192,29 @@ export class DynamicOptionsGatherer<TValue = any> implements OptionsGatherer<TVa
      */
     protected async _processOptionsChange()
     {
+        let searchValue: string = this._liveSearch.searchValue;
+
+        //use value as search value if not initialized
+        if(!this._initialized && !this.pluginBus.selectOptions.multiple && !Array.isArray(this._valueHandler.selectedOptions) && isPresent(this._valueHandler.selectedOptions))
+        {
+            searchValue = this._liveSearch.searchValue ?? this._valueHandler.selectedOptions.text;
+        }
+
         this._initialized = true;
 
-        if((this._liveSearch.searchValue?.length ?? 0) < this._minLength)
+        if((searchValue?.length ?? 0) < this._minLength)
         {
-            this.options = [];
-            this.optionsChange.emit();
+            //remove available options if multiple or empty string
+            if(isPresent(searchValue) || this.pluginBus.selectOptions.multiple)
+            {
+                this.options = [];
+                this.optionsChange.emit();
+            }
 
             return;
         }
 
-        this.options = await this._options.dynamicOptionsCallback(this._liveSearch.searchValue ?? '');
+        this.options = await this._options.dynamicOptionsCallback(searchValue ?? '');
         this.optionsChange.emit();
     }
 }

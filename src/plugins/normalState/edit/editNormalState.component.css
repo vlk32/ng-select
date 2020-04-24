@@ -63,7 +63,7 @@ div.btn-select .selected-caret
 {
     cursor: pointer;
     align-self: center;
-    padding: 2px 4px;
+    padding: 2px;
 }
 
 .cancel-selected:hover

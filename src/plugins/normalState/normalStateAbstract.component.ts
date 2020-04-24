@@ -14,7 +14,7 @@ import {VALUE_HANDLER} from '../valueHandler/types';
  * Base abstract class for normal state of select
  */
 @Directive()
-export abstract class NormalStateAbstractComponent<TCssClasses = any, TOptions extends NormalStateOptions<TCssClasses> = any> implements NormalState, NgSelectPlugin<TOptions>, OnDestroy
+export abstract class NormalStateAbstractComponent<TCssClasses = any, TOptions extends NormalStateOptions<TCssClasses, TValue> = any, TValue = any> implements NormalState, NgSelectPlugin<TOptions>, OnDestroy
 {
     //######################### protected fields #########################
 

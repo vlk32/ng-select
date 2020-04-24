@@ -34,7 +34,8 @@ const defaultOptions: EditNormalStateOptions =
     {
         nothingSelected: 'Nothing selected'
     },
-    cancelButton: false
+    cancelButton: false,
+    optionDisplayText: option => option.text
 };
 
 /**
@@ -47,7 +48,7 @@ const defaultOptions: EditNormalStateOptions =
     styleUrls: ['editNormalState.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditNormalStateComponent extends NormalStateAbstractComponent<CssClassesEditNormalState, EditNormalStateOptions> implements EditNormalState, NgSelectPlugin<EditNormalStateOptions>, OnDestroy
+export class EditNormalStateComponent<TValue = any> extends NormalStateAbstractComponent<CssClassesEditNormalState, EditNormalStateOptions<TValue>, TValue> implements EditNormalState, NgSelectPlugin<EditNormalStateOptions>, OnDestroy
 {
     //######################### public properties - template bindings #########################
 
@@ -89,5 +90,7 @@ export class EditNormalStateComponent extends NormalStateAbstractComponent<CssCl
         {
             this.pluginBus.optionCancel.emit(this.selectedOptions);
         }
+
+        this.pluginBus.updateDisplayedValue.emit();
     }
 }

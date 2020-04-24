@@ -1,4 +1,4 @@
-<ng-template #defaultLook>{{valueHandler?.selectedOptions | ngSelectValue: texts?.nothingSelected}}</ng-template>
+<ng-template #defaultLook>{{valueHandler?.selectedOptions | ngSelectValue: texts?.nothingSelected: options?.optionDisplayText}}</ng-template>
 
 <button [ngClass]="options?.cssClasses?.normalStateElement" (click)="pluginBus?.togglePopup.emit(); pluginBus?.liveSearchFocus.emit()" (focus)="pluginBus?.focus?.emit()" [disabled]="!!pluginBus?.selectOptions?.readonly" type="button" [title]="valueHandler?.selectedOptions | ngSelectValue: texts?.nothingSelected">
     <span [ngClass]="options?.cssClasses?.selectedValue"><ng-container *ngTemplateOutlet="pluginBus?.selectOptions?.templateGatherer?.normalStateTemplate || defaultLook; context: {$implicit: this}"></ng-container></span>

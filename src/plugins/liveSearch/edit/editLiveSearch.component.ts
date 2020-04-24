@@ -1,5 +1,5 @@
 import {Component, ChangeDetectionStrategy, ChangeDetectorRef, Inject, Optional, ElementRef, ViewChild, EventEmitter, OnDestroy} from '@angular/core';
-import {extend} from '@jscrpt/common';
+import {extend, isPresent} from '@jscrpt/common';
 import {STRING_LOCALIZATION, StringLocalization} from '@anglr/common';
 import {Subscription} from 'rxjs';
 
@@ -33,7 +33,8 @@ const defaultOptions: EditLiveSearchOptions =
 
     },
     keepSearchValue: false,
-    nonExistingCancel: false
+    nonExistingCancel: false,
+    emptyCancel: false
 };
 
 /**
@@ -296,6 +297,10 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
 
                 if(!selected)
                 {
+                    this.searchValueDisplayed = '';
+                    this.handleInput('');
+                    this._changeDetector.detectChanges();
+
                     return;
                 }
 
@@ -361,6 +366,11 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
             {
                 //cancel value
                 if(this._options.nonExistingCancel)
+                {
+                    this._valueHandler.setValue(null);
+                }
+                //empty string cancels value
+                else if(this._options.emptyCancel && isPresent(value) && !value.length)
                 {
                     this._valueHandler.setValue(null);
                 }

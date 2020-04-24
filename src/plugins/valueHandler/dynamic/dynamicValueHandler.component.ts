@@ -107,6 +107,8 @@ export class DynamicValueHandlerComponent<TValue = any> extends ValueHandlerBase
                 {
                     this.selectedOptions.push(option);
                 }
+
+                this.selectedOptions = [...this.selectedOptions];
             }
         }
         else

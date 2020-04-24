@@ -1,4 +1,19 @@
 import {NgSelectPlugin, VisualPluginOptions} from "../../misc";
+import {NgSelectOption} from '../../components/option';
+
+//TODO - version 10, change order of TValue and TCssClasses
+
+/**
+ * Function used for transformation of ng select option into display text
+ */
+export interface DisplayTextFunc<TValue = any>
+{
+    /**
+     * Transforms option into display text
+     * @param option - Option that is being transformed
+     */
+    (option: NgSelectOption<TValue>): string;
+}
 
 /**
  * Texts that are used within NormalState
@@ -14,12 +29,17 @@ export interface NormalStateTexts
 /**
  * Options for normal state plugin
  */
-export interface NormalStateOptions<TCssClasses = any> extends VisualPluginOptions<TCssClasses>
+export interface NormalStateOptions<TCssClasses = any, TValue = any> extends VisualPluginOptions<TCssClasses>
 {
     /**
      * Texts that are used within any NormalState
      */
     texts?: NormalStateTexts;
+
+    /**
+     * Function used for transformation of option into display text
+     */
+    optionDisplayText?: DisplayTextFunc<TValue>;
 }
 
 /**

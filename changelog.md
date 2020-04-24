@@ -1,5 +1,25 @@
 # Changelog
 
+## Version 9.1.0 (2020-04-23)
+
+### Bug Fixes
+
+- fixed dynamic `DynamicOptionsGatherer` now correctly uses selected option text during initialization, if live search text is not present, to obtain available options
+- fixed dynamic `DynamicOptionsGatherer` now keeps last available options for single value select if live search text has not changed
+- fixed `EditLiveSearchComponent` now resets displayed value when `valueHandler.value` has changed
+- fixed displaying of multi value in `EditNormalStateComponent` with `object` as value
+- fixed `EditNormalStateComponent` canceling of selected value now updates displayed live search text
+- fixed `DynamicValueHandlerComponent` multi value change now correctly changes instance of array
+
+### Features
+
+- added new `NgSelectAbsoluteDirective` directive that allows you to set select popup to absolute using `absolute` html attribute
+- added new `NgSelectPlaceholderDirective` directive that allows you to set select live search placeholder text using `placeholder` html attribute
+- added new `NgSelectHasValuePipe` pipe that allows you to test whether `valueHandler.selectedOptions` has any value selected
+- `NgSelectValuePipe` extended with new optional parameter, which allows you to change displayed text of selected options
+- `EditLiveSearchOptions` extended with new option `emptyCancel`, if set to true, empty live search cancels selected single select value
+- `NormalStateOptions` extended with new option `optionDisplayText`, which allows you to set function callback used for obtaining display text for *normalState*
+
 ## Version 9.0.0 (2020-04-17)
 
 ### Bug Fixes
@@ -52,7 +72,7 @@
 - added `PopupAbstractComponent` for easier implementation of new `popup` plugin
 - added `DialogPopupDirective` allowing changing popup to dialog using directive
 - added new `NoPositionerComponent` as `Positioner` plugin
-- *subpackage* `@anglr/select/material` 
+- *subpackage* `@anglr/select/material`
    - added new `DialogPopupModule` that allows usage of *DialogPopupComponent*
    - added new `DialogPopupComponent` as `Popup` plugin (using angular cdk dialog)
 
@@ -64,7 +84,7 @@
 - `Positioner` plugin removed `selectElement`, `optionsGatherer` properties, use new `PluginBus` instead
 - `Popup` plugin removed `multiple`, `optionsGatherer`, `templateGatherer`, `selectElement`, `optionClick` properties, use new `PluginBus` instead
 - `ValueHandler` plugin removed `multiple`, `optionsGatherer`, `valueComparer`, `liveSearchFilter`, `normalizer`, `popupVisibilityRequest` properties, use new `PluginBus` instead
-- *subpackage* `@anglr/select/material` 
+- *subpackage* `@anglr/select/material`
    - completely changed types for `DialogPopup`
    - renamed `DialogPopupModule` to `NgSelectDialogPopupModule`
 

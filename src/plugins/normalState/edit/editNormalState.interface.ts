@@ -44,7 +44,7 @@ export interface CssClassesEditNormalState
 /**
  * Edit normal state options
  */
-export interface EditNormalStateOptions extends NormalStateOptions<CssClassesEditNormalState>
+export interface EditNormalStateOptions<TValue = any> extends NormalStateOptions<CssClassesEditNormalState, TValue>
 {
     /**
      * Indication whether display cancel button
