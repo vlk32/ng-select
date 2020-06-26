@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 9.1.1 (2020-06-26)
+
+### Bug Fixes
+
+- fixed problem with setting *select* as *readonly* or *disabled*, when `NormalState` plugin was completely removed from plugins
+
 ## Version 9.1.0 (2020-04-23)
 
 ### Bug Fixes

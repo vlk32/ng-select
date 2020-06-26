@@ -618,6 +618,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
     public setReadonlyStateComponent(readonlyState: ReadonlyState)
     {
         this._registerNewPlugin(readonlyState, READONLY_STATE, 'readonlyState');
+        this._pluginInstances[NORMAL_STATE] = this._pluginInstances[READONLY_STATE];
     }
 
     /**
