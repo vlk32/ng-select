@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 9.1.2 (2020-07-03)
+
+### Bug Fixes
+
+- fixed forgotten `console.trace` in code, removed
+- fixed default `valueComparer`, now using `===` for correct comparison
+
 ## Version 9.1.1 (2020-06-26)
 
 ### Bug Fixes

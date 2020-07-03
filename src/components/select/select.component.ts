@@ -48,7 +48,7 @@ const defaultOptions: NgSelectOptions =
     readonly: false,
     valueComparer: (source, target) =>
     {
-        return source == target;
+        return source === target;
     },
     liveSearchFilter: (query: string, normalizer: NormalizeFunc = value => value) =>
     {

@@ -170,7 +170,6 @@ export class BasicValueHandlerComponent<TValue = any> extends ValueHandlerBase<T
 
         if(this.pluginBus.selectOptions.multiple)
         {
-            console.trace();
             if(Array.isArray(value))
             {
                 let items = value;
