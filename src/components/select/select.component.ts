@@ -181,6 +181,16 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
      */
     protected _absolutePopup: ComponentRef<Popup>;
 
+    /**
+     * Instance of type that is used as absolute popup
+     */
+    protected _absolutePopupType: Type<Popup>;
+
+    /**
+     * Instance of html element that is used
+     */
+    protected _absolutePopupElement: HTMLElement;
+
     //######################### public properties - inputs #########################
 
     /**
@@ -496,11 +506,6 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
             this._availableOptionsChange.emit();
         });
         
-        if(this.selectOptions.absolute)
-        {
-            this._appendPopupToBody(this._selectOptions.plugins.popup.type);
-        }
-
         if(this._selectOptions.autoInitialize)
         {
             this.initialize();
@@ -650,6 +655,12 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
     {
         let liveSearchPlugin = this._pluginInstances[LIVE_SEARCH] as LiveSearch;
         this.liveSearchElement = [[liveSearchPlugin.liveSearchElement]];
+
+        if(this.selectOptions.absolute)
+        {
+            this._appendPopupToBody(this._selectOptions.plugins.popup.type);
+        }
+
         this._changeDetector.detectChanges();
         
         this.selectOptions.optionsGatherer.initializeGatherer();
@@ -768,6 +779,12 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
      */
     protected _appendPopupToBody(component: Type<Popup>) 
     {
+        //do not reinitialize if already exists and nothing has changed
+        if(this._absolutePopupType == component && this.liveSearchElement[0][0] == this._absolutePopupElement)
+        {
+            return;
+        }
+
         // 0. Destroyes absolute popup if it exists
         this._destroyAbsolutePopup();
 
@@ -775,6 +792,9 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
         {
             return;
         }
+
+        this._absolutePopupType = component;
+        this._absolutePopupElement = this.liveSearchElement[0][0];
 
         // 1. Create a component reference from the component 
         this._absolutePopup = this._componentFactoryResolver
@@ -804,6 +824,8 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
             this._appRef.detachView(this._absolutePopup.hostView);
             this._absolutePopup.destroy();
             this._absolutePopup = null;
+            this._absolutePopupType = null;
+            this._absolutePopupElement = null;
         }
     }
 
