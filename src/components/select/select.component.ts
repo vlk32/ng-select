@@ -779,7 +779,7 @@ export class NgSelectComponent<TValue = any> implements NgSelect<TValue>, OnChan
         // 1. Create a component reference from the component 
         this._absolutePopup = this._componentFactoryResolver
             .resolveComponentFactory(component)
-            .create(this._injector);
+            .create(this._injector, this.liveSearchElement);
         
         // 2. Attach component to the appRef so that it's inside the ng component tree
         this._appRef.attachView(this._absolutePopup.hostView);

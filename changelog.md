@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 9.1.3 (2020-07-09)
+
+### Bug Fixes
+
+- fixed `absolute` select `popup` plugin, now should correctly use `liveSearch` plugin
+- fixed `NgSelectControlValueAccessor` now using `===` for comparison of multivalue and `valueComparer` for single value comparison when changing value
+
 ## Version 9.1.2 (2020-07-03)
 
 ### Bug Fixes

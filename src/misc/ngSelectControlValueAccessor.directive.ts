@@ -96,7 +96,7 @@ export class NgSelectControlValueAccessor<TValue = any> implements ControlValueA
             {
                 this._initializedSubscription.unsubscribe();
                 this._initializedSubscription = null;
-                
+
                 this._select.execute(ɵSetValue(value));
             }
         });
@@ -109,10 +109,22 @@ export class NgSelectControlValueAccessor<TValue = any> implements ControlValueA
     {
         let fnWrapper = (value: TValue|Array<TValue>) =>
         {
-            if(this._value != value)
+            //multivalue is new array in case of change
+            if(Array.isArray(value) && Array.isArray(this._value))
             {
-                this._value = value;
-                fn(value);
+                if(value !== this._value)
+                {
+                    this._value = value;
+                    fn(value);
+                }
+            }
+            else if(!Array.isArray(value) && !Array.isArray(this._value))
+            {
+                if(!this._select.selectOptions?.valueComparer(this._value, value))
+                {
+                    this._value = value;
+                    fn(value);
+                }
             }
         };
 
@@ -162,7 +174,7 @@ export class NgSelectControlValueAccessor<TValue = any> implements ControlValueA
      * Sets NgSelect as disabled/readonly
      * @param isDisabled - Indication whether is control disabled or not
      */
-    public setDisabledState(isDisabled: boolean): void 
+    public setDisabledState(isDisabled: boolean): void
     {
         if(this._select.isInitialized)
         {
