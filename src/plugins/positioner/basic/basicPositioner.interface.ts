@@ -1,3 +1,5 @@
+import {FlipCallback} from '@anglr/common/positions';
+
 import {Positioner, PositionerOptions} from "../positioner.interface";
 
 /**
@@ -5,6 +7,15 @@ import {Positioner, PositionerOptions} from "../positioner.interface";
  */
 export interface BasicPositionerOptions extends PositionerOptions
 {
+    /**
+     * Callback that is called when flip occurs during positioning
+     */
+    flipCallback?: FlipCallback;
+
+    /**
+     * Target element that is used for handling scroll event
+     */
+    scrollTarget?: EventTarget;
 }
 
 /**

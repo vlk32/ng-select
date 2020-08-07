@@ -20,11 +20,13 @@ import {PluginBus} from '../../../misc/pluginBus/pluginBus';
 const defaultOptions: BasicPositionerOptions =
 {
     optionsCoordinates: 'top left',
-    selectCoordinates: 'bottom left'
+    selectCoordinates: 'bottom left',
+    flipCallback: () => {},
+    scrollTarget: window
 };
 
 /**
- * Component used for positioning popup element
+ * Component used for positioning popup element, handles resize, scroll and collision with viewport
  */
 @Component(
 {
@@ -113,7 +115,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
         if(this._isBrowser)
         {
             window.removeEventListener('resize', this._handleResizeAndScroll);
-            window.removeEventListener('scroll', this._handleResizeAndScroll);
+            this._options.scrollTarget?.removeEventListener('scroll', this._handleResizeAndScroll);
         }
     }
 
@@ -187,7 +189,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
     protected _handleResizeAndScroll = () =>
     {
         this._updateMinWidth();
-        positionsWithFlip(this._popupElement, this.options.optionsCoordinates, this.pluginBus.selectElement.nativeElement, this.options.selectCoordinates, this._document);
+        positionsWithFlip(this._popupElement, this.options.optionsCoordinates, this.pluginBus.selectElement.nativeElement, this.options.selectCoordinates, this._document, this.options.flipCallback);
     };
 
     /**
@@ -206,7 +208,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
             if(this._popupElement)
             {
                 window.addEventListener('resize', this._handleResizeAndScroll);
-                window.addEventListener('scroll', this._handleResizeAndScroll);
+                this._options.scrollTarget?.addEventListener('scroll', this._handleResizeAndScroll);
     
                 this._handleResizeAndScroll();
             }
@@ -214,7 +216,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
             else
             {
                 window.removeEventListener('resize', this._handleResizeAndScroll);
-                window.removeEventListener('scroll', this._handleResizeAndScroll);
+                this._options.scrollTarget?.removeEventListener('scroll', this._handleResizeAndScroll);
             }
         }
     }

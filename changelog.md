@@ -1,5 +1,18 @@
 # Changelog
 
+## Version 10.0.0 (2020-08-07)
+
+### Features
+
+- added new option `flipCallback` for `BasicPositioner` plugin, which allows to execute when flip occurs
+- added new option `scrollTarget` for `BasicPositioner` plugin, which allows to provided scroll target element
+
+### BREAKING CHANGES
+
+- minimal supported version of *Angular* is `10.0.0`
+- minimal supported version of `@jscrpt/common` is `1.2.0`
+- minimal supported version of `@anglr/common` is `8.0.0`
+
 ## Version 9.1.3 (2020-07-09)
 
 ### Bug Fixes
