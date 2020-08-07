@@ -2,6 +2,8 @@ import {InjectionToken} from "@angular/core";
 
 import {PositionerOptions} from "./positioner.interface";
 
+export {ScrollTargetSelector} from './basic/types';
+
 /**
  * Constant used for accessing positioner plugin in NgSelect
  */

@@ -6,12 +6,16 @@
 
 - added new option `flipCallback` for `BasicPositioner` plugin, which allows to execute when flip occurs
 - added new option `scrollTarget` for `BasicPositioner` plugin, which allows to provided scroll target element
+- added new option `activateOnScroll` for `BasicPositioner` plugin, which allows turning on and off watching for scroll event and changing position of popup
+- added new option `activateOnResize` for `BasicPositioner` plugin, which allows turning on and off watching for resize event and changing position of popup
+- added new `ScrollTargetSelector` service that is for obtaining scroll target
 
 ### BREAKING CHANGES
 
 - minimal supported version of *Angular* is `10.0.0`
 - minimal supported version of `@jscrpt/common` is `1.2.0`
 - minimal supported version of `@anglr/common` is `8.0.0`
+- `BasicPositionerComponent` has new parameter in constructor `ScrollTargetSelector`
 
 ## Version 9.1.3 (2020-07-09)
 

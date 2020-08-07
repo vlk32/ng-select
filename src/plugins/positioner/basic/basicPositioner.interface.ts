@@ -16,6 +16,16 @@ export interface BasicPositionerOptions extends PositionerOptions
      * Target element that is used for handling scroll event
      */
     scrollTarget?: EventTarget;
+
+    /**
+     * Indication whether positioner should be sensitive/activated also to scroll of scrollTarget
+     */
+    activateOnScroll?: boolean;
+
+    /**
+     * Indication whether positioner should be sensitive/activated also on resize of window
+     */
+    activateOnResize?: boolean;
 }
 
 /**

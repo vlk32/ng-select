@@ -12,6 +12,7 @@ import {POSITIONER_OPTIONS} from '../types';
 import {Popup} from '../../popup';
 import {POPUP} from '../../popup/types';
 import {PluginBus} from '../../../misc/pluginBus/pluginBus';
+import {ScrollTargetSelector} from './types';
 
 /**
  * Default options for positioner
@@ -22,7 +23,7 @@ const defaultOptions: BasicPositionerOptions =
     optionsCoordinates: 'top left',
     selectCoordinates: 'bottom left',
     flipCallback: () => {},
-    scrollTarget: window
+    scrollTarget: null
 };
 
 /**
@@ -87,6 +88,16 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
         this._options = extend(true, this._options, options);
     }
 
+    //######################### protected properties #########################
+
+    /**
+     * Gets scroll target
+     */
+    public get scrollTarget(): EventTarget
+    {
+        return this._options.scrollTarget || this._scrollTargetSelector.scrollTarget;
+    }
+
     //######################### constructor #########################
     constructor(@Inject(NG_SELECT_PLUGIN_INSTANCES) @Optional() public ngSelectPlugins: NgSelectPluginInstances,
                 @Optional() public pluginBus: PluginBus,
@@ -94,7 +105,8 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
                 protected _changeDetector: ChangeDetectorRef,
                 @Inject(POSITIONER_OPTIONS) @Optional() options?: BasicPositionerOptions,
                 @Inject(DOCUMENT) protected _document?: HTMLDocument,
-                @Inject(PLATFORM_ID) protected _platformId?: Object)
+                @Inject(PLATFORM_ID) protected _platformId?: Object,
+                protected _scrollTargetSelector?: ScrollTargetSelector)
     {
         this._options = extend(true, {}, defaultOptions, options);
     }
@@ -115,7 +127,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
         if(this._isBrowser)
         {
             window.removeEventListener('resize', this._handleResizeAndScroll);
-            this._options.scrollTarget?.removeEventListener('scroll', this._handleResizeAndScroll);
+            this.scrollTarget?.removeEventListener('scroll', this._handleResizeAndScroll);
         }
     }
 
@@ -207,8 +219,15 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
             //register events and handle position of opened popup
             if(this._popupElement)
             {
-                window.addEventListener('resize', this._handleResizeAndScroll);
-                this._options.scrollTarget?.addEventListener('scroll', this._handleResizeAndScroll);
+                if(this._options.activateOnResize)
+                {
+                    window.addEventListener('resize', this._handleResizeAndScroll);
+                }
+
+                if(this._options.activateOnScroll)
+                {
+                    this.scrollTarget?.addEventListener('scroll', this._handleResizeAndScroll);
+                }
     
                 this._handleResizeAndScroll();
             }
@@ -216,7 +235,7 @@ export class BasicPositionerComponent implements BasicPositioner, NgSelectPlugin
             else
             {
                 window.removeEventListener('resize', this._handleResizeAndScroll);
-                this._options.scrollTarget?.removeEventListener('scroll', this._handleResizeAndScroll);
+                this.scrollTarget?.removeEventListener('scroll', this._handleResizeAndScroll);
             }
         }
     }
