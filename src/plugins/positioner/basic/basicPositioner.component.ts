@@ -23,7 +23,9 @@ const defaultOptions: BasicPositionerOptions =
     optionsCoordinates: 'top left',
     selectCoordinates: 'bottom left',
     flipCallback: () => {},
-    scrollTarget: null
+    scrollTarget: null,
+    activateOnResize: true,
+    activateOnScroll: true
 };
 
 /**
