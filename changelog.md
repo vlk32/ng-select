@@ -1,13 +1,13 @@
 # Changelog
 
-## Version 10.0.0 (2020-08-07)
+## Version 10.0.0 (2020-08-10)
 
 ### Features
 
 - added new option `flipCallback` for `BasicPositioner` plugin, which allows to execute when flip occurs
 - added new option `scrollTarget` for `BasicPositioner` plugin, which allows to provided scroll target element
-- added new option `activateOnScroll` for `BasicPositioner` plugin, which allows turning on and off watching for scroll event and changing position of popup
-- added new option `activateOnResize` for `BasicPositioner` plugin, which allows turning on and off watching for resize event and changing position of popup
+- added new option `activateOnScroll` for `BasicPositioner` plugin, which allows turning on and off watching for scroll event and changing position of popup, defaults to `true`
+- added new option `activateOnResize` for `BasicPositioner` plugin, which allows turning on and off watching for resize event and changing position of popup, defaults to `true`
 - added new `ScrollTargetSelector` service that is for obtaining scroll target
 
 ### BREAKING CHANGES
