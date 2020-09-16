@@ -4,7 +4,7 @@
                [ngClass]="options?.cssClasses?.input"
                type="text"
                [value]="searchValueDisplayed"
-               (input)="handleUserInput($any($event.target).value)"
+               (input)="handleInput($any($event.target).value, true)"
                (focus)="handleFocus($any($event.target))"
                (click)="handleFocus($any($event.target), true)"
                placeholder="{{texts?.inputPlaceholder}}"
