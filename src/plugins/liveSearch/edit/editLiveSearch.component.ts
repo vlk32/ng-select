@@ -1,5 +1,5 @@
 import {Component, ChangeDetectionStrategy, ChangeDetectorRef, Inject, Optional, ElementRef, ViewChild, EventEmitter, OnDestroy} from '@angular/core';
-import {extend, isPresent} from '@jscrpt/common';
+import {extend, isPresent, DebounceCall} from '@jscrpt/common';
 import {STRING_LOCALIZATION, StringLocalization} from '@anglr/common';
 import {Subscription} from 'rxjs';
 
@@ -344,6 +344,17 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
     }
 
     //######################### public methods - template bindings #########################
+
+    /**
+     * Handles user input value
+     * @param value - Value of input
+     * @internal
+     */
+    @DebounceCall(220)
+    public handleUserInput(value: string)
+    {
+        this.handleInput(value, true);
+    }
 
     /**
      * Handle input value

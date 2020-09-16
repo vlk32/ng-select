@@ -13,7 +13,7 @@
          (click)="cancelSelected()"
          [ngClass]="options?.cssClasses?.cancelSelectedElement"></div>
 
-    <div [ngClass]="options?.cssClasses?.selectedCarretWrapper" (click)="pluginBus?.togglePopup.emit(); pluginBus?.liveSearchFocus?.emit()">
+    <div [ngClass]="options?.cssClasses?.selectedCarretWrapper" (click)="pluginBus?.togglePopup.emit(); pluginBus?.liveSearchFocus?.emit()" *ngIf="options?.showOptionsButton">
         <span [ngClass]="options?.cssClasses?.selectedCarret"></span>
     </div>
 </div>

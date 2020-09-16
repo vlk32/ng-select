@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 10.0.0 (2020-08-10)
+## Version 10.0.0 (2020-09-16)
 
 ### Features
 
@@ -9,6 +9,8 @@
 - added new option `activateOnScroll` for `BasicPositioner` plugin, which allows turning on and off watching for scroll event and changing position of popup, defaults to `true`
 - added new option `activateOnResize` for `BasicPositioner` plugin, which allows turning on and off watching for resize event and changing position of popup, defaults to `true`
 - added new `ScrollTargetSelector` service that is for obtaining scroll target
+- added new `showOptionsButton` option for `EditNormalState`, allowing displaying or hiding button for displaying options
+- `EditLiveSearch` now handles user input with debounce of `220ms`
 
 ### BREAKING CHANGES
 

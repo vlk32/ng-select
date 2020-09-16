@@ -50,6 +50,11 @@ export interface EditNormalStateOptions<TValue = any> extends NormalStateOptions
      * Indication whether display cancel button
      */
     cancelButton?: boolean;
+
+    /**
+     * Indication whether display button for displaying options
+     */
+    showOptionsButton?: boolean;
 }
 
 /**

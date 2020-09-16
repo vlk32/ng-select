@@ -35,6 +35,7 @@ const defaultOptions: EditNormalStateOptions =
         nothingSelected: 'Nothing selected'
     },
     cancelButton: false,
+    showOptionsButton: true,
     optionDisplayText: option => option.text
 };
 
