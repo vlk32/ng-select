@@ -2,7 +2,7 @@ import {CommonModule} from '@angular/common';
 import {NgModule} from "@angular/core";
 import {ScrollingModule} from '@angular/cdk/scrolling';
 
-import {VirtualEditPopupComponent} from '../components/plugins/popup/component';
+import {VirtualEditPopupComponent} from '../plugins/popup/virtualEdit/virtualEditPopup.component';
 
 /**
  * Module for VirtualEditPopup components, can also by used for non edit version
@@ -15,6 +15,10 @@ import {VirtualEditPopupComponent} from '../components/plugins/popup/component';
         ScrollingModule
     ],
     declarations:
+    [
+        VirtualEditPopupComponent
+    ],
+    exports:
     [
         VirtualEditPopupComponent
     ]
