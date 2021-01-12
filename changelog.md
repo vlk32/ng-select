@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 10.0.0 (2020-09-16)
+## Version 10.0.0 (2021-01-12)
 
 ### Features
 
@@ -10,6 +10,10 @@
 - added new option `activateOnResize` for `BasicPositioner` plugin, which allows turning on and off watching for resize event and changing position of popup, defaults to `true`
 - added new `ScrollTargetSelector` service that is for obtaining scroll target
 - added new `showOptionsButton` option for `EditNormalState`, allowing displaying or hiding button for displaying options
+- *subpackage* `@anglr/select/material`
+   - added new `VirtualEditPopupModule` as module for `VirtualEditPopup` components, can also by used for non edit version
+   - added new `VirtualEditPopupComponent` plugin used for rendering virtual edit popup with options
+   - added `CssClassesVirtualEditPopup`, `VirtualEditPopupOptions`, `VirtualEditPopup` as interfaces for virtual edit popup
 
 ### BREAKING CHANGES
 

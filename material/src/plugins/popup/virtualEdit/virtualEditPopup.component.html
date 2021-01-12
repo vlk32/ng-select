@@ -1,0 +1,22 @@
+<ng-template #defaultOptionTextLook let-option>{{option?.text}}</ng-template>
+
+<div #popupDiv 
+     *ngIf="options?.visible"
+     [ngClass]="options?.cssClasses?.popupDiv">
+
+     <cdk-virtual-scroll-viewport itemSize="28" class="thin-scrollbar">
+        <div *cdkVirtualFor="let option of selectOptions"
+             #popupOptions
+             [ngClass]="options?.cssClasses?.optionItemDiv"
+             [class.active]="option?.active"
+             [class.selected]="option?.selected"
+             (mouseenter)="handleMouseActivation(option)"
+             (click)="pluginBus?.optionSelect?.emit(option)">
+            <div [ngClass]="options?.cssClasses?.optionItemTextDiv">
+                <ng-container *ngTemplateOutlet="pluginBus?.selectOptions?.templateGatherer?.optionTemplate || defaultOptionTextLook; context: {$implicit: option, popup: this}"></ng-container>
+            </div>
+        </div>
+    </cdk-virtual-scroll-viewport>
+      
+    <div *ngIf="!selectOptions?.length">{{texts?.noAvailableOptions}}</div>
+</div>
