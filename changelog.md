@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 10.0.0 (2021-01-12)
+## Version 10.0.0 (2021-01-13)
 
 ### Features
 
@@ -10,10 +10,15 @@
 - added new option `activateOnResize` for `BasicPositioner` plugin, which allows turning on and off watching for resize event and changing position of popup, defaults to `true`
 - added new `ScrollTargetSelector` service that is for obtaining scroll target
 - added new `showOptionsButton` option for `EditNormalState`, allowing displaying or hiding button for displaying options
+- added *subpackage* `@anglr/select/popperjs`
 - *subpackage* `@anglr/select/material`
    - added new `VirtualEditPopupModule` as module for `VirtualEditPopup` components, can also by used for non edit version
    - added new `VirtualEditPopupComponent` plugin used for rendering virtual edit popup with options
    - added `CssClassesVirtualEditPopup`, `VirtualEditPopupOptions`, `VirtualEditPopup` as interfaces for virtual edit popup
+- *subpackage* `@anglr/select/popperjs`
+   - added new `PopperJsPositionerModule` as module for `PopperJsPositioner` components
+   - added new `PopperJsPositionerComponent` plugin used for positioning popup using `popper.js`
+   - added `PopperJsPositionerOptions`, `PopperJsPositioner` as interfaces for popper.js positioner
 
 ### BREAKING CHANGES
 
