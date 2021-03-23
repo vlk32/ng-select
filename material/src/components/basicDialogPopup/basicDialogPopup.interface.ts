@@ -1,4 +1,4 @@
-import {VisualPluginOptions} from '@anglr/select';
+import {VisualPluginOptions} from '@arborai/select';
 
 /**
  * Css classes for basic dialog popup

@@ -1,7 +1,7 @@
 import {Directive, ValueProvider, Input, SimpleChanges, OnChanges} from '@angular/core';
 import {ComponentType} from '@angular/cdk/portal';
-import {POPUP_TYPE, NgSelectComponent, VisualPluginOptions} from '@anglr/select';
-import {patchOptions} from '@anglr/select/extensions';
+import {POPUP_TYPE, NgSelectComponent, VisualPluginOptions} from '@arborai/select';
+import {patchOptions} from '@arborai/select/extensions';
 import {nameof} from '@jscrpt/common';
 
 import {DialogPopupComponent} from '../../plugins/popup/components';
@@ -44,7 +44,7 @@ export class DialogPopupDirective implements OnChanges
     }
 
     //######################### public methods - implementation of OnChanges #########################
-    
+
     /**
      * Called when input value changes
      */

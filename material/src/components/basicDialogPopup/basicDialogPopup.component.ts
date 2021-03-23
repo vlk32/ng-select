@@ -1,6 +1,6 @@
 import {Component, ChangeDetectionStrategy, Inject, OnDestroy, OnInit, ChangeDetectorRef} from "@angular/core";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {OptionsGatherer, ɵNgSelectOption} from "@anglr/select";
+import {OptionsGatherer, ɵNgSelectOption} from "@arborai/select";
 import {extend} from '@jscrpt/common';
 import {Subscription} from "rxjs";
 
@@ -66,7 +66,7 @@ export class BasicDialogPopupComponent<TValue = any> implements DialogPopupConte
     }
 
     //######################### public methods - implementation of OnInit #########################
-    
+
     /**
      * Initialize component
      */
@@ -94,7 +94,7 @@ export class BasicDialogPopupComponent<TValue = any> implements DialogPopupConte
     }
 
     //######################### public methods - implementation of OnDestroy #########################
-    
+
     /**
      * Called when component is destroyed
      */

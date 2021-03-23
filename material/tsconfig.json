@@ -1,12 +1,12 @@
 {
     "extends": "../tsconfig.json",
-    "compilerOptions": 
+    "compilerOptions":
     {
         "baseUrl": ".",
-        "paths": 
+        "paths":
         {
-            "@anglr/select": ["../src/select"],
-            "@anglr/select/extensions": ["../extensions/src/extensions"]
+            "@arborai/select": ["../src/select"],
+            "@arborai/select/extensions": ["../extensions/src/extensions"]
         }
     },
     "files":

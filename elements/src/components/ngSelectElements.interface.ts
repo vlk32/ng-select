@@ -1,4 +1,4 @@
-import {NgSelectOptions, NgSelectPlugin, NgSelectAction, NgSelectFunction} from "@anglr/select";
+import {NgSelectOptions, NgSelectPlugin, NgSelectAction, NgSelectFunction} from "@arborai/select";
 import {Observable} from "rxjs";
 
 /**

@@ -1,1 +1,1 @@
-export {ɵOnFocus as onFocus} from '@anglr/select';
+export {ɵOnFocus as onFocus} from '@arborai/select';

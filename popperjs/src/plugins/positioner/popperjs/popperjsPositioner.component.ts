@@ -1,6 +1,6 @@
 import {Component, ChangeDetectionStrategy, Inject, Optional, ElementRef, OnDestroy, PLATFORM_ID, ChangeDetectorRef} from '@angular/core';
 import {DOCUMENT, isPlatformBrowser} from '@angular/common';
-import {NgSelectPlugin, NgSelectPluginInstances, NG_SELECT_PLUGIN_INSTANCES, OptionsGatherer, PluginBus, POPUP, Popup, POSITIONER_OPTIONS} from '@anglr/select';
+import {NgSelectPlugin, NgSelectPluginInstances, NG_SELECT_PLUGIN_INSTANCES, OptionsGatherer, PluginBus, POPUP, Popup, POSITIONER_OPTIONS} from '@arborai/select';
 import {extend} from '@jscrpt/common';
 import {createPopper} from '@popperjs/core';
 import type {Instance} from '@popperjs/core';

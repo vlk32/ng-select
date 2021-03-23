@@ -1,1 +1,1 @@
-export {ɵValueChange as valueChange} from '@anglr/select';
+export {ɵValueChange as valueChange} from '@arborai/select';

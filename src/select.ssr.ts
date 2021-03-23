@@ -1,7 +1,7 @@
 /**
- * Allows Server Side Rendering for @anglr/select to work, call it as soon as possible
+ * Allows Server Side Rendering for @arborai/select to work, call it as soon as possible
  */
-(function(global: any) 
+(function(global: any)
 {
     if(!global.HTMLDocument)
     {

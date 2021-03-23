@@ -1,4 +1,4 @@
-import {Popup, PopupOptions, NgSelectPluginInstances, PluginBus, VisualPluginOptions} from "@anglr/select";
+import {Popup, PopupOptions, NgSelectPluginInstances, PluginBus, VisualPluginOptions} from "@arborai/select";
 import {ComponentType} from '@angular/cdk/portal';
 
 /**

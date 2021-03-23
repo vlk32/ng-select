@@ -1,4 +1,4 @@
-import {Positioner} from '@anglr/select';
+import {Positioner} from '@arborai/select';
 
 /**
  * Popper js positioner options

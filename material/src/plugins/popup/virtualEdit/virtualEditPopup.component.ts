@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {EditPopupComponent, NgSelectPlugin, ɵNgSelectOption} from '@anglr/select';
+import {EditPopupComponent, NgSelectPlugin, ɵNgSelectOption} from '@arborai/select';
 
 import {VirtualEditPopup, VirtualEditPopupOptions} from './virtualEditPopup.interface';
 
@@ -30,7 +30,7 @@ export class VirtualEditPopupComponent extends EditPopupComponent implements Vir
     //######################### public properties - children #########################
 
     // /**
-    //  * 
+    //  *
     //  */
     // @ViewChildren('popupOptions')
     // public popupOptions: QueryList<ElementRef>;
@@ -88,10 +88,10 @@ export class VirtualEditPopupComponent extends EditPopupComponent implements Vir
             setTimeout(() =>
             {
                 let viewportElement = this.viewPort?.getElementRef().nativeElement;
-                
+
                 viewportElement.style.width = `${viewportElement.children.item(0).clientWidth}px`;
             }, 0);
-            
+
             this.viewPort.getElementRef().nativeElement.style.height = this.popupElement.style.maxHeight;
             this.viewPort.checkViewportSize();
         }
@@ -130,7 +130,7 @@ export class VirtualEditPopupComponent extends EditPopupComponent implements Vir
     //     const activeOptionsElement = this.popupOptions.toArray().find(el => el.nativeElement.classList.contains('active'))?.nativeElement;
     //     const top = activeOptionsElement?.offsetTop;
     //     const bottom = top + activeOptionsElement?.offsetHeight;
-        
+
     //     if (bottom > this.popupElement?.clientHeight + currentScrollPosition)
     //     {
     //         return Math.max(bottom - this.popupElement?.clientHeight);

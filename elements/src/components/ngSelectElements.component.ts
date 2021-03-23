@@ -1,6 +1,6 @@
 import {Component, ChangeDetectionStrategy, FactoryProvider, Input, ChangeDetectorRef, ElementRef, Inject, Attribute, ComponentFactoryResolver, ApplicationRef, Injector, ClassProvider} from "@angular/core";
 import {isString} from '@jscrpt/common';
-import {NgSelectComponent, NG_SELECT_PLUGIN_INSTANCES, ngSelectPluginInstancesFactory, NgSelectOptions, NgSelectAction, NgSelectFunction, NgSelectPluginInstances, NgSelectPlugin, CodeOptionsGatherer, NgSelectOption, PluginBus} from "@anglr/select";
+import {NgSelectComponent, NG_SELECT_PLUGIN_INSTANCES, ngSelectPluginInstancesFactory, NgSelectOptions, NgSelectAction, NgSelectFunction, NgSelectPluginInstances, NgSelectPlugin, CodeOptionsGatherer, NgSelectOption, PluginBus} from "@arborai/select";
 import {Observable} from "rxjs";
 
 import {NgSelectWebComponent} from "./ngSelectElements.interface";
@@ -118,7 +118,7 @@ export class NgSelectElementsComponent<TValue = any> extends NgSelectComponent<T
             let added: boolean = false;
             let removed: boolean = false;
 
-            mutationsList.forEach(itm => 
+            mutationsList.forEach(itm =>
             {
                 itm.addedNodes.forEach(node =>
                 {
@@ -164,7 +164,7 @@ export class NgSelectElementsComponent<TValue = any> extends NgSelectComponent<T
     }
 
     //######################### public methods - implementation of OnDestroy #########################
-    
+
     /**
      * Called when component is destroyed
      */

@@ -1,4 +1,4 @@
-import {NgSelectPlugin, NgSelectPluginInstances, NG_SELECT_PLUGIN_INSTANCES, PluginBus, POPUP_OPTIONS, ɵNgSelectOption} from "@anglr/select";
+import {NgSelectPlugin, NgSelectPluginInstances, NG_SELECT_PLUGIN_INSTANCES, PluginBus, POPUP_OPTIONS, ɵNgSelectOption} from "@arborai/select";
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Inject, OnDestroy, Optional, resolveForwardRef} from "@angular/core";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ComponentType} from '@angular/cdk/portal';

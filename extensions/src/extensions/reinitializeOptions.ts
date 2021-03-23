@@ -1,4 +1,4 @@
-import {NgSelectAction, NgSelectOptions} from "@anglr/select";
+import {NgSelectAction, NgSelectOptions} from "@arborai/select";
 
 /**
  * Method reinitialize options for NgSelect

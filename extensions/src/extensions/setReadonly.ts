@@ -1,1 +1,1 @@
-export {ɵSetReadonly as setReadonly} from '@anglr/select';
+export {ɵSetReadonly as setReadonly} from '@arborai/select';

@@ -1,4 +1,4 @@
-import {NgSelectAction, NgSelectOptions} from "@anglr/select";
+import {NgSelectAction, NgSelectOptions} from "@arborai/select";
 
 /**
  * Method used to patch options without full initialization of NgSelect, only options are initialized
