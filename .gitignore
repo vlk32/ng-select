@@ -15,3 +15,5 @@ tsdoc-metadata.json
 *.orig
 *.map
 *~
+*.swp
+*.swo
