@@ -84,6 +84,7 @@
         "@angular/cdk": "^10.0.0",
         "@angular/material": "^10.0.0",
         "@angular/animations": "^10.0.0",
+        "@anglr/animations": "7.0.0",
         "rxjs": "^6.5.0",
         "@jscrpt/common": "next",
         "@anglr/common": "next",
