@@ -1,0 +1,9 @@
+  
+{
+    "name": "@anglr/select-popper-js",
+    "module": "./dist/es5/popperjs/index.js",
+    "esm2015": "./dist/es2015/popperjs/index.js",
+    "esm5": "./dist/es5/popperjs/index.js",
+    "typings": "./index.d.ts",
+    "sideEffects": false
+}

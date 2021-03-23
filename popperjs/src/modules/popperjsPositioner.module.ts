@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 
-import {PopperJsPositionerComponent} from '../plugins/positioner/popperJs/popperJsPositioner.component';
+import {PopperJsPositionerComponent} from '../plugins/positioner/popperjs/popperjsPositioner.component';
 
 /**
  * Module for popperjs positioner plugin
