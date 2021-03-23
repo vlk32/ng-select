@@ -232,7 +232,7 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
                     if(this.searchValue)
                     {
                         let option: ɵNgSelectOption = this.pluginBus.selectOptions.optionsGatherer.availableOptions.find(itm => this.pluginBus.selectOptions.liveSearchFilter(this.searchValue, this.pluginBus.selectOptions.normalizer)(itm));
-    
+
                         if(option)
                         {
                             this.pluginBus.selectOptions.optionsGatherer.options.forEach((option: ɵNgSelectOption) => option.active = false);
@@ -354,10 +354,10 @@ export class EditLiveSearchComponent implements EditLiveSearch, NgSelectPlugin<E
     public handleInput(value: string, inputChange: boolean = false)
     {
         this.searchValue = value;
-        this.searchValueChange.emit();
 
         if(inputChange)
         {
+            this.searchValueChange.emit();
             this.pluginBus.showHidePopup.emit(true);
             this.searchValueDisplayed = value;
 
